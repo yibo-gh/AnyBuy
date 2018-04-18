@@ -1,0 +1,3 @@
+In this program, every single thing which wants the server to process must send a String with in assigned pattern. Or, the server will now understand what to do and will not process the request.
+
+When requesting user registration, please send reg&<email>?<passcode>&useSSL=true . For example, when a user is register using email as sample@123.com with password test.123, the Android APP should send "reg&sample@123.com?test.123&useSSL=true".
