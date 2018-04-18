@@ -1,6 +1,7 @@
-package InternediateAPI;
+package IntermediateAPI;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 public class API {
 	
@@ -36,6 +37,13 @@ public class API {
 	
 	static int register (String[] str) {
 		writeLog("Register");
+		String[] str2 = str[1].split("?");
+		String[] uInfo = str2[0].split("@");
+		if (str2.length > 2 || uInfo.length > 2) return 0x1A01;
+		Connection c = SQLControl.SQLOperation.getConnect("userInfo", "anybuy", "CMPS115.");
+		String emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
+				+ " where emailDomain=" + uInfo[1]);
+		if (emailDomainCode == null) emailDomainCode = UserManage.createDomainCode(uInfo[1]);
 		return -0xFF;
 	}
 	
