@@ -9,6 +9,10 @@ import java.net.Socket;
 
 public class Server extends ServerSocket {
     private static final int SERVER_PORT = 18416;
+    
+    public static void main (String[] args) throws IOException {
+    		new Server();
+    }
  
     public Server()throws IOException {
         super(SERVER_PORT);
@@ -50,7 +54,7 @@ public class Server extends ServerSocket {
                 while (line != null) {
                     printWriter.println(line.hashCode());
                     System.out.println("Client(" + getName() +") say: " + line);
-                    API.getCommand(line);
+                    System.out.println("" + API.getCommand(line));
                     line = bufferedReader.readLine();
                 }
                 

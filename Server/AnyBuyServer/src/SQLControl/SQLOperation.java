@@ -21,4 +21,15 @@ public class SQLOperation {
 		}
 		return null;
 	}
+	
+	public static String writeData(Connection c, String sql) {
+		try {
+			if (c.createStatement().executeUpdate(sql) != 0) return "CDS";
+			else return "0x1A03";
+			// CDS = Create Domain Success
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			return "0x1A02";
+		} 
+	}
 }
