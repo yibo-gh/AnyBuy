@@ -13,7 +13,6 @@ public class SQLOperation {
 	}
 	
 	public static String readDatabase(Connection c, String sql) {
-		Statement stat;
 		try {
 			ResultSet rst = c.createStatement().executeQuery(sql);
 			if (rst.next()) return rst.getString(1);
