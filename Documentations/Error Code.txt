@@ -1,3 +1,5 @@
 0x1A01: Registration Error: Illegal Character.
-0x1A02: Registration Error: Failed Database Instruction.
-0x1A03: Registration Error: Connected to database successfully but failed to create a new domain record. (Domain not found)
+0x1A02: Database Write-in Error: Failed Database Instruction.
+0x1A03: Database Write-in Error: Table found, but failed to write in.
+0x1A04: Registration Error: Domain not found. An error occurred when trying to establish the domain table.
+0x1A05: Registration Error: Failed Insert Table instruction.
