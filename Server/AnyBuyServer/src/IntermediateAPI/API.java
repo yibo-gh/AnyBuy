@@ -43,7 +43,13 @@ public class API {
 		Connection c = SQLControl.SQLOperation.getConnect("userInfo", "anybuy", "CMPS115.");
 		String emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
 				+ " where emailDomain='" + uInfo[1] + "'");
-		if (emailDomainCode == null) emailDomainCode = UserManage.createDomainCode(c, uInfo[1]);
+		if (emailDomainCode == null) {
+			emailDomainCode = UserManage.createDomainCode(c, uInfo[1]);
+		}
+		emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
+				+ " where emailDomain='" + uInfo[1] + "'");
+		String sql = "INSERT INTO " + emailDomainCode + "(id,psc) VALUES('" + uInfo[0] + "','" + str2[1] + "');";
+		SQLControl.SQLOperation.writeData(c, sql);
 		System.out.println(emailDomainCode);
 		return -0xFF;
 	}

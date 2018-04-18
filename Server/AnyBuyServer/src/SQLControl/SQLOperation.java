@@ -24,12 +24,22 @@ public class SQLOperation {
 	
 	public static String writeData(Connection c, String sql) {
 		try {
-			if (c.createStatement().executeUpdate(sql) != 0) return "CDS";
+			if (c.createStatement().executeUpdate(sql) != 0) return "WTS";
 			else return "0x1A03";
-			// CDS = Create Domain Success
+			// WTS = Write Success
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			return "0x1A02";
-		} 
+		}
+	}
+	
+	public static String makeTable (Connection c, String str) {
+		String sql = "create table " + str + "( id Char(40),psc Char(50));";
+		try {
+			c.createStatement().executeUpdate(sql);
+		} catch (SQLException e) {
+			return "0x1A04";
+		}
+		return "0x1A05";
 	}
 }
