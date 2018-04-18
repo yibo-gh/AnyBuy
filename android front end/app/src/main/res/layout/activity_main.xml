@@ -21,29 +21,34 @@
         android:id="@+id/sellButtonID4"
         android:layout_width="108dp"
         android:layout_height="51dp"
-        android:layout_marginEnd="47dp"
-        android:layout_marginTop="172dp"
+        android:layout_marginBottom="292dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:layout_marginTop="8dp"
         android:text="Sell"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/buyButtonID3"
         android:layout_width="108dp"
         android:layout_height="45dp"
         android:layout_marginBottom="292dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="172dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
         android:text="Buy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.975" />
 
     <Button
         android:id="@+id/logoutButtonID3"
         android:layout_width="108dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="112dp"
         android:layout_marginEnd="47dp"
         android:text="Log out"
