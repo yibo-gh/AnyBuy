@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 
 public class Server extends ServerSocket {
     private static final int SERVER_PORT = 18416;
@@ -52,9 +53,10 @@ public class Server extends ServerSocket {
                 String line = bufferedReader.readLine();
                 
                 while (line != null) {
-                    printWriter.println(line.hashCode());
                     System.out.println("Client(" + getName() +") say: " + line);
-                    System.out.println("" + API.getCommand(line));
+                    int status = API.getCommand(line);
+                    printWriter.println(status);
+                    System.out.println(status);
                     line = bufferedReader.readLine();
                 }
                 
@@ -64,8 +66,7 @@ public class Server extends ServerSocket {
                 printWriter.close();
                 bufferedReader.close();
                 client.close();
-            }catch (IOException e) {
-            }
+            }catch (IOException | SQLException e) {}
         }
     }
 }

@@ -1,5 +1,13 @@
+0x1000: General Client Error: Illegal Input.
+
 0x1A01: Registration Error: Illegal Character.
-0x1A02: Database Write-in Error: Failed Database Instruction.
-0x1A03: Database Write-in Error: Table found, but failed to write in.
 0x1A04: Registration Error: Domain not found. An error occurred when trying to establish the domain table.
 0x1A05: Registration Error: Failed Insert Table instruction.
+0x1A06: Registration Error: Invalid Command.
+0x1A07: Registration Error: Invalid Email Address.
+
+0x1B01: Database Write-in Error: Failed Write-in Instruction.
+0x1B02: Database Write-in Error: Illegal SQL Command.
+
+0x1C01: Login Error: Domain not found
+0x1C02: Login Error: Invalid username or password.

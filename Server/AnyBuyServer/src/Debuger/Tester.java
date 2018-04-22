@@ -1,9 +1,13 @@
 package Debuger;
 
+import java.sql.SQLException;
+
 public class Tester {
 
-	public static void main (String args[]) {
-		String str = "reg&123@sample.com?test.&useSSL=true";
-		IntermediateAPI.API.getCommand(str);
+	public static void main (String args[]) throws SQLException {
+		String str = "reg&yoona@snsd.or.kr?loveYOONA!&useSSL=true";
+		System.out.println(IntermediateAPI.API.getCommand(str));
+		str = "lgi&yoona@snsd.or.kr?loveYOONA!&useSSL=true";
+		System.out.println(IntermediateAPI.API.getCommand(str));
 	}
 }

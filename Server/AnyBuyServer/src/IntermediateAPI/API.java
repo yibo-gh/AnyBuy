@@ -2,6 +2,7 @@ package IntermediateAPI;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class API {
 	
@@ -20,7 +21,7 @@ public class API {
 		}
 	}
 	
-	public static int getCommand (String str) {
+	public static int getCommand (String str) throws SQLException {
 		String[] strArr;
 		if (str.length() >= 4) strArr = str.split("\\&");
 		else return illegalInput();
@@ -35,8 +36,9 @@ public class API {
 		
 	}
 	
-	static int register (String[] str) {
+	static int register (String[] str) throws SQLException {
 		writeLog("Register");
+		if (str.length < 1) return 0x1A06;
 		String[] str2 = str[0].split("\\?");
 		String[] uInfo = str2[0].split("\\@");
 		if (str2.length != 2 || uInfo.length != 2) return 0x1A01;
@@ -46,17 +48,29 @@ public class API {
 		if (emailDomainCode == null) {
 			emailDomainCode = UserManage.createDomainCode(c, uInfo[1]);
 		}
+		if (emailDomainCode == "0x1A07") return 0x1A07;
 		emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
 				+ " where emailDomain='" + uInfo[1] + "'");
 		String sql = "INSERT INTO " + emailDomainCode + "(id,psc) VALUES('" + uInfo[0] + "','" + str2[1] + "');";
 		SQLControl.SQLOperation.writeData(c, sql);
 		System.out.println(emailDomainCode);
-		return -0xFF;
+		c.close();
+		return 0x01;
 	}
 	
-	static int login (String[] str) {
+	static int login (String[] str) throws SQLException {
 		writeLog("Login");
-		return -0xFF;
+		String[] str2 = str[0].split("\\?");
+		String[] uInfo = str2[0].split("\\@");
+		Connection c = SQLControl.SQLOperation.getConnect("userInfo", "anybuy", "CMPS115.");
+		String sql = "select code from domainCode where emailDomain='" + uInfo[1] + "'";
+		String emailCode = SQLControl.SQLOperation.readDatabase(c, sql);
+		if (emailCode == null) return 0x1C01;
+		sql = "select psc from " + emailCode + " where id='" + uInfo[0] + "'";
+		if (str2[1].equals(SQLControl.SQLOperation.readDatabase(c, sql)) ) {
+			c.close();
+			return (int) (Math.random() * 10 * 0xFFFF);
+		} else return 0x1C02;
 	}
 	
 	static int placeOrder (String[] str) {
@@ -86,7 +100,7 @@ public class API {
 	
 	static int illegalInput() {
 		writeLog("Illegal Input.");
-		return -0xFF;
+		return 0x1000;
 	}
 	
 	static void writeLog (String str) {

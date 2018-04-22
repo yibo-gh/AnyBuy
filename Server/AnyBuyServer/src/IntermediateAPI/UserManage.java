@@ -4,10 +4,10 @@ import java.sql.Connection;
 
 public class UserManage {
 
-	static String getDomainCode(Connection c, String str) {
+	static String generateDomainCode(Connection c, String str) {
 		String code = "";
 		String[] str1 = str.split("\\.");
-		
+		for (int i = 0; i < str1.length; i++) if (str1[i].equals("")) return "0x1A07";
 		if (str1.length >= 3) code += "" + str1[0].charAt(0) + str1[0].charAt(1) + str1[1].charAt(0) + str1[2].charAt(0);
 		else code += "" + str1[0].charAt(0) + str1[0].charAt(1) + str1[1].charAt(0) + "x";
 		
@@ -25,8 +25,9 @@ public class UserManage {
 	}
 	
 	static String createDomainCode (Connection c, String str) {
-		System.out.println(str + " " + getDomainCode(c, str));
-		String code = getDomainCode(c, str);
+		String code = generateDomainCode(c, str);
+		if (code == "0x1A07") return code;
+		System.out.println(str + " " + code);
 		String sql = "INSERT INTO domainCode(emailDomain,code) VALUES('" + str + "','" + code + "');"; 
 		SQLControl.SQLOperation.makeTable(c, code);
 		return SQLControl.SQLOperation.writeData(c, sql);

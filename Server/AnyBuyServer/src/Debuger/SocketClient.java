@@ -8,8 +8,8 @@ import java.net.Socket;
 public class SocketClient {
     public static void main(String[] args) {
         try {
-            Socket socket = new Socket("localhost",18416);
-            socket.setSoTimeout(600);
+            Socket socket = new Socket("yg-home.site",18416);
+            socket.setSoTimeout(6000);
  
             PrintWriter printWriter =new PrintWriter(socket.getOutputStream(),true);
             BufferedReader bufferedReader =new BufferedReader(new InputStreamReader(socket.getInputStream()));

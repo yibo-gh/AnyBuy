@@ -25,11 +25,11 @@ public class SQLOperation {
 	public static String writeData(Connection c, String sql) {
 		try {
 			if (c.createStatement().executeUpdate(sql) != 0) return "WTS";
-			else return "0x1A03";
+			else return "0x1B01";
 			// WTS = Write Success
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			return "0x1A02";
+			return "0x1B02";
 		}
 	}
 	
