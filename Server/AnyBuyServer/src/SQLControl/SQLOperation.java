@@ -34,8 +34,23 @@ public class SQLOperation {
 	}
 	
 	public static String makeTable (Connection c, String str) {
-		String sql = "create table " + str + "( id Char(40),psc Char(50));";
+		String sql = "create table " + str + "( name Char(40),psc Char(50));";
 		try {
+			c.createStatement().executeUpdate(sql);
+		} catch (SQLException e) {
+			return "0x1A04";
+		}
+		return "0x1A05";
+	}
+	
+	public static String creatProfile(Connection c, String userId) {
+		try {
+			String sql = "CREATE DATABASE " + userId;
+			c.createStatement().executeUpdate(sql);
+			c = SQLControl.SQLOperation.getConnect(userId, "anybuy", "CMPS115.");
+			sql = "create table payment ( issuer Char(4), cardNumber int(16), exp Char(4), zip Char(5) );";
+			c.createStatement().executeUpdate(sql);
+			sql = "create table address ( line1 Char(255), line2 Char(255), state Char(2), zip Char(5) );";
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
 			return "0x1A04";

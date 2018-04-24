@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import SQLControl.SQLOperation;
+
 public class API {
 	
 	static Server s;
@@ -51,8 +53,11 @@ public class API {
 		if (emailDomainCode == "0x1A07") return 0x1A07;
 		emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
 				+ " where emailDomain='" + uInfo[1] + "'");
-		String sql = "INSERT INTO " + emailDomainCode + "(id,psc) VALUES('" + uInfo[0] + "','" + str2[1] + "');";
+		String usr = SQLControl.SQLOperation.readDatabase(c, "select psc from " + emailDomainCode + " where name='" + uInfo[0] + "'");
+		if (usr != null) return 0x1A08;
+		String sql = "INSERT INTO " + emailDomainCode + "(name,psc) VALUES('" + uInfo[0] + "','" + str2[1] + "');";
 		SQLControl.SQLOperation.writeData(c, sql);
+		SQLOperation.creatProfile(c, emailDomainCode + "" + uInfo[0]);
 		System.out.println(emailDomainCode);
 		c.close();
 		return 0x01;
@@ -66,7 +71,7 @@ public class API {
 		String sql = "select code from domainCode where emailDomain='" + uInfo[1] + "'";
 		String emailCode = SQLControl.SQLOperation.readDatabase(c, sql);
 		if (emailCode == null) return 0x1C01;
-		sql = "select psc from " + emailCode + " where id='" + uInfo[0] + "'";
+		sql = "select psc from " + emailCode + " where name='" + uInfo[0] + "'";
 		if (str2[1].equals(SQLControl.SQLOperation.readDatabase(c, sql)) ) {
 			c.close();
 			return (int) (Math.random() * 10 * 0xFFFF);

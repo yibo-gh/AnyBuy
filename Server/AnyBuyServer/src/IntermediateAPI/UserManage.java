@@ -20,7 +20,6 @@ public class UserManage {
 			code = sb.toString();
 			sql = "select emailDomain from domainCode where code='" + code + "'";
 		}
-		
 		return code;
 	}
 	

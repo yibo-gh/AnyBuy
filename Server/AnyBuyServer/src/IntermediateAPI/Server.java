@@ -15,7 +15,7 @@ public class Server extends ServerSocket {
     		new Server();
     }
  
-    public Server()throws IOException {
+    public Server() throws IOException {
         super(SERVER_PORT);
         API.writeLog("Server ready. Port " + this.getLocalPort());
  
