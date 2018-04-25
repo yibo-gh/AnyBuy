@@ -54,7 +54,7 @@ public class Server extends ServerSocket {
                 
                 while (line != null) {
                     System.out.println("Client(" + getName() +") say: " + line);
-                    int status = API.getCommand(line);
+                    String status = API.getCommand(line);
                     printWriter.println(status);
                     System.out.println(status);
                     line = bufferedReader.readLine();

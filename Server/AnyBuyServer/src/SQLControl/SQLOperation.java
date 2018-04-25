@@ -34,7 +34,7 @@ public class SQLOperation {
 	}
 	
 	public static String makeTable (Connection c, String str) {
-		String sql = "create table " + str + "( name Char(40),psc Char(50));";
+		String sql = "create table " + str + "( name Char(40),psc Char(50), id int(8));";
 		try {
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
@@ -56,5 +56,14 @@ public class SQLOperation {
 			return "0x1A04";
 		}
 		return "0x1A05";
+	}
+	
+	public static int countLine(Connection c, String tableName) throws SQLException {
+		String sql = "select count(*) as rowCount from " + tableName;
+		ResultSet rset = c.createStatement().executeQuery(sql);
+		rset.next();
+		int rtn = rset.getInt("rowCount");
+//		int rtn = rset.getMetaData().
+		return rtn;
 	}
 }
