@@ -14,25 +14,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button buy = (Button) findViewById(R.id.buyButtonID3);
-        Button sell = (Button) findViewById(R.id.sellButtonID4);
-        Button profile = (Button) findViewById(R.id.profileButtonID);
-        Button logout = (Button) findViewById(R.id.logoutButtonID3);
+        Button logIn = (Button) findViewById(R.id.loginID);
 
-        //open the buy page if buy button was clicked
-        buy.setOnClickListener(new View.OnClickListener() {
+        Button register = (Button) findViewById(R.id.registerButtonID);
+
+        //open the home page if login button was clicked
+        logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, BuyActivity.class);
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
 
-        //open the buy page if buy button was clicked
-        sell.setOnClickListener(new View.OnClickListener() {
+        //open the register page if register button was clicked
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SellActivity.class);
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
