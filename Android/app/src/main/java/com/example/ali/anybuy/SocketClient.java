@@ -20,12 +20,12 @@ public class SocketClient {
                 printWriter.flush();
 
                 result = bufferedReader.readLine();
-                return result;
             }
 
             printWriter.close();
             bufferedReader.close();
             socket.close();
+            return result;
         } catch (Exception e) {
             System.out.println("Exception:" + e);
         }
