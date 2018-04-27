@@ -7,9 +7,12 @@ import java.net.Socket;
 
 public class SocketClient {
     public static String run(String str) {
+        System.out.println("in client");
         try {
             Socket socket = new Socket("yg-home.site", 18416);
             socket.setSoTimeout(6000);
+
+            System.out.println("Connection Established");
 
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -28,7 +31,7 @@ public class SocketClient {
             return result;
         } catch (Exception e) {
             System.out.println("Exception:" + e);
+            return "0x1001";
         }
-        return "0x1001";
     }
 }
