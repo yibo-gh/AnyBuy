@@ -22,7 +22,7 @@
         android:id="@+id/registerButtonID"
         android:layout_width="88dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="156dp"
+        android:layout_marginBottom="88dp"
         android:layout_marginLeft="148dp"
         android:layout_marginStart="148dp"
         android:text="Register"

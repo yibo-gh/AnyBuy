@@ -56,9 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "You didn't repeat the password correctly!", Toast.LENGTH_LONG).show();
                 }
 
-                if(passwordstr.length() < 5){
 
-                }
 
                 else{
                     Toast.makeText(RegisterActivity.this, "You are good", Toast.LENGTH_LONG).show();
