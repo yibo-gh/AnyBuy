@@ -61,7 +61,8 @@ public class RegisterActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(RegisterActivity.this, "You are good", Toast.LENGTH_LONG).show();
                     combine = "reg&" + emailstr + "?" + passwordstr + "&useSSL=true";
-
+                    String res = SocketClient.run(combine);
+                    System.out.println(res);
                     System.out.println(combine);
                 }
                 // make the password and email the way the backend guys want it and store it into another string
