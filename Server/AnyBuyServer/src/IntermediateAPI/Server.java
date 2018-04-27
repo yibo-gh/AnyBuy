@@ -10,11 +10,7 @@ import java.sql.SQLException;
 
 public class Server extends ServerSocket {
     private static final int SERVER_PORT = 18416;
-    
-    public static void main (String[] args) throws IOException {
-    		new Server();
-    }
- 
+
     public Server() throws IOException {
         super(SERVER_PORT);
         API.writeLog("Server ready. Port " + this.getLocalPort());
