@@ -13,7 +13,7 @@ public class Server extends ServerSocket {
 
     public Server() throws IOException {
         super(SERVER_PORT);
-        API.writeLog("Server ready. Port " + this.getLocalPort());
+        CoreOperations.writeLog("Server ready. Port " + this.getLocalPort());
  
         try {
             while (true) {

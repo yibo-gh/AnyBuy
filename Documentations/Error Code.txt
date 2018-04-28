@@ -13,3 +13,6 @@
 
 0x1C01: Login Error: Domain not found
 0x1C02: Login Error: Invalid username or password.
+
+0x1D01: Illegal Request: Illegal sessionID.
+0x1D02: Illegal Request: Expired Session.

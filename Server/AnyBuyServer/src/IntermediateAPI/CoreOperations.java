@@ -49,10 +49,17 @@ public class CoreOperations {
 			int authToken = (int) (Math.random() * 10 * 0xFFFF);
 			// TODO improve authToken algorithm to make it has a high security level.
 			c = SQLControl.SQLOperation.getConnect("accessLog", "anybuy", "CMPS115.");
-			String usrStatus = SQLControl.SQLOperation.readDatabase(c, "select token from domainCode where emailDomain='" + uInfo[1] + "'");
-			if (usrStatus == null) sql = "insert into authLog (uid, authTime, token) values ('" + emailCode + uid + "','','" + authToken + "');";
-			SQLControl.SQLOperation.writeData(c, sql);
+			String usrStatus = SQLControl.SQLOperation.readDatabase(c, "select token from authLog where uid='" + emailCode + uid + "'");
+			System.out.println("user status is null " + (usrStatus == null));
+			if (usrStatus == null) sql = "insert into authLog (uid, authTime, token) values ('" + emailCode + uid + "','" + System.currentTimeMillis() + "','" + authToken + "');";
+			else {
+				sql = "update authLog set authTime='" + System.currentTimeMillis() + "' where uid='" + emailCode + uid + "';" ;
+				SQLControl.SQLOperation.writeData(c, sql);
+				sql = "update authLog set token='" + authToken + "' where uid='" + emailCode + uid + "';" ;
+				SQLControl.SQLOperation.writeData(c, sql);
+			}
 			String sessionID = emailCode + uid + "?" + authToken;
+			System.out.println(authToken);;
 			return sessionID;
 		} else {
 			c.close();
@@ -83,6 +90,20 @@ public class CoreOperations {
 	static String addCard (String[] str) {
 		writeLog("Add Payment Method");
 		return null;
+	}
+	
+	static String sessionVerify (String sessionID) {
+		String[] veri = sessionID.split("\\?");
+		Connection c = SQLControl.SQLOperation.getConnect("accessLog", "anybuy", "CMPS115.");
+		String sql = "select token from authLog where uid='" + veri[0] + "'";
+		String res = SQLOperation.readDatabase(c, sql);
+		if (!veri[1].equals(res)) return "0x1D01";
+		sql = "select authTime from authLog where uid='" + veri[0] + "'";
+		Long l = Long.parseLong(SQLOperation.readDatabase(c, sql));
+		if (System.currentTimeMillis() - l > 0x927C0 || System.currentTimeMillis() < l) return "0x1D02";
+		sql = "update authLog set authTime='" + System.currentTimeMillis() + "' where uid='" + veri[0] + "';" ;
+		SQLControl.SQLOperation.writeData(c, sql);
+		return "0x01";
 	}
 	
 	static String illegalInput() {

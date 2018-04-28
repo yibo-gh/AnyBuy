@@ -66,4 +66,5 @@ public class SQLOperation {
 //		int rtn = rset.getMetaData().
 		return rtn;
 	}
+	
 }
