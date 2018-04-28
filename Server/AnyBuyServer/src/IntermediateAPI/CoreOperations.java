@@ -112,7 +112,6 @@ public class CoreOperations {
 		
 		String value = "'" + name[0] + "','" + name[1] + "','" + cardNum[0] + "','" + cardNum[1] + "','" + expInfo[0] + "','" + expInfo[1] + "'";
 		String sql = "INSERT INTO payment(fn, ln, issuer, cardNumber, exp, zip) VALUES(" + value + ");"; 
-		System.out.println(sql);
 		System.out.println(SQLOperation.writeData(c, sql));
 		return "0x01";
 	}
@@ -121,22 +120,22 @@ public class CoreOperations {
 		
 		String[] uid = str[0].split("\\?");
 		if (uid.length > 2) return "0x1E03";
-		Connection c = SQLOperation.getConnect(uid[0], "abybuy", "CMPS115.");
-		String sql = "SELECT * FROM person";
+		Connection c = SQLOperation.getConnect(uid[0], "anybuy", "CMPS115.");
+		String sql = "SELECT * FROM payment";
 		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		
 		String res = generateResWithRS(rs, 6);
-		
-		
-		return null;
+		if (res.equals("")) return "0x1E04";
+		else return res;
 	}
 	
 	private static String generateResWithRS(ResultSet rs, int len) throws SQLException {
 		String res = "";
 		while (rs.next()) {
 			if (res != "") res += "&";
-			for (int i = 0; i < len; i++) {
+			for (int i = 1; i <= len; i++) {
 				res  += rs.getString(i);
-				if (i < len - 1) res += "?";
+				if (i < len) res += "?";
 			}
 		}
 		return res;

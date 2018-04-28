@@ -20,3 +20,4 @@
 0x1E01: Profile Error: Card exists.
 0x1E02: Profile Error: Card not valid.
 0x1E03: Profile Error: Invalid command syntax.
+0x1E04: Profile Error: Card not found.
