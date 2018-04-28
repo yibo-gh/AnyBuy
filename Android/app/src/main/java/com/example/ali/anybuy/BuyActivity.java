@@ -34,6 +34,15 @@ public class BuyActivity extends AppCompatActivity  {
 
         orderButton = (Button) findViewById(R.id.orderButtonID);
 
+        // Strings to set the edit text to them
+        String productBrandstr = productBrand.getText().toString();
+        String productNamestr = productName.getText().toString();
+
+        String quantitystr = quantity.getText().toString();
+
+        int quantityNum = Integer.parseInt(quantitystr);
+
+
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
