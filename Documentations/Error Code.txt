@@ -17,4 +17,5 @@
 0x1D01: Illegal Request: Illegal sessionID.
 0x1D02: Illegal Request: Expired Session.
 
-0x1E01: Add Payment Error: Card exists.
+0x1E01: Profile Error: Card exists.
+0x1E02: Profile Error: Card not valid.
