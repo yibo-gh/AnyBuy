@@ -13,6 +13,7 @@ public class CoreOperations {
 		String[] str2 = str[0].split("\\?");
 		String[] uInfo = str2[0].split("\\@");
 		if (str2.length != 2 || uInfo.length != 2) return "0x1A01";
+		if (uInfo[0].charAt(0) == '0' && uInfo[0].charAt(1) == 'x' && uInfo[0].length() == 6) return "0x1A01";
 		Connection c = SQLControl.SQLOperation.getConnect("userInfo", "anybuy", "CMPS115.");
 		String emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
 				+ " where emailDomain='" + uInfo[1] + "'");
@@ -49,9 +50,12 @@ public class CoreOperations {
 			int authToken = (int) (Math.random() * 10 * 0xFFFF);
 			// TODO improve authToken algorithm to make it has a high security level.
 			c = SQLControl.SQLOperation.getConnect("accessLog", "anybuy", "CMPS115.");
-			String usrStatus = SQLControl.SQLOperation.readDatabase(c, "select token from authLog where uid='" + emailCode + uid + "'");
-			System.out.println("user status is null " + (usrStatus == null));
-			if (usrStatus == null) sql = "insert into authLog (uid, authTime, token) values ('" + emailCode + uid + "','" + System.currentTimeMillis() + "','" + authToken + "');";
+			sql = "select token from authLog where uid='" + emailCode + uid + "'";
+			String usrStatus = SQLControl.SQLOperation.readDatabase(c, sql);
+			if (usrStatus == null) {
+				sql = "insert into authLog (uid, authTime, token) values ('" + emailCode + uid + "','" + System.currentTimeMillis() + "','" + authToken + "');";
+				SQLControl.SQLOperation.writeData(c, sql);
+			}
 			else {
 				sql = "update authLog set authTime='" + System.currentTimeMillis() + "' where uid='" + emailCode + uid + "';" ;
 				SQLControl.SQLOperation.writeData(c, sql);
@@ -59,7 +63,7 @@ public class CoreOperations {
 				SQLControl.SQLOperation.writeData(c, sql);
 			}
 			String sessionID = emailCode + uid + "?" + authToken;
-			System.out.println(authToken);;
+			System.out.println(authToken);
 			return sessionID;
 		} else {
 			c.close();
@@ -88,8 +92,32 @@ public class CoreOperations {
 	}
 	
 	static String addCard (String[] str) {
+		//adc&snok10000?538847&yoona?lim&amex=375987654321001&1220?95064
 		
-		return null;
+		String uid = sessionVerify(str[0]);
+		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		
+		
+		String[] name = str[1].split("\\?");
+		String[] cardNum = str[2].split("\\=");
+		String[] expInfo = str[3].split("\\?");
+		
+		Connection c = SQLOperation.getConnect(uid, "anybuy", "CMPS115.");
+		String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select token from payment where cardNumber='" + cardNum[1] + "'");
+		if (cardStatus != null) return "0x1E01";
+		
+		cardStatus = validateCardInfo(name, cardNum, expInfo);
+		if ( !cardStatus.equals("0x01") ) return cardStatus;
+		
+		String value = "'" + name[0] + "','" + name[1] + "','" + cardNum[0] + "','" + cardNum[1] + "','" + expInfo[0] + "','" + expInfo[1] + "'";
+		String sql = "INSERT INTO payment(fn, ln, issuer, cardNumber, exp, zip) VALUES(" + value + ");"; 
+		System.out.println(sql);
+		System.out.println(SQLOperation.writeData(c, sql));
+		return "0x01";
+	}
+	
+	private static String validateCardInfo(String[] name, String[] card, String[] exp) {
+		return "0x01";
 	}
 	
 	static String sessionVerify (String sessionID) {
@@ -103,7 +131,7 @@ public class CoreOperations {
 		if (System.currentTimeMillis() - l > 0x927C0 || System.currentTimeMillis() < l) return "0x1D02";
 		sql = "update authLog set authTime='" + System.currentTimeMillis() + "' where uid='" + veri[0] + "';" ;
 		SQLControl.SQLOperation.writeData(c, sql);
-		return "0x01";
+		return veri[0];
 	}
 	
 	static String illegalInput() {
