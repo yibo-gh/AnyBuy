@@ -1,6 +1,7 @@
 package IntermediateAPI;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import SQLControl.SQLOperation;
@@ -114,6 +115,31 @@ public class CoreOperations {
 		System.out.println(sql);
 		System.out.println(SQLOperation.writeData(c, sql));
 		return "0x01";
+	}
+	
+	static String loadCard (String[] str) throws SQLException {
+		
+		String[] uid = str[0].split("\\?");
+		if (uid.length > 2) return "0x1E03";
+		Connection c = SQLOperation.getConnect(uid[0], "abybuy", "CMPS115.");
+		String sql = "SELECT * FROM person";
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		String res = generateResWithRS(rs, 6);
+		
+		
+		return null;
+	}
+	
+	private static String generateResWithRS(ResultSet rs, int len) throws SQLException {
+		String res = "";
+		while (rs.next()) {
+			if (res != "") res += "&";
+			for (int i = 0; i < len; i++) {
+				res  += rs.getString(i);
+				if (i < len - 1) res += "?";
+			}
+		}
+		return res;
 	}
 	
 	private static String validateCardInfo(String[] name, String[] card, String[] exp) {

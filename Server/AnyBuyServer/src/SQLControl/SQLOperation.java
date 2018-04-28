@@ -22,6 +22,14 @@ public class SQLOperation {
 		return null;
 	}
 	
+	public static ResultSet readDatabaseRS(Connection c, String sql) {
+		try {
+			return c.createStatement().executeQuery(sql);
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
 	public static String writeData(Connection c, String sql) {
 		try {
 			if (c.createStatement().executeUpdate(sql) != 0) return "WTS";
