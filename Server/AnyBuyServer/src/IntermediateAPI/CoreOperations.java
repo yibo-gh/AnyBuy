@@ -88,7 +88,7 @@ public class CoreOperations {
 	}
 	
 	static String addCard (String[] str) {
-		writeLog("Add Payment Method");
+		
 		return null;
 	}
 	

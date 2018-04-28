@@ -9,6 +9,5 @@ public class Tester {
 //		System.out.println(IntermediateAPI.API.getCommand(str));
 		String str = "lgi&yoona1@snsd.or.kr?loveYOONA!&useSSL=true";
 		System.out.println(IntermediateAPI.API.getCommand(str));
-		System.out.println( IntermediateAPI.CoreOperations.sessionVerify("snok10001?59262") );
 	}
 }

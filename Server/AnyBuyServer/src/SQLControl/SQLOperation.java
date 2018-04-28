@@ -48,7 +48,7 @@ public class SQLOperation {
 			String sql = "CREATE DATABASE " + userId;
 			c.createStatement().executeUpdate(sql);
 			c = SQLControl.SQLOperation.getConnect(userId, "anybuy", "CMPS115.");
-			sql = "create table payment ( issuer Char(4), cardNumber int(16), exp Char(4), zip Char(5) );";
+			sql = "create table payment ( fn Char(20), ln Char(20), issuer Char(4), cardNumber int(16), exp Char(4), zip Char(5) );";
 			c.createStatement().executeUpdate(sql);
 			sql = "create table address ( line1 Char(255), line2 Char(255), state Char(2), zip Char(5) );";
 			c.createStatement().executeUpdate(sql);
