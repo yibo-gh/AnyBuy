@@ -18,7 +18,9 @@ public class BuyActivity extends AppCompatActivity  {
     EditText quantity;
 
     ImageView productImage;
+
     Button orderButton;
+    Button addButton;
 
     private final int PICK_IMAGE_REQUEST = 1;
     @Override
@@ -33,22 +35,36 @@ public class BuyActivity extends AppCompatActivity  {
         productImage = (ImageView) findViewById(R.id.productImageViewID);
 
         orderButton = (Button) findViewById(R.id.orderButtonID);
-
-        // Strings to set the edit text to them
-        String productBrandstr = productBrand.getText().toString();
-        String productNamestr = productName.getText().toString();
-
-        String quantitystr = quantity.getText().toString();
-
-        int quantityNum = Integer.parseInt(quantitystr);
-
+        addButton = (Button) findViewById(R.id.addProductEditTextID);
 
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();
+
             }
         });
+
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Strings to set the edit text to them
+                String productBrandstr = productBrand.getText().toString();
+                String productNamestr = productName.getText().toString();
+
+                String quantitystr = quantity.getText().toString();
+
+                int quantityNum = Integer.parseInt(quantitystr);
+            }
+        });
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 
     private void chooseImage()
