@@ -72,7 +72,27 @@ public class CoreOperations {
 	}
 	
 	static String placeOrder (String[] str) {
+		// plo&sessionID&<Country>?<Product>?<Model>?<Quantity>
 		writeLog("Place Order");
+		
+		// verify session
+		String uid = sessionVerify(str[0]);
+		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		
+		// get data for order
+		String[] order = str[1].split("\\?");
+		String country = order[0];
+		String product = order[1];
+		String model = order[2];
+		String quantity = order[3];
+		
+		// insert data into table
+		Connection c = SQLControl.SQLOperation.getConnect("generalOrder", "anybuy", "CMPS115.");
+		String value = "'" + product + "','" + model + "','" + quantity + "'" + ", NULL";
+		String sql = "INSERT INTO " + country +" (Product, Model, Quantity, orderID) VALUES (" + value + ");"; 
+		System.out.println(sql);
+		System.out.println(SQLOperation.writeData(c, sql));
+		
 		return null;
 	}
 	
