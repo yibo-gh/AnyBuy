@@ -4,4 +4,6 @@ When requesting user registration, please send reg&<email>?<passcode>&useSSL=tru
 
 When requesting user login, please send lgi&<email>?<passcode>&useSSL=true to the server.
 
+When adding card, please send adc&sessionID&<FN>?<LN>&<issuer>=<card#>&<Exp>?<ZIP>. <FN> & <LN> have the max length of 20, Issuer.max = 4, card#.max = 16, exp.max = 4, zip.max = 5. All variables are written in String.
+
 WARNING: Except registration and login function, every function defined in class CoreOperations.java, must go thru a session validation (ie sessionVeriy() ) before they can really do something. A function MUST return immediately unless the responding code of sessionVerify() is "0x01 ".
