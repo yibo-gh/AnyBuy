@@ -8,8 +8,8 @@
 0x1A07: Registration Error: Invalid Email Address.
 0x1A08: Registration Error: User Exist.
 
-0x1B01: Database Write-in Error: Failed Write-in Instruction.
-0x1B02: Database Write-in Error: Illegal SQL Command.
+0x1B01: Database Update Error: Failed Write-in Instruction.
+0x1B02: Database Update Error: Illegal SQL Command.
 
 0x1C01: Login Error: Domain not found
 0x1C02: Login Error: Invalid username or password.
