@@ -32,6 +32,7 @@ public class API {
 		else if (strArr[0].equalsIgnoreCase("art")) return CoreOperations.acceptRate(voidHead(strArr));
 		else if (strArr[0].equalsIgnoreCase("adc")) return CoreOperations.addCard(voidHead(strArr));
 		else if (strArr[0].equalsIgnoreCase("ldc")) return CoreOperations.loadCard(voidHead(strArr));
+		else if (strArr[0].equalsIgnoreCase("dtc")) return CoreOperations.deleteCard(voidHead(strArr));
 //		else if (strArr[0].equalsIgnoreCase("ada")) return CoreOperations.addAddress(voidHead(strArr));
 		else return CoreOperations.illegalInput();
 		
