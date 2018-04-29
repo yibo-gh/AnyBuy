@@ -92,7 +92,7 @@ public class CoreOperations {
 		return null;
 	}
 	
-	static String addCard (String[] str) {
+	static String addCard (String[] str) throws SQLException {
 		//adc&snok10000?538847&yoona?lim&amex=375987654321001&1220?95064
 		
 		String uid = sessionVerify(str[0]);
@@ -105,14 +105,21 @@ public class CoreOperations {
 		
 		Connection c = SQLOperation.getConnect(uid);
 		String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select issuer from payment where cardNumber='" + cardNum[1] + "'");
-		if (cardStatus != null) return "0x1E01";
+		if (cardStatus != null) {
+			c.close();
+			return "0x1E01";
+		}
 		
 		cardStatus = validateCardInfo(name, cardNum, expInfo);
-		if ( !cardStatus.equals("0x01") ) return cardStatus;
+		if ( !cardStatus.equals("0x01") ) {
+			c.close();
+			return cardStatus;
+		}
 		
 		String value = "'" + name[0] + "','" + name[1] + "','" + cardNum[0] + "','" + cardNum[1] + "','" + expInfo[0] + "','" + expInfo[1] + "'";
 		String sql = "INSERT INTO payment(fn, ln, issuer, cardNumber, exp, zip) VALUES(" + value + ");"; 
 		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
 		return "0x01";
 	}
 	
@@ -123,21 +130,25 @@ public class CoreOperations {
 		Connection c = SQLOperation.getConnect(uid[0]);
 		String sql = "SELECT * FROM payment";
 		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
-		
+		c.close();
 		String res = generateResWithRS(rs, 6);
 		if (res.equals("")) return "0x1E04";
 		else return res;
 	}
 	
-	static String deleteCard(String[] str) {
+	static String deleteCard(String[] str) throws SQLException {
 		//dlc&sid&card#
 		String uid = sessionVerify(str[0]);
 		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
 		String sql = "delete from payment where cardNumber=" + str[1] + ";";
 		Connection c = SQLControl.SQLOperation.getConnect(uid);
 		String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select issuer from payment where cardNumber='" + str[1] + "'");
-		if (cardStatus == null) return "0x1E04";
+		if (cardStatus == null) {
+			c.close();
+			return "0x1E04";
+		}
 		String res = SQLControl.SQLOperation.updateData(c, sql);
+		c.close();
 		if (res != "UPS") return res;
 		else return "0x01";
 	}
@@ -158,17 +169,21 @@ public class CoreOperations {
 		return "0x01";
 	}
 	
-	static String sessionVerify (String sessionID) {
+	static String sessionVerify (String sessionID) throws SQLException {
 		String[] veri = sessionID.split("\\?");
 		Connection c = SQLControl.SQLOperation.getConnect("accessLog");
 		String sql = "select token from authLog where uid='" + veri[0] + "'";
 		String res = SQLOperation.readDatabase(c, sql);
-		if (!veri[1].equals(res)) return "0x1D01";
+		if (!veri[1].equals(res)) {
+			c.close();
+			return "0x1D01";
+		}
 		sql = "select authTime from authLog where uid='" + veri[0] + "'";
 		Long l = Long.parseLong(SQLOperation.readDatabase(c, sql));
 		if (System.currentTimeMillis() - l > 0x927C0 || System.currentTimeMillis() < l) return "0x1D02";
 		sql = "update authLog set authTime='" + System.currentTimeMillis() + "' where uid='" + veri[0] + "';" ;
 		SQLControl.SQLOperation.updateData(c, sql);
+		c.close();
 		return veri[0];
 	}
 	
