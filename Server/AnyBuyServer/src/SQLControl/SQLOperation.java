@@ -57,6 +57,21 @@ public class SQLOperation {
 		return "0x1A05";
 	}
 	
+	// Create table for country in generalOrder
+	public static String createCountryTable(Connection c, String country) {
+		String sql = "CREATE TABLE " + country + "(Product VARCHAR(45) NOT NULL,"
+				+ " Brand VARCHAR(45) NOT NULL, Quantity INT(10) NOT NULL, Image VARCHAR(255) NULL,"
+				+ " orderID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY)";
+		try {
+			c.createStatement().executeUpdate(sql);
+		} catch (SQLException e) {
+			// CHANGE error code?
+			return "0xblur";
+		}
+		// CHANGE error code?
+		return "0xgurh";
+	}
+	
 	public static int countLine(Connection c, String tableName) throws SQLException {
 		String sql = "select count(*) as rowCount from " + tableName;
 		ResultSet rset = c.createStatement().executeQuery(sql);

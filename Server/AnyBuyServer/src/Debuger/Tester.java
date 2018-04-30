@@ -11,7 +11,7 @@ public class Tester {
 //		System.out.println(IntermediateAPI.API.getCommand(str));
 //		String str = "adc&snok10000?553587&yoona?lim&amex=375987654321001&1220?95064";
 //		System.out.println(IntermediateAPI.API.getCommand(str));
-		String str = "plo&snok10000?553587&CA?Shoes?Nike?1";
+		String str = "plo&snok10000?553587&AZ?Shoes?Nike?test.jpg?1";
 		System.out.println(IntermediateAPI.API.getCommand(str));
 	}
 }
