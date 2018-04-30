@@ -9,7 +9,7 @@
     <EditText
         android:id="@+id/emailEditTextID"
         android:layout_width="wrap_content"
-        android:layout_height="46dp"
+        android:layout_height="44dp"
         android:layout_marginLeft="84dp"
         android:layout_marginStart="84dp"
         android:layout_marginTop="92dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailEditTextID" />
 
     <Button
-        android:id="@+id/registerButtonID"
+        android:id="@+id/registerButtonID1"
         android:layout_width="88dp"
         android:layout_height="48dp"
         android:layout_marginLeft="148dp"
