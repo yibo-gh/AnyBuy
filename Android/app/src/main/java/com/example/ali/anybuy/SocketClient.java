@@ -18,17 +18,18 @@ public class SocketClient {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String result = "";
-            while (result.indexOf("bye") == -1) {
-                printWriter.println(str);
+
+               printWriter.println(str);
                 printWriter.flush();
 
                 result = bufferedReader.readLine();
-            }
+            
 
             printWriter.close();
             bufferedReader.close();
             socket.close();
             return result;
+
         } catch (Exception e) {
             System.out.println("Exception:" + e);
             return "0x1001";

@@ -125,27 +125,29 @@
 
                 android:layout_height="match_parent"
                 tools:context="com.example.ali.anybuy.BuyActivity">
+
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/picsLayoutID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal" >
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
 
-                <ImageView
-                    android:id="@+id/productImageViewID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="96dp"
-                    android:src="@android:drawable/ic_input_add"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/orderButtonID"
-                    app:layout_constraintHorizontal_bias="0.3"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.55"
-                    android:layout_gravity="center"/>
+                    <ImageView
+                        android:id="@+id/productImageViewID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="96dp"
+                        android:src="@android:drawable/ic_input_add"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/orderButtonID"
+                        app:layout_constraintHorizontal_bias="0.3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.55" />
                 </LinearLayout>
             </android.support.constraint.ConstraintLayout>
 

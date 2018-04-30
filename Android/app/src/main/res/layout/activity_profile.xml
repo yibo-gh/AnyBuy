@@ -33,10 +33,10 @@
         android:text="Seller History"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orders" />
+        app:layout_constraintTop_toBottomOf="@+id/ordersButtonID" />
 
     <Button
-        android:id="@+id/orders"
+        android:id="@+id/ordersButtonID"
         android:layout_width="@android:dimen/thumbnail_height"
         android:layout_height="wrap_content"
         android:layout_marginEnd="96dp"

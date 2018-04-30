@@ -26,15 +26,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
+
         email1 = (EditText) findViewById(R.id.emailEditTextID1);
         password1 = (EditText) findViewById(R.id.passwordEditTextID1);
-=======
+
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
->>>>>>> 0b91ccbd95ccf080ae85f99035db2fd4f5f9cb01
+
 
         Button logIn = (Button) findViewById(R.id.loginID);
 
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //else{
-                    Toast.makeText(MainActivity.this, "You are good", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
                     combine1 = "reg&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
                  //   String res = SocketClient.run(combine1);
                   //  System.out.println(res);
