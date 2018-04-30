@@ -29,7 +29,7 @@ public class UserManage {
 		System.out.println(str + " " + code);
 		String sql = "INSERT INTO domainCode(emailDomain,code) VALUES('" + str + "','" + code + "');"; 
 		SQLControl.SQLOperation.makeTable(c, code);
-		return SQLControl.SQLOperation.writeData(c, sql);
+		return SQLControl.SQLOperation.updateData(c, sql);
 	}
 	
 	

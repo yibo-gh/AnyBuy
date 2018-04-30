@@ -1,6 +1,7 @@
 package com.example.ali.anybuy;
 
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,8 +26,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+<<<<<<< HEAD
         email1 = (EditText) findViewById(R.id.emailEditTextID1);
         password1 = (EditText) findViewById(R.id.passwordEditTextID1);
+=======
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+>>>>>>> 0b91ccbd95ccf080ae85f99035db2fd4f5f9cb01
 
         Button logIn = (Button) findViewById(R.id.loginID);
 

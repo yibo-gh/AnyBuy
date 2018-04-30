@@ -3,3 +3,9 @@ In this program, every single thing which wants the server to process must send 
 When requesting user registration, please send reg&<email>?<passcode>&useSSL=true . For example, when a user is register using email as sample@123.com with password test.123, the Android APP should send "reg&sample@123.com?test.123&useSSL=true".
 
 When requesting user login, please send lgi&<email>?<passcode>&useSSL=true to the server.
+
+When adding card, please send adc&sessionID&<FN>?<LN>&<issuer>=<card#>&<Exp>?<ZIP>. <FN> & <LN> have the max length of 20, Issuer.max = 4, card#.max = 16, exp.max = 4, zip.max = 5. All variables are written in String. Please use the following code to indicate card issuer: amex = American Express, visa = Visa, mstc = MasterCard, jbcx = JBC, dscv = Discover, dncl = Diner Club Int'l, unpy = UnionPay, bccd = BC Card
+
+When a client calls loadCard function, if it passes the session validation and there is some valid payment card recorded in the database, the server should returns a String. In each record, the String should be formatted as: <LN>?<FN>?<issuer>?<Card#>?<exp>?<zip>. Between two records, there should be a "&". e.g.: yoona?lim?amex?375987654321001?1220?95064&yoona?lim?amex?375987654321002?1220?95064.
+
+WARNING: Except registration and login function, every function defined in class CoreOperations.java, must go thru a session validation (ie sessionVeriy() ) before they can really do something. A function MUST return immediately unless the responding code of sessionVerify() is "0x01 ".

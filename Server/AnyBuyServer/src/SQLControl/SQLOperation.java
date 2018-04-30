@@ -8,8 +8,8 @@ public class SQLOperation {
 		
 	}
 	
-	public static Connection getConnect (String base, String user, String psc) {
-		return new SQL(base, user, psc).connect();
+	public static Connection getConnect (String base) {
+		return new SQL(base, "anybuy", "CMPS115.").connect();
 	}
 	
 	public static String readDatabase(Connection c, String sql) {
@@ -22,13 +22,20 @@ public class SQLOperation {
 		return null;
 	}
 	
-	public static String writeData(Connection c, String sql) {
+	public static ResultSet readDatabaseRS(Connection c, String sql) {
 		try {
-			if (c.createStatement().executeUpdate(sql) != 0) return "WTS";
+			return c.createStatement().executeQuery(sql);
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
+	public static String updateData(Connection c, String sql) {
+		try {
+			if (c.createStatement().executeUpdate(sql) != 0) return "UPS";
 			else return "0x1B01";
 			// WTS = Write Success
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			return "0x1B02";
 		}
 	}
@@ -47,8 +54,8 @@ public class SQLOperation {
 		try {
 			String sql = "CREATE DATABASE " + userId;
 			c.createStatement().executeUpdate(sql);
-			c = SQLControl.SQLOperation.getConnect(userId, "anybuy", "CMPS115.");
-			sql = "create table payment ( issuer Char(4), cardNumber int(16), exp Char(4), zip Char(5) );";
+			c = SQLControl.SQLOperation.getConnect(userId);
+			sql = "create table payment ( fn Char(20), ln Char(20), issuer Char(4), cardNumber Char(16), exp Char(4), zip Char(5) );";
 			c.createStatement().executeUpdate(sql);
 			sql = "create table address ( line1 Char(255), line2 Char(255), state Char(2), zip Char(5) );";
 			c.createStatement().executeUpdate(sql);
@@ -66,4 +73,5 @@ public class SQLOperation {
 //		int rtn = rset.getMetaData().
 		return rtn;
 	}
+	
 }
