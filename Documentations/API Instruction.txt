@@ -8,4 +8,6 @@ When adding card, please send adc&sessionID&<FN>?<LN>&<issuer>=<card#>&<Exp>?<ZI
 
 When a client calls loadCard function, if it passes the session validation and there is some valid payment card recorded in the database, the server should returns a String. In each record, the String should be formatted as: <LN>?<FN>?<issuer>?<Card#>?<exp>?<zip>. Between two records, there should be a "&". e.g.: yoona?lim?amex?375987654321001?1220?95064&yoona?lim?amex?375987654321002?1220?95064.
 
+When storing buy order: send plo&sessionID&<Country>?<Product>?<Brand>?<Image>?<Quantity>
+
 WARNING: Except registration and login function, every function defined in class CoreOperations.java, must go thru a session validation (ie sessionVeriy() ) before they can really do something. A function MUST return immediately unless the responding code of sessionVerify() is "0x01 ".

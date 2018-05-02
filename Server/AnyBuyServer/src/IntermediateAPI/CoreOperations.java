@@ -104,7 +104,7 @@ public class CoreOperations {
 		System.out.println(SQLOperation.updateData(c, sql));
 		
 		c.close();
-		return null;
+		return "0x01";
 	}
 	
 	static String giveRate (String[] str) {

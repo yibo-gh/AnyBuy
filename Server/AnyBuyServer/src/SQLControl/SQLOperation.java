@@ -73,11 +73,11 @@ public class SQLOperation {
 		try {
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
-			// CHANGE error code?
-			return "0xblur";
+			// Failed CREATE TABLE for country
+			return "0x1F01";
 		}
-		// CHANGE error code?
-		return "0xgurh";
+		// Failed CREATE TABLE for country
+		return "0x1F01";
 	}
 	
 	public static int countLine(Connection c, String tableName) throws SQLException {
