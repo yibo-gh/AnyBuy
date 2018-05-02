@@ -72,9 +72,39 @@ public class CoreOperations {
 		}
 	}
 	
-	static String placeOrder (String[] str) {
+	static String placeOrder (String[] str) throws SQLException {
+		// plo&sessionID&<Country>?<Product>?<Brand>?<Image>?<Quantity>
 		writeLog("Place Order");
-		return null;
+		
+		// verify session
+		String uid = sessionVerify(str[0]);
+		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		
+		// get data for order
+		String[] order = str[1].split("\\?");
+		String country = order[0];
+		String product = order[1];
+		String brand = order[2];
+		String image = order[3];
+		String quantity = order[4];
+		
+		// make string for sql command
+		Connection c = SQLControl.SQLOperation.getConnect("generalOrder");
+		String value = "'" + product + "','" + brand + "','" + image + "','" + quantity + "'," + " NULL";
+		String sql = "INSERT INTO " + country +" (Product, Brand, Image, Quantity, orderID) VALUES (" + value + ");"; 
+		
+		// make new table for country if needed
+		String countryStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT * FROM" + country);
+		if (countryStatus == null) {
+			SQLControl.SQLOperation.createCountryTable(c, country);
+		}
+		
+		// insert data into table
+		System.out.println(sql);
+		System.out.println(SQLOperation.updateData(c, sql));
+		
+		c.close();
+		return "0x01";
 	}
 	
 	static String giveRate (String[] str) {
