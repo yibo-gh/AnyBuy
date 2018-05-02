@@ -24,20 +24,22 @@ public class API {
 		String[] strArr;
 		if (str.length() >= 4) strArr = str.split("\\&");
 		else return CoreOperations.illegalInput();
-		if (strArr[0].equalsIgnoreCase("reg")) return CoreOperations.register(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("lgi")) return CoreOperations.login(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("plo")) return CoreOperations.placeOrder(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("gvr")) return CoreOperations.giveRate(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("cco")) return CoreOperations.cancelOrder(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("art")) return CoreOperations.acceptRate(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("adc")) return CoreOperations.addCard(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("ldc")) return CoreOperations.loadCard(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("dtc")) return CoreOperations.deleteCard(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("ada")) return CoreOperations.addAddress(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("lda")) return CoreOperations.loadAddress(voidHead(strArr));
-		else if (strArr[0].equalsIgnoreCase("dta")) return CoreOperations.deleteAddress(voidHead(strArr));
-		else return CoreOperations.illegalInput();
-		
+		switch (strArr[0]) {
+			case "reg": return CoreOperations.register(voidHead(strArr));
+			case "lgi": return CoreOperations.login(voidHead(strArr));
+			case "plo": return CoreOperations.placeOrder(voidHead(strArr));
+			case "ldo": return CoreOperations.loadOrder(voidHead(strArr));
+			case "gvr": return CoreOperations.giveRate(voidHead(strArr));
+			case "cco": return CoreOperations.cancelOrder(voidHead(strArr));
+			case "art": return CoreOperations.acceptRate(voidHead(strArr));
+			case "adc": return CoreOperations.addCard(voidHead(strArr));
+			case "ldc": return CoreOperations.loadCard(voidHead(strArr));
+			case "dtc": return CoreOperations.deleteCard(voidHead(strArr));
+			case "ada": return CoreOperations.addAddress(voidHead(strArr));
+			case "lda": return CoreOperations.loadAddress(voidHead(strArr));
+			case "dta": return CoreOperations.deleteAddress(voidHead(strArr));
+			default: return CoreOperations.illegalInput();
+		}
 	}
 	
 

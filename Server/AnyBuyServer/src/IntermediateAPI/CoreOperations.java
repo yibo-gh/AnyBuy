@@ -107,9 +107,8 @@ public class CoreOperations {
 		// get orderID that was just INSERT'ed
 		String orderID = SQLControl.SQLOperation.readDatabase(c, "SELECT orderID FROM " + country + " where orderTime = '" + time + "'");
 		
-		c.close();
-		
 		// make string for INSERT orderID into user's account
+		c.close();
 		c = SQLControl.SQLOperation.getConnect(uid);
 		value = "'" + orderID + "','" + country + "'";
 		sql = "INSERT INTO `order` (`order`, `country`) VALUES (" + value + ");";
@@ -118,6 +117,11 @@ public class CoreOperations {
 		
 		c.close();
 		return "0x01";
+	}
+	
+	static String loadOrder (String[] str) throws SQLException {
+		writeLog("Load Order");
+		return null;
 	}
 	
 	static String giveRate (String[] str) {
