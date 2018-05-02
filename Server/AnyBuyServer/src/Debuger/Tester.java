@@ -22,5 +22,8 @@ public class Tester {
 		System.out.println(IntermediateAPI.API.getCommand(str));
 		str = "ldc&snok10000?" + uInfo[1];
 		System.out.println(IntermediateAPI.API.getCommand(str));
+		// Place order
+		str = "plo&snok10000?" + uInfo[1] + "&AZ?Shoes?Nike?test.jpg?1";
+		System.out.println(IntermediateAPI.API.getCommand(str));
 	}
 }
