@@ -112,7 +112,7 @@ public class CoreOperations {
 		// make string for INSERT orderID into user's account
 		c = SQLControl.SQLOperation.getConnect(uid);
 		value = "'" + orderID + "','" + country + "'";
-		sql = "INSERT INTO order (order, country) VALUES (" + value + ");";
+		sql = "INSERT INTO `order` (`order`, `country`) VALUES (" + value + ");";
 		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		
