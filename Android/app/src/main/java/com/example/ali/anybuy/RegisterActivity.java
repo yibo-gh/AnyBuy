@@ -1,5 +1,6 @@
 package com.example.ali.anybuy;
 
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +32,11 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         register = (Button) findViewById(R.id.registerButtonID1);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
 
 
