@@ -124,14 +124,13 @@ public class CoreOperations {
 	}
 	
 	static String loadCard (String[] str) throws SQLException {
-		
-		String[] uid = str[0].split("\\?");
-		if (uid.length > 2) return "0x1E03";
-		Connection c = SQLOperation.getConnect(uid[0]);
+		String uid = sessionVerify(str[0]);
+		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		Connection c = SQLOperation.getConnect(uid);
 		String sql = "SELECT * FROM payment";
 		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
-		c.close();
 		String res = generateResWithRS(rs, 6);
+		c.close();
 		if (res.equals("")) return "0x1E04";
 		else return res;
 	}
@@ -151,6 +150,39 @@ public class CoreOperations {
 		c.close();
 		if (res != "UPS") return res;
 		else return "0x01";
+	}
+	
+	static String addAddress(String[] str) throws SQLException {
+		//<veri>&yoona?lim&SM Ent'l?Yeongdong-daero 513?Gangnam-gu?Seoul?KR?00000
+		String uid = sessionVerify(str[0]);
+		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		String[] name = str[1].split("\\?");
+		String[] info = str[2].split("\\?");
+		
+		Connection c = SQLOperation.getConnect(uid);
+		String addStatus = SQLControl.SQLOperation.readDatabase(c, "select line2 from address where line1='" + info[1] + "'");
+		if (addStatus != null) {
+			c.close();
+			return "0x1E06";
+		}
+		
+		String value = "('" + name[0] + "','" + name[1] + "','" + info[0] + "','" + info[1] + "','" + info[2] + "','" + info[3] + "','" + info[4] + "','" + info[5] + "')";
+		String sql = "INSERT INTO address(fn, ln, company, line1, line2, city, state, zip) VALUES" + value + ";";
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
+		return "0x01";
+	}
+	
+	static String loadAddress (String[] str) throws SQLException {
+		String uid = sessionVerify(str[0]);
+		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		Connection c = SQLOperation.getConnect(uid);
+		String sql = "SELECT * FROM address";
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		String res = generateResWithRS(rs, 8);
+		c.close();
+		if (res.equals("")) return "0x1E05";
+		else return res;
 	}
 	
 	private static String generateResWithRS(ResultSet rs, int len) throws SQLException {

@@ -57,7 +57,9 @@ public class SQLOperation {
 			c = SQLControl.SQLOperation.getConnect(userId);
 			sql = "create table payment ( fn Char(20), ln Char(20), issuer Char(4), cardNumber Char(16), exp Char(4), zip Char(5) );";
 			c.createStatement().executeUpdate(sql);
-			sql = "create table address ( line1 Char(255), line2 Char(255), state Char(2), zip Char(5) );";
+			sql = "create table address ( fn Char(20), ln Char(20), company Char(255), line1 Char(255), line2 Char(255), city Char(255), state Char(2), zip Char(5) );";
+			c.createStatement().executeUpdate(sql);
+			sql = "create table order ( orderOd Char(10), country Char(2) );";
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
 			return "0x1A04";
