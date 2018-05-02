@@ -16,15 +16,26 @@ public class SocketClient {
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String result = "";
+<<<<<<< HEAD
            // while (result.indexOf("bye") == -1) {
                 printWriter.println(str);
+=======
+
+               printWriter.println(str);
+>>>>>>> f6ea299ac9c12e5e71d32fe84456680c946f32a2
                 printWriter.flush();
                 result = bufferedReader.readLine();
+<<<<<<< HEAD
            // }
+=======
+            
+
+>>>>>>> f6ea299ac9c12e5e71d32fe84456680c946f32a2
             printWriter.close();
             bufferedReader.close();
             socket.close();
             return result;
+
         } catch (Exception e) {
             System.out.println("Exception:" + e);
             return "0x1001";

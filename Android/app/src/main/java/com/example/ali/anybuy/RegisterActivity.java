@@ -63,6 +63,11 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 else{
+
+                    //check to see if the user already exist
+
+
+
                     Toast.makeText(RegisterActivity.this, "You are good", Toast.LENGTH_LONG).show();
                     combine = "reg&" + emailstr + "?" + passwordstr + "&useSSL=true";
                     String res = SocketClient.run(combine);

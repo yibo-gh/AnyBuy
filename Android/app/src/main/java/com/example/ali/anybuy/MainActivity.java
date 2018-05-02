@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //else{
-                    Toast.makeText(MainActivity.this, "You are good", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
                     combine1 = "reg&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
                     String res = SocketClient.run(combine1);
                     System.out.println(res);
