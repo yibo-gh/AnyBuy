@@ -10,27 +10,21 @@ public class SocketClient {
         System.out.println("in client");
         try {
             Socket socket = new Socket("yg-home.site", 18416);
-            socket.setSoTimeout(60000);
+            socket.setSoTimeout(6000);
+
             System.out.println("Connection Established");
 
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
             String result = "";
-<<<<<<< HEAD
-           // while (result.indexOf("bye") == -1) {
-                printWriter.println(str);
-=======
 
                printWriter.println(str);
->>>>>>> f6ea299ac9c12e5e71d32fe84456680c946f32a2
                 printWriter.flush();
+
                 result = bufferedReader.readLine();
-<<<<<<< HEAD
-           // }
-=======
             
 
->>>>>>> f6ea299ac9c12e5e71d32fe84456680c946f32a2
             printWriter.close();
             bufferedReader.close();
             socket.close();
