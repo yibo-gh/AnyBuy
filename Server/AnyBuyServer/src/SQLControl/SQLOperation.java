@@ -59,12 +59,15 @@ public class SQLOperation {
 			c.createStatement().executeUpdate(sql);
 			sql = "create table address ( fn Char(20), ln Char(20), company Char(255), line1 Char(255), line2 Char(255), city Char(255), state Char(2), zip Char(5) );";
 			c.createStatement().executeUpdate(sql);
-			sql = "create table order ( orderOd Char(10), country Char(2) );";
+			sql = "CREATE TABLE `snok10000`.`order` (\r\n" + 
+					"  `order` CHAR(255) NOT NULL,\r\n" + 
+					"  `country` CHAR(2) NULL,\r\n" + 
+					"  PRIMARY KEY (`order`));";
 			c.createStatement().executeUpdate(sql);
+			return "0x01";
 		} catch (SQLException e) {
-			return "0x1A04";
+			return "0x1A05";
 		}
-		return "0x1A05";
 	}
 	
 	// Create table for country in generalOrder

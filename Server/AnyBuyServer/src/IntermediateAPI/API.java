@@ -35,6 +35,7 @@ public class API {
 		else if (strArr[0].equalsIgnoreCase("dtc")) return CoreOperations.deleteCard(voidHead(strArr));
 		else if (strArr[0].equalsIgnoreCase("ada")) return CoreOperations.addAddress(voidHead(strArr));
 		else if (strArr[0].equalsIgnoreCase("lda")) return CoreOperations.loadAddress(voidHead(strArr));
+		else if (strArr[0].equalsIgnoreCase("dta")) return CoreOperations.deleteAddress(voidHead(strArr));
 		else return CoreOperations.illegalInput();
 		
 	}
