@@ -80,18 +80,19 @@ public class CoreOperations {
 		String uid = sessionVerify(str[0]);
 		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
 		
-		// get data for order
+		// get data for buy order
 		String[] order = str[1].split("\\?");
 		String country = order[0];
 		String product = order[1];
 		String brand = order[2];
 		String image = order[3];
 		String quantity = order[4];
+		long time = System.currentTimeMillis();
 		
-		// make string for sql command
+		// make string for INSERT buy order into generalOrder
 		Connection c = SQLControl.SQLOperation.getConnect("generalOrder");
-		String value = "'" + product + "','" + brand + "','" + image + "','" + quantity + "'," + " NULL";
-		String sql = "INSERT INTO " + country +" (Product, Brand, Image, Quantity, orderID) VALUES (" + value + ");"; 
+		String value = "'" + product + "','" + brand + "','" + image + "','" + quantity + "','" + time + "'," + " NULL";
+		String sql = "INSERT INTO " + country +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
 		
 		// make new table for country if needed
 		String countryStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT * FROM" + country);
@@ -100,6 +101,18 @@ public class CoreOperations {
 		}
 		
 		// insert data into table
+		System.out.println(sql);
+		System.out.println(SQLOperation.updateData(c, sql));
+		
+		// get orderID that was just INSERT'ed
+		String orderID = SQLControl.SQLOperation.readDatabase(c, "SELECT orderID FROM " + country + " where orderTime = '" + time + "'");
+		
+		c.close();
+		
+		// make string for INSERT orderID into user's account
+		c = SQLControl.SQLOperation.getConnect(uid);
+		value = "'" + orderID + "','" + country + "'";
+		sql = "INSERT INTO order (order, country) VALUES (" + value + ");";
 		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		

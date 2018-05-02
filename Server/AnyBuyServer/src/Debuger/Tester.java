@@ -5,20 +5,19 @@ import java.sql.SQLException;
 public class Tester {
 
 	public static void main (String args[]) throws SQLException {
-		String str = "reg&yoona@snsd.or.kr?loveYOONA!&useSSL=true";
-		System.out.println(IntermediateAPI.API.getCommand(str));
-		str = "lgi&yoona@snsd.or.kr?loveYOONA!&useSSL=true";
+		///* hho15's testing commands
+		String str = "";
+		// Register
+		//str = "reg&yoona1@snsd.or.kr?loveYOONA!&useSSL=true";
+		//System.out.println(IntermediateAPI.API.getCommand(str));
+		// Login
+		str = "lgi&yoona1@snsd.or.kr?loveYOONA!&useSSL=true";
 		String res = IntermediateAPI.API.getCommand(str);
 		System.out.println(res);
 		String[] uInfo = res.split("\\?");
-		str = "ada&snok10000?" + uInfo[1] + "&yoona?lim&SM 엔터테인먼트?Yeongdong-daero 513?Gangnam-gu?Seoul?KR?00000";
-		System.out.println(IntermediateAPI.API.getCommand(str));
-		str = "ada&snok10000?" + uInfo[1] + "&yoona?lim&?Yeongdong-daero 513?Gangnam-gu?Seoul?KR?00000";
-		System.out.println(IntermediateAPI.API.getCommand(str));
-		str = "lda&snok10000?" + uInfo[1];
-		System.out.println(IntermediateAPI.API.getCommand(str));
 		// Place order
-		str = "plo&snok10000?" + uInfo[1] + "&AZ?Shoes?Nike?test.jpg?1";
+		str = "plo&" + uInfo[0] + "?" + uInfo[1] + "&AZ?Shoes?Nike?test.jpg?1";
 		System.out.println(IntermediateAPI.API.getCommand(str));
+		//*/
 	}
 }

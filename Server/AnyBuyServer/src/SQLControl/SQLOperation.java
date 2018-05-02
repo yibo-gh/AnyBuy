@@ -59,7 +59,7 @@ public class SQLOperation {
 			c.createStatement().executeUpdate(sql);
 			sql = "create table address ( fn Char(20), ln Char(20), company Char(255), line1 Char(255), line2 Char(255), city Char(255), state Char(2), zip Char(5) );";
 			c.createStatement().executeUpdate(sql);
-			sql = "create table order ( orderOd Char(10), country Char(2) );";
+			sql = "create table order ( orderID Char(10), country Char(2) );";
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
 			return "0x1A04";
@@ -71,6 +71,7 @@ public class SQLOperation {
 	public static String createCountryTable(Connection c, String country) {
 		String sql = "CREATE TABLE " + country + "(Product VARCHAR(45) NOT NULL,"
 				+ " Brand VARCHAR(45) NOT NULL, Quantity INT(10) NOT NULL, Image VARCHAR(255) NULL,"
+				+ " orderTime VARCHAR(45) NULL,"
 				+ " orderID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY)";
 		try {
 			c.createStatement().executeUpdate(sql);
