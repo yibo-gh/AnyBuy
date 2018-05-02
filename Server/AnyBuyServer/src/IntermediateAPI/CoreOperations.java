@@ -228,6 +228,24 @@ public class CoreOperations {
 		else return res;
 	}
 	
+	static String deleteAddress(String[] str) throws SQLException {
+		//dlc&sid&line1#
+		String uid = sessionVerify(str[0]);
+		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		Connection c = SQLControl.SQLOperation.getConnect(uid);
+		String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select zip from address where line1='" + str[1] + "'");
+		System.out.println(str[1]);
+		if (cardStatus == null) {
+			c.close();
+			return "0x1E07";
+		}
+		String sql = "delete from address where line1='" + str[1] + "';";
+		String res = SQLControl.SQLOperation.updateData(c, sql);
+		c.close();
+		if (res != "UPS") return res;
+		else return "0x01";
+	}
+	
 	private static String generateResWithRS(ResultSet rs, int len) throws SQLException {
 		String res = "";
 		while (rs.next()) {
