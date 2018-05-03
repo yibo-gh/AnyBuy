@@ -61,10 +61,17 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //else{
+<<<<<<< HEAD
 
                     combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
                     sessionID = SocketClient.run(combine1);
                     System.out.println(sessionID);
+=======
+                    Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
+                    combine1 = "reg&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
+                 //   String res = SocketClient.run(combine1);
+                  //  System.out.println(res);
+>>>>>>> ced8eeb7d53d1baf411a6923ab73e6f8ed581432
                     System.out.println(combine1);
                     if(sessionID.equals(success)) {
                         Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();

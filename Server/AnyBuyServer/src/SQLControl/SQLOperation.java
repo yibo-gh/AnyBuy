@@ -57,12 +57,33 @@ public class SQLOperation {
 			c = SQLControl.SQLOperation.getConnect(userId);
 			sql = "create table payment ( fn Char(20), ln Char(20), issuer Char(4), cardNumber Char(16), exp Char(4), zip Char(5) );";
 			c.createStatement().executeUpdate(sql);
-			sql = "create table address ( line1 Char(255), line2 Char(255), state Char(2), zip Char(5) );";
+			sql = "create table address ( fn Char(20), ln Char(20), company Char(255), line1 Char(255), line2 Char(255), city Char(255), state Char(2), zip Char(5) );";
+			c.createStatement().executeUpdate(sql);
+			sql = "CREATE TABLE `snok10000`.`order` (\r\n" + 
+					"  `order` VARCHAR(10) NOT NULL,\r\n" + 
+					"  `country` CHAR(2) NULL,\r\n" + 
+					"  PRIMARY KEY (`order`));";
+			c.createStatement().executeUpdate(sql);
+			return "0x01";
+		} catch (SQLException e) {
+			return "0x1A05";
+		}
+	}
+	
+	// Create table for country in generalOrder
+	public static String createCountryTable(Connection c, String country) {
+		String sql = "CREATE TABLE " + country + "(Product VARCHAR(45) NOT NULL,"
+				+ " Brand VARCHAR(45) NOT NULL, Quantity INT(10) NOT NULL, Image VARCHAR(255) NULL,"
+				+ " orderTime VARCHAR(45) NULL,"
+				+ " orderID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY)";
+		try {
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
-			return "0x1A04";
+			// Failed CREATE TABLE for country
+			return "0x1F01";
 		}
-		return "0x1A05";
+		// Failed CREATE TABLE for country
+		return "0x1F01";
 	}
 	
 	public static int countLine(Connection c, String tableName) throws SQLException {

@@ -17,12 +17,11 @@ public class SQL {
 	Connection connect() {
 		Connection conn;
 		String driver = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://yg-home.site:3306/" + this.base + "?verifyServerCertificate=true&useSSL=true";
+		String url = "jdbc:mysql://yg-home.site:3306/" + this.base + "?verifyServerCertificate=true&useSSL=true&useUnicode=true&characterEncoding=UTF-8";
 		try{
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url,this.user,this.psc);
 			if(!conn.isClosed()) {
-				System.out.println("Succeeded connecting to the Database!");
 				return conn;
 			}
 		}catch(ClassNotFoundException e){
