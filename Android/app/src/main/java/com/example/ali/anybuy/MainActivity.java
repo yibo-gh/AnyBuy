@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                emailstr1 = email1.getText().toString();
+               emailstr1 = email1.getText().toString();
                 passwordstr1 = password1.getText().toString();
 
                // if(!repeatPassword.getText().toString().equals(password1str))
@@ -58,20 +58,16 @@ public class MainActivity extends AppCompatActivity {
                 //    Toast.makeText(MainActivity.this, "Email or Username is incorrect!", Toast.LENGTH_LONG).show();
                 //}
 
-
-
                 //else{
-<<<<<<< HEAD
-
                     combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
                     sessionID = SocketClient.run(combine1);
                     System.out.println(sessionID);
-=======
+
                     Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
                     combine1 = "reg&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
                  //   String res = SocketClient.run(combine1);
                   //  System.out.println(res);
->>>>>>> ced8eeb7d53d1baf411a6923ab73e6f8ed581432
+
                     System.out.println(combine1);
                     if(sessionID.equals(success)) {
                         Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();

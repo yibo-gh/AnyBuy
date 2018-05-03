@@ -18,21 +18,17 @@ public class SocketClient {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String result = "";
-<<<<<<< HEAD
+
            // while (result.indexOf("bye") == -1) {
                 printWriter.println(str);
-=======
->>>>>>> ced8eeb7d53d1baf411a6923ab73e6f8ed581432
 
                printWriter.println(str);
                 printWriter.flush();
 
                 result = bufferedReader.readLine();
-<<<<<<< HEAD
            // }
 
-=======
->>>>>>> ced8eeb7d53d1baf411a6923ab73e6f8ed581432
+
             
 
             printWriter.close();

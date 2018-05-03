@@ -2,34 +2,33 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sellerhistory"
+    android:id="@+id/profileLayoutID"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="156dp"
-        android:layout_marginLeft="156dp"
-        android:layout_marginRight="156dp"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="62dp"
+        android:layout_height="66dp"
+        android:layout_marginEnd="161dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="76dp"
+
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@android:drawable/sym_def_app_icon"
+        tools:ignore="DuplicateIds" />
 
     <Button
-        android:id="@+id/sellerhistory"
+        android:id="@+id/sellhistoryID"
         android:layout_width="@android:dimen/thumbnail_height"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginRight="96dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="14dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Seller History"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,84 +38,53 @@
         android:id="@+id/ordersButtonID"
         android:layout_width="@android:dimen/thumbnail_height"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginRight="96dp"
-        android:layout_marginStart="96dp"
-<<<<<<< HEAD
-        android:layout_marginTop="44dp"
-=======
-        android:layout_marginTop="64dp"
->>>>>>> ced8eeb7d53d1baf411a6923ab73e6f8ed581432
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+
+
+        android:layout_marginTop="32dp"
         android:text="Orders"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/information"
-        android:layout_width="@android:dimen/thumbnail_height"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginRight="96dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="14dp"
+        android:id="@+id/informationButtonID"
+        android:layout_width="192dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Information"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sellerhistory" />
+        app:layout_constraintTop_toBottomOf="@+id/sellhistoryID" />
 
     <Button
-        android:id="@+id/preference"
-        android:layout_width="@android:dimen/thumbnail_height"
+        android:id="@+id/prefrenceButtonID"
+        android:layout_width="192dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginRight="96dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="14dp"
-        android:text="Preference"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Prefrence"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/information" />
+        app:layout_constraintTop_toBottomOf="@+id/informationButtonID" />
 
     <Button
-        android:id="@+id/button5"
-        android:layout_width="@android:dimen/thumbnail_height"
+        android:id="@+id/legalButtonID"
+        android:layout_width="192dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginRight="96dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Legal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintTop_toBottomOf="@+id/preference"
-        app:layout_constraintVertical_bias="0.133" />
+        app:layout_constraintTop_toBottomOf="@+id/prefrenceButtonID" /><![CDATA[
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="62dp"
-        android:layout_height="66dp"
-        android:layout_marginBottom="17dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginLeft="161dp"
-        android:layout_marginRight="161dp"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/orders"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
-=======
-        app:layout_constraintTop_toBottomOf="@+id/preference" />
->>>>>>> ced8eeb7d53d1baf411a6923ab73e6f8ed581432
+    app:layout_constraintTop_toBottomOf="@+id/preference" />
+
+]]>
 </android.support.constraint.ConstraintLayout>
