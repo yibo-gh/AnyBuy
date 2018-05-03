@@ -15,10 +15,15 @@ public class MainActivity extends AppCompatActivity {
     public EditText password1;
 
     public Button login1;
+    static String sessionID;
     String emailstr1;
     String passwordstr1;
-
+    String success = "0x01";
     String combine1;
+
+    public static String getID() {
+        return sessionID;
+    }
 
 
     @Override
@@ -56,19 +61,27 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //else{
-                    Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
-                    combine1 = "reg&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
-                    String res = SocketClient.run(combine1);
-                    System.out.println(res);
+
+                    combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
+                    sessionID = SocketClient.run(combine1);
+                    System.out.println(sessionID);
                     System.out.println(combine1);
-                //}
+                    if(sessionID.equals(success)) {
+                        Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
+                    }
+                    //}
 
 
                 //if the email and password were walid, then go to home page
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
+
+
+
         });
+
+
 
         //open the register page if register button was clicked
         register1.setOnClickListener(new View.OnClickListener() {
