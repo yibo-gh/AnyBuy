@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.ali.anybuy.MainActivity"
+    android:background="@drawable/background"
     tools:layout_editor_absoluteY="81dp">
 
     <Button
@@ -14,12 +15,15 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="148dp"
         android:layout_marginStart="148dp"
+        android:background="@drawable/button_background"
         android:text="Login"
         app:layout_constraintBottom_toTopOf="@+id/registerButtonID1"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/registerButtonID1"
+        android:background="@drawable/button_background"
         android:layout_width="88dp"
         android:layout_height="48dp"
         android:layout_marginBottom="60dp"
@@ -27,7 +31,8 @@
         android:layout_marginStart="148dp"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"/>
 
     <EditText
         android:id="@+id/emailEditTextID1"

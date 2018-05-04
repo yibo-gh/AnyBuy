@@ -4,27 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".HomeActivity">
 
     <Button
         android:id="@+id/profileButtonID"
         android:layout_width="108dp"
+        android:background="@drawable/button_background"
+        android:textAllCaps="false"
         android:layout_height="48dp"
         android:layout_marginBottom="112dp"
+        android:layout_marginLeft="47dp"
         android:layout_marginStart="47dp"
         android:text="Profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="47dp"
         tools:ignore="RtlCompat" />
 
     <Button
         android:id="@+id/sellButtonID"
+        android:background="@drawable/button_background"
         android:layout_width="108dp"
         android:layout_height="51dp"
         android:layout_marginBottom="292dp"
         android:layout_marginEnd="44dp"
         android:layout_marginRight="44dp"
+        android:textAllCaps="false"
         android:layout_marginTop="8dp"
         android:text="Sell"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,9 +39,11 @@
 
     <Button
         android:id="@+id/buyButtonID"
+        android:background="@drawable/button_background"
         android:layout_width="108dp"
         android:layout_height="45dp"
         android:layout_marginBottom="292dp"
+        android:textAllCaps="false"
         android:layout_marginLeft="44dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="8dp"
@@ -48,11 +55,14 @@
 
     <Button
         android:id="@+id/logoutButtonID"
+        android:background="@drawable/button_background"
         android:layout_width="108dp"
         android:layout_height="48dp"
         android:layout_marginBottom="112dp"
         android:layout_marginEnd="47dp"
+        android:textAllCaps="false"
         android:text="Log out"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="47dp" />
 </android.support.constraint.ConstraintLayout>

@@ -15,7 +15,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        orderbutton = (Button) findViewById(R.id.orderButtonID);
+        /*orderbutton = (Button) findViewById(R.id.orderButtonID);
 
         orderbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -24,6 +24,6 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+*/
     }
 }

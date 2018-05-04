@@ -5,8 +5,41 @@
     android:id="@+id/profileLayoutID"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".ProfileActivity">
 
+
+    <ImageView
+        android:id="@+id/productImageViewID"
+        android:layout_width="62dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="17dp"
+        android:layout_marginEnd="161dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintBottom_toTopOf="@+id/ordersButtonID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/preferenceButtonID"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+    <Button
+        android:id="@+id/ordersButtonID"
+        android:layout_width="@android:dimen/thumbnail_height"
+        android:background="@drawable/button_background"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="96dp"
+        android:layout_marginRight="96dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Orders"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productImageViewID" />
 
     <Button
         android:id="@+id/sellhistoryID"
@@ -16,55 +49,33 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Seller History"
-<<<<<<< HEAD
+        android:background="@drawable/button_background"
         android:textAllCaps="false"
-=======
         app:layout_constraintBottom_toTopOf="@+id/informationButtonID"
->>>>>>> 3e04b029e9428142f82dab4fc27f466aace169da
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ordersButtonID" />
 
     <Button
-        android:id="@+id/ordersButtonID"
-        android:layout_width="@android:dimen/thumbnail_height"
-        android:layout_height="wrap_content"
-
-
-        android:layout_marginLeft="96dp"
-        android:layout_marginRight="96dp"
-
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:textAllCaps="false"
-        android:layout_marginTop="32dp"
-
-        android:text="Orders"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <Button
         android:id="@+id/informationButtonID"
 
+        android:background="@drawable/button_background"
+        android:layout_width="192dp"
 
+        android:layout_height="48dp"
         android:layout_marginBottom="20dp"
 
+
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="96dp"
         android:layout_marginRight="96dp"
-
-
-        android:layout_width="192dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-<<<<<<< HEAD
-        android:textAllCaps="false"
-=======
 
->>>>>>> 3e04b029e9428142f82dab4fc27f466aace169da
         android:text="Information"
+
+        android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@+id/preferenceButtonID"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,8 +88,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:textAllCaps="false"
         android:text="Prefrence"
+        android:background="@drawable/button_background"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/informationButtonID" />
@@ -86,39 +98,17 @@
     <Button
         android:id="@+id/legalButtonID"
         android:layout_width="192dp"
-
+        android:background="@drawable/button_background"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Legal"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/prefrenceButtonID" /><![CDATA[
-=======
->>>>>>> 3e04b029e9428142f82dab4fc27f466aace169da
 
-        app:layout_constraintTop_toBottomOf="@+id/preferenceButtonID" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="62dp"
-        android:layout_height="66dp"
-        android:layout_marginBottom="17dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginLeft="161dp"
-        android:layout_marginRight="161dp"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="56dp"
-        app:layout_constraintBottom_toTopOf="@+id/ordersButtonID"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/sym_def_app_icon"
         app:layout_constraintTop_toBottomOf="@+id/preferenceButtonID" />
 
 </android.support.constraint.ConstraintLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".RegisterActivity">
 
     <EditText
@@ -37,6 +38,7 @@
         android:layout_width="88dp"
         android:layout_height="48dp"
         android:layout_marginLeft="148dp"
+        android:background="@drawable/button_background"
         android:layout_marginStart="148dp"
         android:layout_marginTop="52dp"
         android:text="Register"
