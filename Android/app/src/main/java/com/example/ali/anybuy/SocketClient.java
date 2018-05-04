@@ -18,10 +18,7 @@ public class SocketClient {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String result = "";
-<<<<<<< HEAD
-=======
 
->>>>>>> bf49a7f2116878046eb41bdd70bba57986edd193
            // while (result.indexOf("bye") == -1) {
                 printWriter.println(str);
 
@@ -32,10 +29,7 @@ public class SocketClient {
            // }
 
 
-<<<<<<< HEAD
-=======
-            
->>>>>>> bf49a7f2116878046eb41bdd70bba57986edd193
+
 
             printWriter.close();
             bufferedReader.close();

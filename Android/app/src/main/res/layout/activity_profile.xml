@@ -7,32 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-<<<<<<< HEAD
-    <Button
-        android:id="@+id/sellerhistoryButtonID"
-        android:layout_width="@android:dimen/thumbnail_height"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginRight="96dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="14dp"
-=======
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="62dp"
-        android:layout_height="66dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="76dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/sym_def_app_icon"
-        tools:ignore="DuplicateIds" />
 
     <Button
         android:id="@+id/sellhistoryID"
@@ -41,7 +15,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
->>>>>>> bf49a7f2116878046eb41bdd70bba57986edd193
         android:text="Seller History"
         app:layout_constraintBottom_toTopOf="@+id/informationButtonID"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,21 +25,17 @@
         android:id="@+id/ordersButtonID"
         android:layout_width="@android:dimen/thumbnail_height"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_marginEnd="96dp"
+
+
         android:layout_marginLeft="96dp"
         android:layout_marginRight="96dp"
-        android:layout_marginStart="96dp"
 
-
-        android:layout_marginTop="33dp"
-=======
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
 
 
         android:layout_marginTop="32dp"
->>>>>>> bf49a7f2116878046eb41bdd70bba57986edd193
+
         android:text="Orders"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,45 +43,28 @@
 
     <Button
         android:id="@+id/informationButtonID"
-<<<<<<< HEAD
-        android:layout_width="@android:dimen/thumbnail_height"
-        android:layout_height="wrap_content"
+
+
         android:layout_marginBottom="20dp"
-        android:layout_marginEnd="96dp"
+
         android:layout_marginLeft="96dp"
         android:layout_marginRight="96dp"
-        android:layout_marginStart="96dp"
-=======
+
+
         android:layout_width="192dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
->>>>>>> bf49a7f2116878046eb41bdd70bba57986edd193
+
         android:text="Information"
         app:layout_constraintBottom_toTopOf="@+id/preferenceButtonID"
         app:layout_constraintEnd_toEndOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/preferenceButtonID"
-        android:layout_width="@android:dimen/thumbnail_height"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="33dp"
-        android:text="Preference"
-        app:layout_constraintBottom_toTopOf="@+id/legalButtonID"
-        tools:layout_editor_absoluteX="96dp" />
-
-    <Button
-        android:id="@+id/legalButtonID"
-        android:layout_width="@android:dimen/thumbnail_height"
-=======
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sellhistoryID" />
 
     <Button
-        android:id="@+id/prefrenceButtonID"
+        android:id="@+id/preferenceButtonID"
         android:layout_width="192dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -126,19 +78,17 @@
     <Button
         android:id="@+id/legalButtonID"
         android:layout_width="192dp"
->>>>>>> bf49a7f2116878046eb41bdd70bba57986edd193
+
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Legal"
         app:layout_constraintEnd_toEndOf="parent"
-<<<<<<< HEAD
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-    <HEAD
-        app:layout_constraintTop_toBottomOf="@+id/preferenceButtonID"
-        app:layout_constraintVertical_bias="0.133" />
+
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/preferenceButtonID" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -155,15 +105,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
-        app:layout_constraintTop_toBottomOf="@+id/preference" />
+        app:srcCompat="@android:drawable/sym_def_app_icon"
+        app:layout_constraintTop_toBottomOf="@+id/preferenceButtonID" />
 
-=======
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prefrenceButtonID" /><![CDATA[
-
-    app:layout_constraintTop_toBottomOf="@+id/preference" />
-
-]]>
->>>>>>> bf49a7f2116878046eb41bdd70bba57986edd193
 </android.support.constraint.ConstraintLayout>
