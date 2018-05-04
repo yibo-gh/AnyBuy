@@ -14,7 +14,9 @@
         android:layout_marginStart="47dp"
         android:text="Profile"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="47dp"
+        tools:ignore="RtlCompat" />
 
     <Button
         android:id="@+id/sellButtonID"
