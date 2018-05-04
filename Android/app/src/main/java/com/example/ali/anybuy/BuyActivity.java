@@ -79,7 +79,7 @@ public class BuyActivity extends AppCompatActivity  {
                 quantity.setText("");
                 county.setText("");
 
-                productImage.setImageResource(R.drawable.ic_launcher_foreground);
+                productImage.setImageResource(android.R.drawable.ic_input_add);
 
             }
         });

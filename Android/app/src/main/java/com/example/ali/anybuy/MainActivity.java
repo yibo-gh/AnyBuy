@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     static String sessionID;
     String emailstr1;
     String passwordstr1;
-    String loginerror = "0x01";
+    String loginerror = "0x1A01";
     String combine1;
 
     public static String getID() {
@@ -59,25 +59,16 @@ public class MainActivity extends AppCompatActivity {
                 //}
 
                 //else{
-<<<<<<< HEAD
 
 
                     combine1 = "reg&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
                     String sessionID = SocketClient.run(combine1);
-=======
-                    combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
-                    sessionID = SocketClient.run(combine1);
-                    System.out.println(sessionID);
 
-                    Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
-                    combine1 = "reg&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
-                 //   String res = SocketClient.run(combine1);
-                  //  System.out.println(res);
 
->>>>>>> bf49a7f2116878046eb41bdd70bba57986edd193
+
                     System.out.println(combine1);
                     System.out.println(sessionID);
-                    if(sessionID.equals(loginerror)) {
+                    if(sessionID.equals(loginerror) || emailstr1.equals("") || passwordstr1.equals("")) {
                         Toast.makeText(MainActivity.this, "Username or Password is invalid", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
