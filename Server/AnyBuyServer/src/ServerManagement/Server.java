@@ -1,4 +1,4 @@
-package IntermediateAPI;
+package ServerManagement;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+
+import IntermediateAPI.API;
+import IntermediateAPI.CoreOperations;
 
 public class Server extends ServerSocket {
     private static final int SERVER_PORT = 18416;

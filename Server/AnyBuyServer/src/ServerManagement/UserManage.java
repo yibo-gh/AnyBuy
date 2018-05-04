@@ -1,4 +1,4 @@
-package IntermediateAPI;
+package ServerManagement;
 
 import java.sql.Connection;
 

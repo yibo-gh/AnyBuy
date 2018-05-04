@@ -3,6 +3,8 @@ package IntermediateAPI;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import ServerManagement.Server;
+
 public class API {
 	
 	static Server s;
@@ -27,7 +29,12 @@ public class API {
 		switch (strArr[0]) {
 			case "reg": return CoreOperations.register(voidHead(strArr));
 			case "lgi": return CoreOperations.login(voidHead(strArr));
-			case "plo": return CoreOperations.placeOrder(voidHead(strArr));
+			case "plo": {
+				String res = CoreOperations.placeOrder(voidHead(strArr));
+				if (!(res.charAt(0) == 'w' && res.charAt(1) == 't' && res.charAt(2) == 'i' && res.charAt(3) == '='))
+					return res;
+				else return CoreOperations.acceptImage(CoreOperations.getImageWaiting());
+			}
 			case "ldo": return CoreOperations.loadOrder(voidHead(strArr));
 			case "cco": return CoreOperations.cancelOrder(voidHead(strArr));
 			case "ldl": return CoreOperations.loadOrderList(voidHead(strArr));

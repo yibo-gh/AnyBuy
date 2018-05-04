@@ -115,12 +115,22 @@ public class CoreOperations {
 		c.close();
 		c = SQLControl.SQLOperation.getConnect(uid);
 		sql = "INSERT INTO `order` (`orderID`) VALUES ('" + orderID + "');";
-		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		
 		c.close();
 		if (image.equals("")) return "0x01";
-		else return "wti=" + image;
+		else {
+			imageWaiting = image;
+			return "wti=" + image;
+		}
+	}
+	
+	static String imageWaiting;
+	
+	static String getImageWaiting() { return imageWaiting;}
+	
+	static String acceptImage(String str) {
+		
 	}
 	
 	static String loadOrder (String[] str) throws SQLException {
@@ -151,7 +161,7 @@ public class CoreOperations {
 	}
 	
 	static String cancelOrder (String[] str) {
-		// cco&sessionID&<orderID>?<Country>
+		// cco&sessionID&<orderID>
 		writeLog("Cancel Order");
 		return "0x01";
 	}
