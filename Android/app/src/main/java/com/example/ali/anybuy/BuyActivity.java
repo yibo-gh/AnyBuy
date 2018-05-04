@@ -19,12 +19,13 @@ public class BuyActivity extends AppCompatActivity  {
 
     EditText productBrand;
     EditText productName;
+    EditText county;
     EditText quantity;
 
     ImageView productImage;
 
     Button orderButton;
-    Button addButton;
+
 
     LinearLayout  linearLayout;
     private final int PICK_IMAGE_REQUEST = 1;
@@ -36,11 +37,12 @@ public class BuyActivity extends AppCompatActivity  {
         productBrand = (EditText) findViewById(R.id.productBrandEditTextID);
         productName = (EditText) findViewById(R.id.productNameEditTextID);
         quantity = (EditText) findViewById(R.id.quantityEditTextID);
+        county = (EditText)findViewById(R.id.countryEditTextID);
 
         productImage = (ImageView) findViewById(R.id.productImageViewID);
 
         orderButton = (Button) findViewById(R.id.orderButtonID);
-        addButton = (Button) findViewById(R.id.addProductEditTextID);
+
 
         linearLayout = (LinearLayout) findViewById(R.id.picsLayoutID);
 
@@ -71,41 +73,18 @@ public class BuyActivity extends AppCompatActivity  {
                     // handle the exception
                 }
 
-            }
-        });
+                //after giving the data to the back end we want to erase everything on the page so that the user can order another product
+                productBrand.setText("");
+                productName.setText("");
+                quantity.setText("");
+                county.setText("");
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Initialize a new ImageView widget
-                ImageView newImageView = new ImageView((getApplicationContext()));
-
-                //initially set the pic be a normal pic
-                newImageView.setImageDrawable(getDrawable(R.drawable.ic_launcher_background));
-
-                //set an image for Image view
-                //for this part I want to choose a image view from the mobile
-                //So I will use the same method I used for our initial image view
-                newImageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        chooseImage();
-                    }
-                });
-
-                //create a layout pramete for our image view
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                                                                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-                //add rule to our layout parameters
-                //add the image view below the previous image view
-                layoutParams.addRule(RelativeLayout.BELOW, addButton.getId());
-                newImageView.setLayoutParams(layoutParams);
-
-                linearLayout.addView(newImageView);
+                productImage.setImageResource(R.drawable.ic_launcher_foreground);
 
             }
         });
+
+
 
     }
 
@@ -128,25 +107,4 @@ public class BuyActivity extends AppCompatActivity  {
             productImage.setImageURI(data.getData());
         }
     }
-
-/*
-    // Initialize a new ImageView widget
-                ImageView iv = new ImageView(getApplicationContext());
-
-                // Set an image for ImageView
-                iv.setImageDrawable(getDrawable(R.drawable.animal));
-
-                // Create layout parameters for ImageView
-                LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-
-                // Add rule to layout parameters
-                // Add the ImageView below to Button
-                lp.addRule(RelativeLayout.BELOW, btn.getId());
-
-                // Add layout parameters to ImageView
-                iv.setLayoutParams(lp);
-
-                // Finally, add the ImageView to layout
-                rl.addView(iv);
-*/
 }

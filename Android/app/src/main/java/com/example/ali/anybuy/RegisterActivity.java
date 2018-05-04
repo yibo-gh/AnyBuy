@@ -67,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String res = SocketClient.run(combine);
                     System.out.println(res);
                     System.out.println(combine);
+                    System.out.println(MainActivity.getID());
                 }
                 // make the password and email the way the backend guys want it and store it into another string
             }

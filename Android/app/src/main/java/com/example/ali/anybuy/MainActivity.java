@@ -15,10 +15,15 @@ public class MainActivity extends AppCompatActivity {
     public EditText password1;
 
     public Button login1;
+    static String sessionID;
     String emailstr1;
     String passwordstr1;
-
+    String success = "0x01";
     String combine1;
+
+    public static String getID() {
+        return sessionID;
+    }
 
 
     @Override
@@ -45,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                emailstr1 = email1.getText().toString();
+               emailstr1 = email1.getText().toString();
                 passwordstr1 = password1.getText().toString();
 
                // if(!repeatPassword.getText().toString().equals(password1str))
@@ -53,22 +58,33 @@ public class MainActivity extends AppCompatActivity {
                 //    Toast.makeText(MainActivity.this, "Email or Username is incorrect!", Toast.LENGTH_LONG).show();
                 //}
 
-
-
                 //else{
+                    combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
+                    sessionID = SocketClient.run(combine1);
+                    System.out.println(sessionID);
+
                     Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
                     combine1 = "reg&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
                  //   String res = SocketClient.run(combine1);
                   //  System.out.println(res);
+
                     System.out.println(combine1);
-                //}
+                    if(sessionID.equals(success)) {
+                        Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
+                    }
+                    //}
 
 
                 //if the email and password were walid, then go to home page
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
+
+
+
         });
+
+
 
         //open the register page if register button was clicked
         register1.setOnClickListener(new View.OnClickListener() {
