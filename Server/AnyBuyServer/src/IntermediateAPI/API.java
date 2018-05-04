@@ -29,8 +29,9 @@ public class API {
 			case "lgi": return CoreOperations.login(voidHead(strArr));
 			case "plo": return CoreOperations.placeOrder(voidHead(strArr));
 			case "ldo": return CoreOperations.loadOrder(voidHead(strArr));
-			case "gvr": return CoreOperations.giveRate(voidHead(strArr));
 			case "cco": return CoreOperations.cancelOrder(voidHead(strArr));
+			// space for loadOrderList();
+			case "gvr": return CoreOperations.giveRate(voidHead(strArr));
 			case "art": return CoreOperations.acceptRate(voidHead(strArr));
 			case "adc": return CoreOperations.addCard(voidHead(strArr));
 			case "ldc": return CoreOperations.loadCard(voidHead(strArr));
