@@ -30,7 +30,7 @@ public class API {
 			case "plo": return CoreOperations.placeOrder(voidHead(strArr));
 			case "ldo": return CoreOperations.loadOrder(voidHead(strArr));
 			case "cco": return CoreOperations.cancelOrder(voidHead(strArr));
-			// space for loadOrderList();
+			case "ldl": return CoreOperations.loadOrderList(voidHead(strArr));
 			case "gvr": return CoreOperations.giveRate(voidHead(strArr));
 			case "art": return CoreOperations.acceptRate(voidHead(strArr));
 			case "adc": return CoreOperations.addCard(voidHead(strArr));
