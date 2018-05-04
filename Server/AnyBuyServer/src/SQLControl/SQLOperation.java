@@ -59,7 +59,7 @@ public class SQLOperation {
 			c.createStatement().executeUpdate(sql);
 			sql = "create table address ( fn Char(20), ln Char(20), company Char(255), line1 Char(255), line2 Char(255), city Char(255), state Char(2), zip Char(5) );";
 			c.createStatement().executeUpdate(sql);
-			sql = "CREATE TABLE `snok10000`.`order` (\r\n" + 
+			sql = "CREATE TABLE `" + userId + "`.`order` (\r\n" + 
 					"  `order` VARCHAR(10) NOT NULL,\r\n" + 
 					"  `country` CHAR(2) NULL,\r\n" + 
 					"  PRIMARY KEY (`order`));";
