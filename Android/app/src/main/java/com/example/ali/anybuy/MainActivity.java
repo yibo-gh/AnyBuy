@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     static String sessionID;
     String emailstr1;
     String passwordstr1;
-    String success = "0x01";
+    String loginerror = "0x01";
     String combine1;
 
     public static String getID() {
@@ -61,27 +61,21 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //else{
-<<<<<<< HEAD
 
-                    combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
-                    sessionID = SocketClient.run(combine1);
-                    System.out.println(sessionID);
-=======
-                    Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
+
                     combine1 = "reg&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
-                 //   String res = SocketClient.run(combine1);
-                  //  System.out.println(res);
->>>>>>> ced8eeb7d53d1baf411a6923ab73e6f8ed581432
+                    String sessionID = SocketClient.run(combine1);
                     System.out.println(combine1);
-                    if(sessionID.equals(success)) {
+                    System.out.println(sessionID);
+                    if(sessionID.equals(loginerror)) {
+                        Toast.makeText(MainActivity.this, "Username or Password is invalid", Toast.LENGTH_LONG).show();
+                    }else{
                         Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(intent);
                     }
                     //}
 
-
-                //if the email and password were walid, then go to home page
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(intent);
             }
 
 
