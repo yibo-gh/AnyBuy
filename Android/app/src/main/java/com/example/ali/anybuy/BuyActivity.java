@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class BuyActivity extends AppCompatActivity  {
 
@@ -50,7 +52,8 @@ public class BuyActivity extends AppCompatActivity  {
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseImage();
+                try{chooseImage();}
+                catch (Exception ex){}
 
             }
         });
@@ -100,6 +103,7 @@ public class BuyActivity extends AppCompatActivity  {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,PICK_IMAGE_REQUEST);
+
     }
 
     @Override
@@ -110,6 +114,7 @@ public class BuyActivity extends AppCompatActivity  {
         {
 
             productImage.setImageURI(data.getData());
+
         }
     }
 }

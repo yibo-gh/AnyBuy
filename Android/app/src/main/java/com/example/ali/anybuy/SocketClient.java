@@ -29,7 +29,7 @@ public class SocketClient {
            // }
 
 
-            
+
 
             printWriter.close();
             bufferedReader.close();

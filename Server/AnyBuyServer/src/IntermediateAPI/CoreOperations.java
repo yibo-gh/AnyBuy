@@ -29,7 +29,7 @@ public class CoreOperations {
 		int uid = SQLOperation.countLine(c, emailDomainCode) + 10000;
 		String sql = "INSERT INTO " + emailDomainCode + "(name,psc,id) VALUES('" + uInfo[0] + "','" + str2[1] + "','" + uid + "');";
 		SQLControl.SQLOperation.updateData(c, sql);
-		SQLOperation.creatProfile(c, emailDomainCode + "" + uid);
+		SQLOperation.createProfile(c, emailDomainCode + "" + uid);
 		c.close();
 		return "0x01";
 	}
@@ -87,12 +87,11 @@ public class CoreOperations {
 		String brand = order[2];
 		String image = order[3];
 		String quantity = order[4];
+		String orderID = "";
 		long time = System.currentTimeMillis();
 		
 		// make string for INSERT buy order into generalOrder
 		Connection c = SQLControl.SQLOperation.getConnect("generalOrder");
-		String value = "'" + product + "','" + brand + "','" + image + "','" + quantity + "','" + time + "'," + " NULL";
-		String sql = "INSERT INTO " + country +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
 		
 		// make new table for country if needed
 		String countryStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT * FROM" + country);
@@ -100,37 +99,88 @@ public class CoreOperations {
 			SQLControl.SQLOperation.createCountryTable(c, country);
 		}
 		
+		orderID = country + (SQLOperation.countLine(c, country) + 10000);
+		boolean imageExist = (!image.equals(""));
+		
+		String value = "'" + product + "','" + brand + "','" + imageExist + "','" + quantity + "','" + time + "','" + orderID + "'";
+		String sql = "INSERT INTO " + country +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
+		
+		
 		// insert data into table
-		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		
 		// get orderID that was just INSERT'ed
-		String orderID = SQLControl.SQLOperation.readDatabase(c, "SELECT orderID FROM " + country + " where orderTime = '" + time + "'");
 		
 		// make string for INSERT orderID into user's account
 		c.close();
 		c = SQLControl.SQLOperation.getConnect(uid);
-		value = "'" + orderID + "','" + country + "'";
-		sql = "INSERT INTO `order` (`order`, `country`) VALUES (" + value + ");";
+		sql = "INSERT INTO `order` (`orderID`) VALUES ('" + orderID + "');";
 		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		
 		c.close();
-		return "0x01";
+		if (image.equals("")) return "0x01";
+		else return "wti=" + image;
 	}
 	
 	static String loadOrder (String[] str) throws SQLException {
+		/* POTENTIALLY USELESS CODE
+		// ldo&sessionID&<orderID>?<Country>
+		writeLog("Load Order");
+		
+		// verify session
+		String uid = sessionVerify(str[0]);
+		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		
+		// get data for buy order
+		String[] order = str[1].split("\\?");
+		String orderID = order[0];
+		String country = order[1];
+		
+		Connection c = SQLOperation.getConnect("generalOrder");
+		String sql = "SELECT * FROM " + country + " where orderID = '" + orderID + "'";
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		String res = generateResWithRS(rs, 4);
+		c.close();
+		
+		if (res.equals("")) return "0x1F02"; // Order not found
+		else return res;
+		*/
 		writeLog("Load Order");
 		return null;
 	}
 	
-	static String giveRate (String[] str) {
-		writeLog("Give Rate");
-		return null;
+	static String cancelOrder (String[] str) {
+		// cco&sessionID&<orderID>?<Country>
+		writeLog("Cancel Order");
+		return "0x01";
 	}
 	
-	static String cancelOrder (String[] str) {
-		writeLog("Cancel Order");
+	// Load list of buy orders (for sell page / for profile page?)
+	static String loadOrderList (String[] str) throws SQLException {
+		// ldl&sessionID&<Country>
+		writeLog("Load Order List");
+		
+		// verify session
+		String uid = sessionVerify(str[0]);
+		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		
+		// country to load orders from
+		String country = str[1];
+		
+		// load orders from country table
+		Connection c = SQLOperation.getConnect("generalOrder");
+		String sql = "SELECT Product, Brand, Quantity, Image, orderID FROM " + country;
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		String res = generateResWithRS(rs, 5);
+		c.close();
+		
+		if (res.equals("")) return "0x1F03"; // Country table not found
+		else return res;
+	}
+	
+	static String giveRate (String[] str) {
+		writeLog("Give Rate");
 		return null;
 	}
 	

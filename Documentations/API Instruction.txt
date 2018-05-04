@@ -10,4 +10,6 @@ When a client calls loadCard function, if it passes the session validation and t
 
 When storing buy order: send plo&sessionID&<Country>?<Product>?<Brand>?<Image>?<Quantity>
 
+When loading order list for sell page: send ldl&sessionID&<Country>
+
 WARNING: Except registration and login function, every function defined in class CoreOperations.java, must go thru a session validation (ie sessionVeriy() ) before they can really do something. A function MUST return immediately unless the responding code of sessionVerify() is "0x01 ".
