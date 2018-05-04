@@ -26,3 +26,4 @@
 
 0x1F01: Store Buy Order Error: Failed CREATE TABLE for country
 0x1F02: Load Buy Order Error: Order not found
+0x1F03: Load Order List Error: Table not found
