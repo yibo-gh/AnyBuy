@@ -120,17 +120,42 @@ public class CoreOperations {
 	}
 	
 	static String loadOrder (String[] str) throws SQLException {
+		// ldo&sessionID&<orderID>?<Country>
 		writeLog("Load Order");
+		
+		// verify session
+		String uid = sessionVerify(str[0]);
+		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		
+		// get data for buy order
+		String[] order = str[1].split("\\?");
+		String orderID = order[0];
+		String country = order[1];
+		
+		Connection c = SQLOperation.getConnect("generalOrder");
+		String sql = "SELECT * FROM " + country + " where orderID = '" + orderID + "'";
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		String res = generateResWithRS(rs, 4);
+		c.close();
+		
+		if (res.equals("")) return "0x1F02"; // Order not found
+		else return res;
+	}
+	
+	static String cancelOrder (String[] str) {
+		// cco&sessionID&<orderID>?<Country>
+		writeLog("Cancel Order");
+		return "0x01";
+	}
+	
+	// Load list of buy orders (for sell page / for profile page?)
+	static String loadOrderList (String[] str) throws SQLException {
+		writeLog("Load Order List");
 		return null;
 	}
 	
 	static String giveRate (String[] str) {
 		writeLog("Give Rate");
-		return null;
-	}
-	
-	static String cancelOrder (String[] str) {
-		writeLog("Cancel Order");
 		return null;
 	}
 	

@@ -24,6 +24,8 @@ public class Tester {
 		// Place order
 		str = "plo&" + uInfo[0] + "?" + uInfo[1] + "&AZ?Shoes?Nike?test.jpg?1";
 		System.out.println(IntermediateAPI.API.getCommand(str));
-		//*/
+		// Load order 30 from AZ
+		str = "ldo&" + uInfo[0] + "?" + uInfo[1] + "&30?AZ";
+		System.out.println(IntermediateAPI.API.getCommand(str));
 	}
 }
