@@ -16,6 +16,7 @@ public class RegisterActivity extends AppCompatActivity {
     public Button register;
     String emailstr;
     String passwordstr;
+    String exist = "0x1A08";
     String emailPasswordForServer;
 
     String combine;
@@ -43,32 +44,28 @@ public class RegisterActivity extends AppCompatActivity {
                 passwordstr = password.getText().toString();
 
                 // make sure the password is more than 6 letter
-                if(passwordstr.length() < 6){
+                if (passwordstr.length() < 6) {
 
                     Toast.makeText(RegisterActivity.this, "Your password is less than 6 characters", Toast.LENGTH_LONG).show();
                 }
                 //check to see that the repeat password is the same as password and then continue
                 //if not give a msg telling the user it is not complete
-                else if(!repeatPassword.getText().toString().equals(passwordstr))
-                {
+                else if (!repeatPassword.getText().toString().equals(passwordstr)) {
                     Toast.makeText(RegisterActivity.this, "You didn't repeat the password correctly!", Toast.LENGTH_LONG).show();
-                }
-
-
-
-                else{
-
-                    //check to see if the user already exist
-
-
-
-                    Toast.makeText(RegisterActivity.this, "You are good", Toast.LENGTH_LONG).show();
+                } else {
                     combine = "reg&" + emailstr + "?" + passwordstr + "&useSSL=true";
                     String res = SocketClient.run(combine);
                     System.out.println(res);
                     System.out.println(combine);
+
+                    if (res.equals(exist)) {
+                        Toast.makeText(RegisterActivity.this, "Account already Exist", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "You are good", Toast.LENGTH_LONG).show();
+                        System.out.println(MainActivity.getID());
+                    }
+                    // make the password and email the way the backend guys want it and store it into another string
                 }
-                // make the password and email the way the backend guys want it and store it into another string
             }
         });
 
