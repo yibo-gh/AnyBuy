@@ -2,6 +2,7 @@ package com.example.ali.anybuy;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -43,7 +44,6 @@ public class BuyActivity extends AppCompatActivity  {
 
         orderButton = (Button) findViewById(R.id.orderButtonID);
 
-
         linearLayout = (LinearLayout) findViewById(R.id.picsLayoutID);
 
         // When you click the imgae, you get to search through library and post a picture.
@@ -61,7 +61,8 @@ public class BuyActivity extends AppCompatActivity  {
                 // Strings to set the edit text to them
                 String productBrandstr = productBrand.getText().toString();
                 String productNamestr = productName.getText().toString();
-
+                String countrystr = county.getText().toString();
+                String combineBuyPagestr;
                 String quantityNum = quantity.getText().toString();
 
                 try
@@ -73,13 +74,17 @@ public class BuyActivity extends AppCompatActivity  {
                     // handle the exception
                 }
 
+                //productImage.get
+
+                //combine the Strings to get it all fixed up for the database api's
+                //combineBuyPagestr = "plo&sessionID&" + countrystr + "?" + productNamestr + "?" + productBrandstr + "?"<Image>?<Quantity>
                 //after giving the data to the back end we want to erase everything on the page so that the user can order another product
                 productBrand.setText("");
                 productName.setText("");
                 quantity.setText("");
                 county.setText("");
 
-                productImage.setImageResource(R.drawable.ic_launcher_foreground);
+                productImage.setImageResource(android.R.drawable.ic_input_add);
 
             }
         });
