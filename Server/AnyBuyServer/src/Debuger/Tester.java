@@ -5,9 +5,9 @@ import java.sql.SQLException;
 public class Tester {
 
 	public static void main (String args[]) throws SQLException {
-		String str = "reg&yoona1@snsd.or.kr?loveYOONA!&useSSL=true";
+		String str = "reg&yoona@snsd.or.kr?loveYOONA!&useSSL=true";
 		System.out.println(IntermediateAPI.API.getCommand(str));
-		str = "lgi&yoona1@snsd.or.kr?loveYOONA!&useSSL=true";
+		str = "lgi&yoona@snsd.or.kr?loveYOONA!&useSSL=true";
 		String res = IntermediateAPI.API.getCommand(str);
 		System.out.println(res);
 		String[] uInfo = res.split("\\?");
