@@ -28,7 +28,7 @@ public class Tester {
 		System.out.println(IntermediateAPI.API.getCommand(str));
 		*/
 		// Load order list from AZ
-//		str = "ldl&" + uInfo[0] + "?" + uInfo[1] + "&AZ";
-//		System.out.println(IntermediateAPI.API.getCommand(str));
+		str = "ldl&" + uInfo[0] + "?" + uInfo[1] + "&AZ";
+		System.out.println(IntermediateAPI.API.getCommand(str));
 	}
 }
