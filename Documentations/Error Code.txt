@@ -24,6 +24,7 @@
 0x1E06: Profile Error: Address exists.
 0x1E07: Profile Error: Address not found.
 
-0x1F01: Store Buy Order Error: Failed CREATE TABLE for country
-0x1F02: Load Buy Order Error: Order not found
-0x1F03: Load Order List Error: Table not found
+0x1F01: Order Error: Table not found. Failed to create table for country
+0x1F02: Order Error: Load failed. Order not found
+0x1F03: Order Error: List table failed. Table not found
+0x1F04: Order Error: Cannot upload image.
