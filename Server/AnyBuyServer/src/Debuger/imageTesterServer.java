@@ -39,7 +39,7 @@ public class imageTesterServer extends ServerSocket {
      * @throws Exception 
      */  
     public void load() throws Exception {  
-        while (true) {  
+ //       while (true) {  
             // server尝试接收其他Socket的连接请求，server的accept方法是阻塞式的  
             Socket socket = this.accept();  
             /** 
@@ -49,7 +49,7 @@ public class imageTesterServer extends ServerSocket {
              */  
             // 每接收到一个Socket就建立一个新的线程来处理它  
             new Thread(new Task(socket)).start();  
-        }  
+   //     }  
     }  
   
     /** 

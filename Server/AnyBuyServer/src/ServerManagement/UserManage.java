@@ -23,7 +23,7 @@ public class UserManage {
 		return code;
 	}
 	
-	static String createDomainCode (Connection c, String str) {
+	public static String createDomainCode (Connection c, String str) {
 		String code = generateDomainCode(c, str);
 		if (code == "0x1A07") return code;
 		System.out.println(str + " " + code);

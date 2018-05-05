@@ -41,7 +41,7 @@ public class imageTester extends Socket {
      */  
     public void sendFile() throws Exception {  
         try {  
-            File file = new File("/Users/yiboguo/Downloads/Win10_1709_English_x64.iso");  
+            File file = new File("/Users/yiboguo/Downloads/googlechrome.dmg");  
             if(file.exists()) {  
                 fis = new FileInputStream(file);  
                 dos = new DataOutputStream(client.getOutputStream());  

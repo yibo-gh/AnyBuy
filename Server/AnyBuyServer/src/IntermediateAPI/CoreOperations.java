@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import ServerManagement.FileRecivier;
 import SQLControl.SQLOperation;
 
 public class CoreOperations {
+
+	private static FileRecivier server;
 
 	static String register (String[] str) throws SQLException {
 		writeLog("Register");
@@ -19,7 +22,7 @@ public class CoreOperations {
 		String emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
 				+ " where emailDomain='" + uInfo[1] + "'");
 		if (emailDomainCode == null) {
-			emailDomainCode = UserManage.createDomainCode(c, uInfo[1]);
+			emailDomainCode = ServerManagement.UserManage.createDomainCode(c, uInfo[1]);
 		}
 		if (emailDomainCode == "0x1A07") return "0x1A07";
 		emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
@@ -119,18 +122,20 @@ public class CoreOperations {
 		
 		c.close();
 		if (image.equals("")) return "0x01";
-		else {
-			imageWaiting = image;
-			return "wti=" + image;
-		}
+		
+		ServerManagement.CreateServerThread.pushToClient("wti=" + image);
+		return acceptImage(image);
 	}
 	
-	static String imageWaiting;
-	
-	static String getImageWaiting() { return imageWaiting;}
 	
 	static String acceptImage(String str) {
-		
+		try {  
+			server = new FileRecivier();
+            server.load();  
+        } catch (Exception e) {  
+            return "0x1F04";
+        }
+		return "0x01";
 	}
 	
 	static String loadOrder (String[] str) throws SQLException {
@@ -349,7 +354,7 @@ public class CoreOperations {
 		return null;
 	}
 	
-	static void writeLog (String str) {
+	public static void writeLog (String str) {
 		System.out.println(str);
 	}
 	
