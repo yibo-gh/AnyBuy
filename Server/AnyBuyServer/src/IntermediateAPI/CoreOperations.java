@@ -41,6 +41,7 @@ public class CoreOperations {
 		writeLog("Login");
 		String[] str2 = str[0].split("\\?");
 		String[] uInfo = str2[0].split("\\@");
+		if (str2.length != 2 || uInfo.length != 2) return "0x1A01";
 		Connection c = SQLControl.SQLOperation.getConnect("userInfo");
 		String sql = "select code from domainCode where emailDomain='" + uInfo[1] + "'";
 		String emailCode = SQLControl.SQLOperation.readDatabase(c, sql);
@@ -333,6 +334,7 @@ public class CoreOperations {
 	}
 	
 	static String sessionVerify (String sessionID) throws SQLException {
+		if (sessionID == null) return "0x1D03";
 		String[] veri = sessionID.split("\\?");
 		Connection c = SQLControl.SQLOperation.getConnect("accessLog");
 		String sql = "select token from authLog where uid='" + veri[0] + "'";
