@@ -9,7 +9,7 @@ public class SocketClient {
     public static String run(String str) {
         System.out.println("in client");
         try {
-            Socket socket = new Socket("yg-home.site", 18416);
+            Socket socket = new Socket("169.233.234.108", 18416);
             socket.setSoTimeout(6000);
 
             System.out.println("Connection Established");
@@ -20,7 +20,6 @@ public class SocketClient {
             String result = "";
 
            // while (result.indexOf("bye") == -1) {
-                printWriter.println(str);
 
                printWriter.println(str);
                 printWriter.flush();

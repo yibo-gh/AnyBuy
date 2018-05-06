@@ -28,6 +28,7 @@ public class BuyActivity extends AppCompatActivity  {
     ImageView productImage;
 
     Button orderButton;
+    String combine2;
 
 
     LinearLayout  linearLayout;
@@ -77,6 +78,11 @@ public class BuyActivity extends AppCompatActivity  {
                     // handle the exception
                 }
 
+                String sessionID = MainActivity.getID();
+                combine2 = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?test.jpg?"+ quantityNum;
+                String res = SocketClient.run(combine2);
+                System.out.println(res);
+                System.out.println(sessionID);
                 //productImage.get
 
                 //combine the Strings to get it all fixed up for the database api's
