@@ -48,6 +48,7 @@ import IntermediateAPI.API;
         }
         
         public static void pushToClient(String str) {
+        	System.out.println(printWriter == null);
         	printWriter.println(str);
         }
     }

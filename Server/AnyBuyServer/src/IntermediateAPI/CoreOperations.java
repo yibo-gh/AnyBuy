@@ -128,7 +128,8 @@ public class CoreOperations {
 	}
 	
 	
-	static String acceptImage(String str) {
+	public static String acceptImage(String str) {
+		System.out.println("image process started.");
 		try {  
 			server = new FileRecivier();
             server.load();  

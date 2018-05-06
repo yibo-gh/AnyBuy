@@ -15,7 +15,7 @@ import java.net.Socket;
  */  
 public class imageTester extends Socket {
 
-	private static final String SERVER_IP = "127.0.0.1"; // 服务端IP
+	private static final String SERVER_IP = "yg-home.site"; // 服务端IP
 	private static final int SERVER_PORT = 17805; // 服务端端口
 	private Socket client;
 	private FileInputStream fis;
@@ -38,7 +38,7 @@ public class imageTester extends Socket {
      */  
 	public void sendFile() throws Exception {  
 		try {  
-			File file = new File("/Users/yiboguo/Downloads/googlechrome.dmg");  
+			File file = new File("/Users/yiboguo/Downloads/javax.enterprise.deploy-api-1.6.jar");  
 			if(file.exists()) {  
 				fis = new FileInputStream(file);  
 				dos = new DataOutputStream(client.getOutputStream());
@@ -63,8 +63,11 @@ public class imageTester extends Socket {
 					if (temp != sendProcess) {
 						sendProcess = (int) (100*progress/file.length());
 						System.out.print(sendProcess + "%");
-						if (sendProcess == 100) System.out.println(" ...");
-						else System.out.println();
+						if (sendProcess == 100) {
+							System.out.println();
+							System.out.println("done!");
+						}
+						else System.out.println(" ...");
 					}
 				}
 			}
