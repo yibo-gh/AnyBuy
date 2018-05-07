@@ -122,18 +122,20 @@ public class CoreOperations {
 		System.out.println(SQLOperation.updateData(c, sql));
 		
 		c.close();
-		if (image.equals("")) return "0x01";
+		if (!imageExist) return "0x01";
 		
-		ServerManagement.CreateServerThread.pushToClient("wti=" + image);
-		return acceptImage(image);
+		ServerManagement.CreateServerThread.pushToClient("wti?" + image);
+		return acceptImage(image, orderID);
 	}
 	
 	
-	public static String acceptImage(String str) {
+	public static String acceptImage(String img, String orderID) {
 		System.out.println("image process started.");
 		try {  
 			server = new FileRecivier();
-            server.load();  
+            server.load();
+            ServerManagement.Task.setID(orderID);
+            ServerManagement.Task.setImage(img);
         } catch (Exception e) {  
             return "0x1F04";
         }
