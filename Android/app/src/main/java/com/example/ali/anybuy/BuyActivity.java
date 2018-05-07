@@ -1,10 +1,14 @@
 package com.example.ali.anybuy;
 
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -118,9 +122,20 @@ public class BuyActivity extends AppCompatActivity  {
 
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
         {
-
             productImage.setImageURI(data.getData());
+                Uri ImageUri = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = managedQuery(ImageUri,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                //picturePath就是图片在储存卡所在的位置
+                String picturePath = cursor.getString(columnIndex);
+                System.out.println(picturePath);
+                cursor.close();
 
         }
     }
+
+
 }

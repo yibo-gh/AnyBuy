@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
-                    String sessionID = SocketClient.run(combine1);
+                    sessionID = SocketClient.run(combine1);
 
 
 
