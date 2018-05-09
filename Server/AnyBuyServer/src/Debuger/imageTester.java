@@ -86,17 +86,18 @@ public class imageTester extends Socket {
      * 入口 
      * @param args 
      */  
-	public static void run() {
+	public static void run(String imageAdd) {
+		filePath = imageAdd;
 		try {
 			imageTester client = new imageTester(); // 启动客户端连接
 			client.sendFile(); // 传输文件
 			client.close();
 		} catch (Exception e) {
-			run();
+			run(imageAdd);
 		}
 	}
 	
 	public static void main (String args[]) {
-		run();
+		run(filePath);
 	}
 }  
