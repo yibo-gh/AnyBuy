@@ -85,12 +85,17 @@ public class imageTester extends Socket {
      * 入口 
      * @param args 
      */  
-	public static void main(String[] args) {
+	public static void run() {
 		try {
 			imageTester client = new imageTester(); // 启动客户端连接
 			client.sendFile(); // 传输文件
+			client.close();
 		} catch (Exception e) {
-			main(null);
+			run();
 		}
+	}
+	
+	public static void main (String args[]) {
+		run();
 	}
 }  
