@@ -20,7 +20,6 @@ public class SocketClient {
             String result = "";
 
            // while (result.indexOf("bye") == -1) {
-                printWriter.println(str);
 
                printWriter.println(str);
                 printWriter.flush();

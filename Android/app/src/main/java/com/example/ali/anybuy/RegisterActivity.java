@@ -1,5 +1,6 @@
 package com.example.ali.anybuy;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -63,6 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(RegisterActivity.this, "You are good", Toast.LENGTH_LONG).show();
                         System.out.println(MainActivity.getID());
+
+                        Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                        startActivity(intent);
                     }
                     // make the password and email the way the backend guys want it and store it into another string
                 }

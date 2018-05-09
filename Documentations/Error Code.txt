@@ -14,8 +14,9 @@
 0x1C01: Login Error: Domain not found
 0x1C02: Login Error: Invalid username or password.
 
-0x1D01: Illegal Request: Illegal sessionID.
-0x1D02: Illegal Request: Expired Session.
+0x1D01: General Authorization Error: Illegal sessionID.
+0x1D02: General Authorization Error: Expired Session.
+0x1D03: General Authorization Error: Invalid Session ID.
 
 0x1E01: Profile Error: Card exists.
 0x1E02: Profile Error: Card not valid.
@@ -24,6 +25,8 @@
 0x1E06: Profile Error: Address exists.
 0x1E07: Profile Error: Address not found.
 
-0x1F01: Store Buy Order Error: Failed CREATE TABLE for country
-0x1F02: Load Buy Order Error: Order not found
-0x1F03: Load Order List Error: Table not found
+0x1F01: Order Error: Table not found. Failed to create table for country
+0x1F02: Order Error: Load failed. Order not found
+0x1F03: Order Error: List table failed. Table not found
+0x1F04: Order Error: Cannot upload image.
+0x1F05: Order Error: Cannot rename file.

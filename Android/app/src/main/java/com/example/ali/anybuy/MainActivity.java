@@ -14,11 +14,13 @@ public class MainActivity extends AppCompatActivity {
     public EditText email1;
     public EditText password1;
 
-    public Button login1;
     static String sessionID;
     String emailstr1;
     String passwordstr1;
-    String loginerror = "0x1A01";
+    String loginerror1 = "0x1C01";
+    String loginerror2 = "0x1C02";
+    String loginerror3 = "0x1A01";
+    String loginerror4 = "0x1001";
     String combine1;
 
     public static String getID() {
@@ -61,15 +63,20 @@ public class MainActivity extends AppCompatActivity {
                 //else{
 
 
-                    combine1 = "reg&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
-                    String sessionID = SocketClient.run(combine1);
+                    combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
+                    sessionID = SocketClient.run(combine1);
 
 
 
                     System.out.println(combine1);
                     System.out.println(sessionID);
-                    if(sessionID.equals(loginerror) || emailstr1.equals("") || passwordstr1.equals("")) {
+                    if(sessionID.equals(loginerror1)) {
+                        Toast.makeText(MainActivity.this, "User not found", Toast.LENGTH_LONG).show();
+                    }else if(sessionID.equals(loginerror2) || emailstr1.equals("") || passwordstr1.equals("")) {
                         Toast.makeText(MainActivity.this, "Username or Password is invalid", Toast.LENGTH_LONG).show();
+                    }
+                    else if(sessionID.equals(loginerror3) || sessionID.equals(loginerror4)) {
+                        Toast.makeText(MainActivity.this, "Wrong format", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);

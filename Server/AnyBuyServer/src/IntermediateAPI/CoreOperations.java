@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import ServerManagement.FileRecivier;
 import SQLControl.SQLOperation;
 
 public class CoreOperations {
+
+	private static FileRecivier server;
 
 	static String register (String[] str) throws SQLException {
 		writeLog("Register");
@@ -19,7 +22,7 @@ public class CoreOperations {
 		String emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
 				+ " where emailDomain='" + uInfo[1] + "'");
 		if (emailDomainCode == null) {
-			emailDomainCode = UserManage.createDomainCode(c, uInfo[1]);
+			emailDomainCode = ServerManagement.UserManage.createDomainCode(c, uInfo[1]);
 		}
 		if (emailDomainCode == "0x1A07") return "0x1A07";
 		emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
@@ -38,6 +41,7 @@ public class CoreOperations {
 		writeLog("Login");
 		String[] str2 = str[0].split("\\?");
 		String[] uInfo = str2[0].split("\\@");
+		if (str2.length != 2 || uInfo.length != 2) return "0x1A01";
 		Connection c = SQLControl.SQLOperation.getConnect("userInfo");
 		String sql = "select code from domainCode where emailDomain='" + uInfo[1] + "'";
 		String emailCode = SQLControl.SQLOperation.readDatabase(c, sql);
@@ -118,19 +122,24 @@ public class CoreOperations {
 		System.out.println(SQLOperation.updateData(c, sql));
 		
 		c.close();
-		if (image.equals("")) return "0x01";
-		else {
-			imageWaiting = image;
-			return "wti=" + image;
-		}
+		if (!imageExist) return "0x01";
+		
+		ServerManagement.CreateServerThread.pushToClient("wti?" + image);
+		return acceptImage(image, orderID);
 	}
 	
-	static String imageWaiting;
 	
-	static String getImageWaiting() { return imageWaiting;}
-	
-	static String acceptImage(String str) {
-		
+	public static String acceptImage(String img, String orderID) {
+		System.out.println("image process started.");
+		try {  
+			server = new FileRecivier();
+            server.load();
+            ServerManagement.Task.setID(orderID);
+            ServerManagement.Task.setImage(img);
+        } catch (Exception e) {  
+            return "0x1F04";
+        }
+		return "0x01";
 	}
 	
 	static String loadOrder (String[] str) throws SQLException {
@@ -327,6 +336,7 @@ public class CoreOperations {
 	}
 	
 	static String sessionVerify (String sessionID) throws SQLException {
+		if (sessionID == null) return "0x1D03";
 		String[] veri = sessionID.split("\\?");
 		Connection c = SQLControl.SQLOperation.getConnect("accessLog");
 		String sql = "select token from authLog where uid='" + veri[0] + "'";
@@ -349,7 +359,7 @@ public class CoreOperations {
 		return null;
 	}
 	
-	static void writeLog (String str) {
+	public static void writeLog (String str) {
 		System.out.println(str);
 	}
 	

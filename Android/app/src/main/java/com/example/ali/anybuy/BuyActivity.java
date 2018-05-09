@@ -1,10 +1,14 @@
 package com.example.ali.anybuy;
 
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +32,7 @@ public class BuyActivity extends AppCompatActivity  {
     ImageView productImage;
 
     Button orderButton;
+    String combine2;
 
 
     LinearLayout  linearLayout;
@@ -77,6 +82,11 @@ public class BuyActivity extends AppCompatActivity  {
                     // handle the exception
                 }
 
+                String sessionID = MainActivity.getID();
+                combine2 = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?test.jpg?"+ quantityNum;
+                String res = SocketClient.run(combine2);
+                System.out.println(res);
+                System.out.println(sessionID);
                 //productImage.get
 
                 //combine the Strings to get it all fixed up for the database api's
@@ -112,9 +122,20 @@ public class BuyActivity extends AppCompatActivity  {
 
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
         {
-
             productImage.setImageURI(data.getData());
+                Uri ImageUri = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = managedQuery(ImageUri,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                //picturePath就是图片在储存卡所在的位置
+                String picturePath = cursor.getString(columnIndex);
+                System.out.println(picturePath);
+                cursor.close();
 
         }
     }
+
+
 }

@@ -23,12 +23,12 @@ public class Tester {
 		System.out.println(IntermediateAPI.API.getCommand(str));
 		str = "ada&snok10000?" + uInfo[1] + "&yoona?lim&?Yeongdong-daero 513?Gangnam-gu?Seoul?KR?00000";
 		System.out.println(IntermediateAPI.API.getCommand(str));
-		// Place order
-		str = "plo&" + uInfo[0] + "?" + uInfo[1] + "&AZ?Shoes?Nike?test.jpg?1";
-		System.out.println(IntermediateAPI.API.getCommand(str));
 		*/
 		// Load order list from AZ
-		str = "ldl&" + uInfo[0] + "?" + uInfo[1] + "&AZ";
+//		str = "ldl&" + uInfo[0] + "?" + uInfo[1] + "&AZ";
+//		System.out.println(IntermediateAPI.API.getCommand(str));
+		// Place order
+		str = "plo&" + uInfo[0] + "?" + uInfo[1] + "&KR?Yoona\\'s Choice?Innisfree?test.jpg?1";
 		System.out.println(IntermediateAPI.API.getCommand(str));
 	}
 }
