@@ -20,6 +20,7 @@ public class imageTester extends Socket {
 	private Socket client;
 	private FileInputStream fis;
 	private DataOutputStream dos;  
+	static String filePath = "/Users/yiboguo/Downloads/javax.enterprise.deploy-api-1.6.jar";
   
     /** 
      * 构造函数<br/> 
@@ -38,7 +39,7 @@ public class imageTester extends Socket {
      */  
 	public void sendFile() throws Exception {  
 		try {  
-			File file = new File("/Users/yiboguo/Downloads/javax.enterprise.deploy-api-1.6.jar");  
+			File file = new File(filePath);  
 			if(file.exists()) {  
 				fis = new FileInputStream(file);  
 				dos = new DataOutputStream(client.getOutputStream());
