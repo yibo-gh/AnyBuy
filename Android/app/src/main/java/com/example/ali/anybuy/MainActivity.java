@@ -28,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+    public static void setSessionID(String str){
+        sessionID = str;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
                     combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
                     sessionID = SocketClient.run(combine1);
-
-
 
                     System.out.println(combine1);
                     System.out.println(sessionID);
