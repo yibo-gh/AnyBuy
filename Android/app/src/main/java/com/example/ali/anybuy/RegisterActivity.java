@@ -20,6 +20,7 @@ public class RegisterActivity extends AppCompatActivity {
     String exist = "0x1A08";
     String emailPasswordForServer;
 
+    String combineRegisterPage;
     String combine;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +64,25 @@ public class RegisterActivity extends AppCompatActivity {
                     if (res.equals(exist)) {
                         Toast.makeText(RegisterActivity.this, "Account already Exist", Toast.LENGTH_LONG).show();
                     } else {
+                        combineRegisterPage= "lgi&" + emailstr + "?" + passwordstr + "&useSSL=true";
+
+                        MainActivity.setSessionID(SocketClient.run(combineRegisterPage));
+                        System.out.println("com = " + combineRegisterPage);
+
+
                         Toast.makeText(RegisterActivity.this, "You are good", Toast.LENGTH_LONG).show();
                         System.out.println(MainActivity.getID());
 
                         Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                         startActivity(intent);
 
+<<<<<<< HEAD
                         String combineRegisterPage= "lgi&" + emailstr + "?" + passwordstr + "&useSSL=true";
                         String sessionIDRegisterPage = SocketClient.run(combineRegisterPage);
+=======
+
+
+>>>>>>> f97606a850d95a4a862be2ef1831e1a8dd795a5e
                     }
 
 
