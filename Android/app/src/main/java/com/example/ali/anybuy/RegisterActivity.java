@@ -34,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         register = (Button) findViewById(R.id.registerButtonID1);
 
+        String combineRegisterPage= "lgi&" + email + "?" + password + "&useSSL=true";
+        String sessionIDRegisterPage = SocketClient.run(combineRegisterPage);
 
 
         //when we click the register button
