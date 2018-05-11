@@ -336,7 +336,7 @@ public class CoreOperations {
 	}
 	
 	static String sessionVerify (String sessionID) throws SQLException {
-		if (sessionID == null) return "0x1D03";
+		if (sessionID.equalsIgnoreCase("null")) return "0x1D03";
 		String[] veri = sessionID.split("\\?");
 		Connection c = SQLControl.SQLOperation.getConnect("accessLog");
 		String sql = "select token from authLog where uid='" + veri[0] + "'";
