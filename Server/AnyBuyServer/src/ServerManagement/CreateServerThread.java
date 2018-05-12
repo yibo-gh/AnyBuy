@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.SQLException;
 
 import IntermediateAPI.API;
 import Object.LinkedList;
@@ -48,7 +49,13 @@ import Object.LinkedList;
                  
                 System.out.println("Client(" + getName() +") exit!");
                 client.close();
-            }catch (IOException e) {} catch (ClassNotFoundException e) {
+            }catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

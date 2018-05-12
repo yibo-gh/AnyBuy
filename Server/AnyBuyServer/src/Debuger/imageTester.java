@@ -15,7 +15,7 @@ import java.net.Socket;
  */  
 public class imageTester extends Socket {
 
-	private static final String SERVER_IP = "yg-home.site"; // 服务端IP
+	private static final String SERVER_IP = "localhost"; // 服务端IP
 	private static final int SERVER_PORT = 17805; // 服务端端口
 	private Socket client;
 	private FileInputStream fis;

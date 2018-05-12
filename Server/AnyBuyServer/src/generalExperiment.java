@@ -1,11 +1,8 @@
 
-import java.sql.SQLException;
- 
 public class generalExperiment {
-    public static void main(String[] args) throws SQLException {
-    	System.out.println(getID().getClass());
-    	System.out.println(getID().getClass().equals("String".getClass()));
+    public static void main(String[] args) {
+    	String s = "test";
+    	s += '0';
+    	System.out.println(s);
     }
-    
-    static Object getID() { return "test";}
 }

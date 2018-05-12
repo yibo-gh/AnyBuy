@@ -8,8 +8,7 @@ import java.net.Socket;
 public class Task implements Runnable {
 
 	private static String orderID = "";
-	private static File img;
-	public static void setImage(File imgIp) {img = imgIp;}
+	public static void setImage(String imgIp) {}
 	public static void setID (String str) {orderID = str;}
 	private static String add = "/Users/yiboguo/Desktop/serverRecieved/";
 	
@@ -27,12 +26,13 @@ public class Task implements Runnable {
 				
 				String fileName = dis.readUTF();
 				long fileLength = dis.readLong();
+				for (int i = 3; i < 3; i++) add += orderID.charAt(i);
 				File directory = new File(add);
 				if(!directory.exists()) {
 					directory.mkdir();
 				}
-//				File file = new File(directory.getAbsolutePath() + File.separatorChar + fileName);
-				fos = new FileOutputStream(img);
+				File file = new File(directory.getAbsolutePath() + File.separatorChar + fileName);
+				fos = new FileOutputStream(file);
 
 				
 				byte[] bytes = new byte[1024];
