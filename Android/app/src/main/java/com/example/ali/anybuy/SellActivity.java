@@ -5,9 +5,12 @@ import android.os.Bundle;
 
 public class SellActivity extends AppCompatActivity {
 
+    String orders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
+       // String combineOrder = "ldl&" + MainActivity.getID() + "?" +
+       // orders = SocketClient.run();
     }
 }
