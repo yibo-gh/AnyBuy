@@ -1,10 +1,10 @@
 0x1000: General Client Error: Illegal Input.
 0x1001: General Client Error: Illegal Connection.
+0x1002: General Client Error: Illegal Object.
+0x1003: General Client Error: Illegal SessionID Node.
 
-0x1A01: Registration Error: Illegal Character.
 0x1A04: Registration Error: Domain not found. An error occurred when trying to establish the domain table.
 0x1A05: Registration Error: Failed Insert Table instruction.
-0x1A06: Registration Error: Invalid Command.
 0x1A07: Registration Error: Invalid Email Address.
 0x1A08: Registration Error: User Exist.
 

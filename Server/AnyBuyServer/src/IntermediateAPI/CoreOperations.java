@@ -4,53 +4,59 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Object.LinkedList;
+import Object.Node;
+import Object.Order;
+import Object.User;
 import ServerManagement.FileRecivier;
 import SQLControl.SQLOperation;
 
 public class CoreOperations {
 
 	private static FileRecivier server;
+	private static User userObj = new User();
+	private static Order orderObj = new Order();
 
-	static String register (String[] str) throws SQLException {
+	static String register (LinkedList ll) throws SQLException {
+		// This linked list should have length of 1. The Node should contains a user object.
 		writeLog("Register");
-		if (str.length < 1) return "0x1A06";
-		String[] str2 = str[0].split("\\?");
-		String[] uInfo = str2[0].split("\\@");
-		if (str2.length != 2 || uInfo.length != 2) return "0x1A01";
-		if (uInfo[0].charAt(0) == '0' && uInfo[0].charAt(1) == 'x' && uInfo[0].length() == 6) return "0x1A01";
+		Object o = ll.head.getObject();
+		if (!o.getClass().equals(userObj)) return "0x1002";
+		User u = (User) o;
 		Connection c = SQLControl.SQLOperation.getConnect("userInfo");
 		String emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
-				+ " where emailDomain='" + uInfo[1] + "'");
+				+ " where emailDomain='" + u.getDomain() + "'");
 		if (emailDomainCode == null) {
-			emailDomainCode = ServerManagement.UserManage.createDomainCode(c, uInfo[1]);
+			emailDomainCode = ServerManagement.UserManage.createDomainCode(c, u.getDomain());
 		}
 		if (emailDomainCode == "0x1A07") return "0x1A07";
 		emailDomainCode = SQLControl.SQLOperation.readDatabase(c, "select code from domainCode"
-				+ " where emailDomain='" + uInfo[1] + "'");
-		String usr = SQLControl.SQLOperation.readDatabase(c, "select psc from " + emailDomainCode + " where name='" + uInfo[0] + "'");
+				+ " where emailDomain='" + u.getDomain() + "'");
+		String usr = SQLControl.SQLOperation.readDatabase(c, "select psc from " + emailDomainCode + " where name='" + u.getUserName() + "'");
 		if (usr != null) return "0x1A08";
 		int uid = SQLOperation.countLine(c, emailDomainCode) + 10000;
-		String sql = "INSERT INTO " + emailDomainCode + "(name,psc,id) VALUES('" + uInfo[0] + "','" + str2[1] + "','" + uid + "');";
+		String sql = "INSERT INTO " + emailDomainCode + "(name,psc,id) VALUES('" + u.getUserName() + "','" + u.getPassword() + "','" + uid + "');";
 		SQLControl.SQLOperation.updateData(c, sql);
 		SQLOperation.createProfile(c, emailDomainCode + "" + uid);
 		c.close();
 		return "0x01";
 	}
 	
-	static String login (String[] str) throws SQLException {
+	static String login (LinkedList ll) throws SQLException {
+		// This linked list should have length of 1. The Node should contains a user object.
 		writeLog("Login");
-		String[] str2 = str[0].split("\\?");
-		String[] uInfo = str2[0].split("\\@");
-		if (str2.length != 2 || uInfo.length != 2) return "0x1A01";
+		Object o = ll.head.getObject();
+		if (!o.getClass().equals(userObj)) return "0x1002";
+		User u = (User) o;
 		Connection c = SQLControl.SQLOperation.getConnect("userInfo");
-		String sql = "select code from domainCode where emailDomain='" + uInfo[1] + "'";
+		String sql = "select code from domainCode where emailDomain='" + u.getDomain() + "'";
 		String emailCode = SQLControl.SQLOperation.readDatabase(c, sql);
-		sql = "select id from " + emailCode + " where name='" + uInfo[0] + "'";
+		sql = "select id from " + emailCode + " where name='" + u.getUserName() + "'";
 		String uid = SQLControl.SQLOperation.readDatabase(c, sql);
 		if (emailCode == null) return "0x1C01";
-		sql = "select psc from " + emailCode + " where name='" + uInfo[0] + "'";
+		sql = "select psc from " + emailCode + " where name='" + u.getUserName() + "'";
 		System.out.println(sql);
-		if (str2[1].equals(SQLControl.SQLOperation.readDatabase(c, sql)) ) {
+		if (u.getPassword().equals(SQLControl.SQLOperation.readDatabase(c, sql)) ) {
 			c.close();
 			int authToken = (int) (Math.random() * 10 * 0xFFFF);
 			// TODO improve authToken algorithm to make it has a high security level.
@@ -76,64 +82,77 @@ public class CoreOperations {
 		}
 	}
 	
-	static String placeOrder (String[] str) throws SQLException {
-		// plo&sessionID&<Country>?<Product>?<Brand>?<Image>?<Quantity>
+	static String placeOrder (LinkedList ll) throws SQLException {
+		
+		/**
+		 * This LinkedList should includes at least 2 Node. 
+		 * The first Node should contains sessionID.
+		 * Starting from the second node, each of them should includes an Order object.
+		 * plo&sessionID&<Country>?<Product>?<Brand>?<Image>?<Quantity>
+		 */
+		
 		writeLog("Place Order");
 		
-		// verify session
-		String uid = sessionVerify(str[0]);
+		Node temp = ll.head;
+		LinkedList orderList = new LinkedList();
+		
+		if (!temp.getClass().equals("".getClass())) return "0x1003";
+		String uid = sessionVerify((String)temp.getObject());
 		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return uid;
+		API.voidHead(ll);
 		
-		// get data for buy order
-		String[] order = str[1].split("\\?");
-		String country = order[0];
-		String product = order[1];
-		String brand = order[2];
-		String image = order[3];
-		String quantity = order[4];
-		String orderID = "";
-		long time = System.currentTimeMillis();
-		
-		// make string for INSERT buy order into generalOrder
-		Connection c = SQLControl.SQLOperation.getConnect("generalOrder");
-		
-		// make new table for country if needed
-		String countryStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT * FROM" + country);
-		if (countryStatus == null) {
-			SQLControl.SQLOperation.createCountryTable(c, country);
+		temp = ll.head;
+		while (temp != null){
+			Object o = temp.getObject();
+			if (!o.getClass().equals(orderObj)) return "0x1002";
+			Order od = (Order)o;
+			orderList.insert(od);
+			temp = temp.getNext();
 		}
 		
-		orderID = country + (SQLOperation.countLine(c, country) + 10000);
-		boolean imageExist = (!image.equals(""));
-		
-		String value = "'" + product + "','" + brand + "','" + imageExist + "','" + quantity + "','" + time + "','" + orderID + "'";
-		String sql = "INSERT INTO " + country +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
-		
-		
-		// insert data into table
-		System.out.println(SQLOperation.updateData(c, sql));
-		
-		// get orderID that was just INSERT'ed
-		
-		// make string for INSERT orderID into user's account
-		c.close();
-		c = SQLControl.SQLOperation.getConnect(uid);
-		sql = "INSERT INTO `order` (`orderID`) VALUES ('" + orderID + "');";
-		System.out.println(SQLOperation.updateData(c, sql));
-		
-		c.close();
-		if (!imageExist) return "0x01";
-		
-		ServerManagement.CreateServerThread.pushToClient("wti?" + image);
-		return acceptImage(image, orderID);
+		temp = orderList.head;
+		while (temp != null) {
+			Order obj = (Order)temp.getObject();
+			long time = System.currentTimeMillis();
+			
+			// make string for INSERT buy order into generalOrder
+			Connection c = SQLControl.SQLOperation.getConnect("generalOrder");
+			
+			// make new table for country if needed
+			String countryStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT * FROM" + obj.getCountry());
+			if (countryStatus == null) {
+				SQLControl.SQLOperation.createCountryTable(c, obj.getCountry());
+			}
+			
+			String orderID = obj.getCountry() + (SQLOperation.countLine(c, obj.getCountry()) + 10000);
+			boolean imageExist = (obj.getImage() != null);
+			
+			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + imageExist + "','" + obj.getQuantity() + "','" + time + "','" + orderID + "'";
+			String sql = "INSERT INTO " + obj.getCountry() +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
+			
+			
+			// insert data into table
+			System.out.println(SQLOperation.updateData(c, sql));
+			
+			// get orderID that was just INSERT'ed
+			
+			// make string for INSERT orderID into user's account
+			c.close();
+			c = SQLControl.SQLOperation.getConnect(uid);
+			sql = "INSERT INTO `order` (`orderID`) VALUES ('" + orderID + "');";
+			System.out.println(SQLOperation.updateData(c, sql));
+
+			c.close();
+			return acceptImage(obj.getImage(), orderID);
+		}
 	}
 	
 	
-	public static String acceptImage(String img, String orderID) {
+	public static String acceptImage(File img, String orderID) {
 		System.out.println("image process started.");
 		try {  
-			server = new FileRecivier();
-            server.load();
+//			server = new FileRecivier();
+//            server.load();
             ServerManagement.Task.setID(orderID);
             ServerManagement.Task.setImage(img);
         } catch (Exception e) {  

@@ -3,6 +3,7 @@ package IntermediateAPI;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import Object.LinkedList;
 import ServerManagement.Server;
 
 public class API {
@@ -22,33 +23,30 @@ public class API {
 		}
 	}
 	
-	public static String getCommand (String str) throws SQLException {
-		String[] strArr;
-		if (str.length() >= 4) strArr = str.split("\\&");
-		else return CoreOperations.illegalInput();
-		switch (strArr[0]) {
-			case "reg": return CoreOperations.register(voidHead(strArr));
-			case "lgi": return CoreOperations.login(voidHead(strArr));
-			case "plo": return CoreOperations.placeOrder(voidHead(strArr));
-			case "ldo": return CoreOperations.loadOrder(voidHead(strArr));
-			case "cco": return CoreOperations.cancelOrder(voidHead(strArr));
-			case "ldl": return CoreOperations.loadOrderList(voidHead(strArr));
-			case "gvr": return CoreOperations.giveRate(voidHead(strArr));
-			case "art": return CoreOperations.acceptRate(voidHead(strArr));
-			case "adc": return CoreOperations.addCard(voidHead(strArr));
-			case "ldc": return CoreOperations.loadCard(voidHead(strArr));
-			case "dtc": return CoreOperations.deleteCard(voidHead(strArr));
-			case "ada": return CoreOperations.addAddress(voidHead(strArr));
-			case "lda": return CoreOperations.loadAddress(voidHead(strArr));
-			case "dta": return CoreOperations.deleteAddress(voidHead(strArr));
+	public static Object getCommand (LinkedList ll) throws SQLException {
+		if (ll == null || ll.head == null) return CoreOperations.illegalInput();
+		switch ((String)ll.head.getObject()) {
+			case "reg": return CoreOperations.register(voidHead(ll));
+			case "lgi": return CoreOperations.login(voidHead(ll));
+			case "plo": return CoreOperations.placeOrder(voidHead(ll));
+			case "ldo": return CoreOperations.loadOrder(voidHead(ll));
+			case "cco": return CoreOperations.cancelOrder(voidHead(ll));
+			case "ldl": return CoreOperations.loadOrderList(voidHead(ll));
+			case "gvr": return CoreOperations.giveRate(voidHead(ll));
+			case "art": return CoreOperations.acceptRate(voidHead(ll));
+			case "adc": return CoreOperations.addCard(voidHead(ll));
+			case "ldc": return CoreOperations.loadCard(voidHead(ll));
+			case "dtc": return CoreOperations.deleteCard(voidHead(ll));
+			case "ada": return CoreOperations.addAddress(voidHead(ll));
+			case "lda": return CoreOperations.loadAddress(voidHead(ll));
+			case "dta": return CoreOperations.deleteAddress(voidHead(ll));
 			default: return CoreOperations.illegalInput();
 		}
 	}
 	
 
-	static String[] voidHead (String [] str) {
-		String[] res = new String[str.length - 1];
-		for (int i = 1; i < str.length; i++) res[i - 1] = str[i];
-		return res;
+	static LinkedList voidHead (LinkedList ll) {
+		ll.delete(0);
+		return ll;
 	}
 }

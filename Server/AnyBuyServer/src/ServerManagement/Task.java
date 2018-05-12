@@ -7,8 +7,9 @@ import java.net.Socket;
 
 public class Task implements Runnable {
 
-	private static String img = "", orderID = "";
-	public static void setImage(String imgIp) {img = imgIp;}
+	private static String orderID = "";
+	private static File img;
+	public static void setImage(File imgIp) {img = imgIp;}
 	public static void setID (String str) {orderID = str;}
 	private static String add = "/Users/yiboguo/Desktop/serverRecieved/";
 	
@@ -30,8 +31,8 @@ public class Task implements Runnable {
 				if(!directory.exists()) {
 					directory.mkdir();
 				}
-				File file = new File(directory.getAbsolutePath() + File.separatorChar + fileName);
-				fos = new FileOutputStream(file);
+//				File file = new File(directory.getAbsolutePath() + File.separatorChar + fileName);
+				fos = new FileOutputStream(img);
 
 				
 				byte[] bytes = new byte[1024];

@@ -1,26 +1,23 @@
 package ServerManagement;
 
-import java.io.BufferedReader;
+import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.sql.SQLException;
 
 import IntermediateAPI.API;
+import Object.LinkedList;
 
 //Thread Class
     public class CreateServerThread extends Thread {
         private Socket client;
-        private BufferedReader bufferedReader;
-        private static PrintWriter printWriter;
+        private ObjectInputStream is = null;  
+        private static ObjectOutputStream os = null; 
+        
  
         public CreateServerThread(Socket s)throws IOException {
-            client = s;
- 
-            bufferedReader =new BufferedReader(new InputStreamReader(client.getInputStream()));
-             
-            printWriter =new PrintWriter(client.getOutputStream(),true);
+            this.client = s;
             System.out.println("Client(" + getName() +") come in...");
              
             start();
@@ -28,27 +25,37 @@ import IntermediateAPI.API;
  
         public void run() {
             try {
-                String line = bufferedReader.readLine();
+            	is = new ObjectInputStream(new BufferedInputStream(client.getInputStream()));  
+                os = new ObjectOutputStream(client.getOutputStream());  
+
+                Object obj = is.readObject();  
+                LinkedList input = (LinkedList)obj;  
+                System.out.println("Client said " + (String)input.head.getObject());
                 
-                while (line != null) {
-                    System.out.println("Client(" + getName() +") say: " + line);
-                    String status = API.getCommand(line);
-                    pushToClient(status);
+                while (input != null) {
+                    System.out.println("Client(" + getName() +") say: " + input);
+                    Object status = API.getCommand(input);
+                    LinkedList ll = new LinkedList();
+                    ll.insert(status);
+                    pushToClient(ll);
                     System.out.println("pushed message: " + status);
-                    line = bufferedReader.readLine();
+                    input = (LinkedList)obj;
                 }
                 
-                printWriter.println("bye, Client(" + getName() +")!");
+                LinkedList pushBack = new LinkedList();
+                pushBack.insert("bye, Client(" + getName() +")!");
+                pushToClient(pushBack);
                  
                 System.out.println("Client(" + getName() +") exit!");
-                printWriter.close();
-                bufferedReader.close();
                 client.close();
-            }catch (IOException | SQLException e) {}
+            }catch (IOException e) {} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
-        
-        public static void pushToClient(String str) {
-        	System.out.println(printWriter == null);
-        	printWriter.println(str);
+
+		public static void pushToClient(Object o) throws IOException {
+        	os.writeObject(o);  
+            os.flush();  
         }
     }
