@@ -3,6 +3,7 @@ package IntermediateAPI;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import Object.Address;
 import Object.Card;
@@ -104,7 +105,7 @@ public class CoreOperations {
 		temp = ll.head;
 		while (temp != null){
 			Object o = temp.getObject();
-			if (!o.getClass().equals(new Order().getClass().getClass())) return "0x1002";
+			if (!o.getClass().equals(new Order().getClass())) return "0x1002";
 			Order od = (Order)o;
 			orderList.insert(od);
 			temp = temp.getNext();
@@ -125,7 +126,7 @@ public class CoreOperations {
 			}
 			
 			String orderID = obj.getCountry() + (SQLOperation.countLine(c, obj.getCountry()) + 10000);
-			boolean imageExist = (obj.getImage() != null);
+			boolean imageExist = (obj.getImage() != "");
 			
 			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + imageExist + "','" + obj.getQuantity() + "','" + time + "','" + orderID + "'";
 			String sql = "INSERT INTO " + obj.getCountry() +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
@@ -158,14 +159,16 @@ public class CoreOperations {
             ServerManagement.Task.setID(orderID);
             ServerManagement.Task.setImage(img);
 			server = new FileRecivier();
+			System.out.println("Server Started");
             server.load();
+            System.out.println("load file success");
         } catch (Exception e) {  
             return "0x1F04";
         }
 		return "0x01";
 	}
 	
-	static Object loadOrder (LinkedList ll) throws SQLException {
+	static Object loadPersonalOrder (LinkedList ll) throws SQLException {
 		// TODO Write this section.
 		writeLog("Load Order");
 		
@@ -174,18 +177,8 @@ public class CoreOperations {
 		
 		return null;
 	}
-	
-	static Object cancelOrder (LinkedList ll) throws SQLException {
-		// cco&sessionID&<orderID>
-		writeLog("Cancel Order");
-		
-		String uid = checkSession(ll);
-		if (!verifySessionRes(uid, ll)) return uid;
-		
-		return "0x01";
-	}
-	
-	static Object loadOrderList (LinkedList ll) throws SQLException {
+
+	static Object loadCountryOrder (LinkedList ll) throws SQLException {
 		
 		/**
 		 * This LinkedList should includes 2 Nodes. 
@@ -212,9 +205,9 @@ public class CoreOperations {
 		
 		// load orders from country table
 		Connection c = SQLOperation.getConnect("generalOrder");
-		String sql = "SELECT Product, Brand, Quantity, Image, orderID FROM " + country;
+		String sql = "SELECT Product, Brand, Quantity, orderID, orderTime FROM " + country;
 		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
-		LinkedList res = generateResWithRS(rs, 5);
+		LinkedList res = generateResWithRS(rs, new Order());
 		c.close();
 		
 		if (res.head == null) return "0x1F03"; // Country table not found
@@ -222,8 +215,19 @@ public class CoreOperations {
 		return res;
 	}
 	
+	static Object cancelOrder (LinkedList ll) throws SQLException {
+		// TODO
+		writeLog("Cancel Order");
+		
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
+		
+		return "0x01";
+	}
+	
 	static String giveRate (LinkedList ll) throws SQLException {
 		writeLog("Give Rate");
+		// TODO
 		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
@@ -233,7 +237,7 @@ public class CoreOperations {
 	
 	static String acceptRate (LinkedList ll) throws SQLException {
 		writeLog("Accept Rate");
-		
+		// TODO
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
@@ -246,7 +250,7 @@ public class CoreOperations {
 		 * This LinkedList should includes at least 2 Node. 
 		 * The first Node should contains sessionID.
 		 * Starting from the second node, each of them should includes a card Object.
-		 * adc&snok10000?538847&yoona?lim&amex=375987654321001&1220?95064
+		 * adc&<sessionID>&<FN>?<LN>&<issuer>=<cardNum>?<zip>
 		 */
 		
 		// verify session
@@ -257,8 +261,9 @@ public class CoreOperations {
 		Node temp = ll.head;
 		
 		LinkedList cardList = new LinkedList();
+		boolean cardExist = false;
 		while (temp != null){
-			if (!temp.getClass().equals(new Card().getClass())) return "0x1002";
+			if (!temp.getObject().getClass().equals(new Card().getClass())) return "0x1002";
 			Card card = (Card)temp.getObject();
 			cardList.insert(card);
 			
@@ -266,22 +271,22 @@ public class CoreOperations {
 			String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select issuer from payment where cardNumber='" + card.getCardNum() + "'");
 			if (cardStatus != null) {
 				c.close();
-				return "0x1E01";
+				cardExist = true;
 			}
-			
 			cardStatus = validateCardInfo(card.getFN(), card.getLN(), card.getCardNum(), card.getZip(), card.getExp());
 			if ( !cardStatus.equals("0x01") ) {
 				c.close();
 				return cardStatus;
 			}
 			
-			String value = "'" + card.getFN() + "','" + card.getLN() + "','" + card.getCardNum() + "','" + card.getIssuser() + "','" + card.getZip() + "','" + card.getExp() + "'";
+			String value = "'" + card.getFN() + "','" + card.getLN() + "','" + card.getIssuser() + "','" + card.getCardNum() + "','" + card.getExp() + "','" + card.getZip() + "'";
 			String sql = "INSERT INTO payment(fn, ln, issuer, cardNumber, exp, zip) VALUES(" + value + ");"; 
 			System.out.println(SQLOperation.updateData(c, sql));
 			c.close();
 			temp = temp.getNext();
 		}
-		return "0x01";
+		if (cardExist) return "0x1E01";
+		else return "0x01";
 	}
 	
 	private static String validateCardInfo(String fn, String ln, String cardNum, String zip, String exp) {
@@ -302,7 +307,7 @@ public class CoreOperations {
 		Connection c = SQLOperation.getConnect(uid);
 		String sql = "SELECT * FROM payment";
 		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
-		LinkedList res = generateResWithRS(rs, 6);
+		LinkedList res = generateResWithRS(rs, new Card());
 		c.close();
 		if (res.head == null) res.insert("0x1E04");
 		return res;
@@ -357,7 +362,7 @@ public class CoreOperations {
 			if (!(temp.getObject().getClass().equals(new Address().getClass()))) return "0x1002";
 			Address a = (Address) temp.getObject();
 			Connection c = SQLOperation.getConnect(uid);
-			String addStatus = SQLControl.SQLOperation.readDatabase(c, "select line2 from address where line1='" + a.getL2() + "'");
+			String addStatus = SQLControl.SQLOperation.readDatabase(c, "select line2 from address where line1='" + a.getL1() + "'");
 			if (addStatus != null) {
 				c.close();
 				return "0x1E06";
@@ -388,7 +393,7 @@ public class CoreOperations {
 		Connection c = SQLOperation.getConnect(uid);
 		String sql = "SELECT * FROM address";
 		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
-		LinkedList res = generateResWithRS(rs, 8);
+		LinkedList res = generateResWithRS(rs, new Address());
 		c.close();
 		if (res.head == null) return "0x1E05";
 		return res;
@@ -399,7 +404,7 @@ public class CoreOperations {
 		/**
 		 * This LinkedList should includes at least 2 Nodes. 
 		 * The first Node should contains sessionID.
-		 * Starting from the second Node, each Node should include a address to be removed.
+		 * Starting from the second Node, each Node should include a line1 to be removed.
 		 * dla&<sessionID>&<L1>
 		 */
 		
@@ -425,17 +430,42 @@ public class CoreOperations {
 		return "0x01";
 	}
 	
-	private static LinkedList generateResWithRS(ResultSet rs, int len) throws SQLException {
-		LinkedList res = new LinkedList();
+	private static LinkedList generateResWithRS(ResultSet rs, Object o) throws SQLException {
+		if (o.getClass().equals(new Address().getClass())) return addressList(rs);
+		if (o.getClass().equals(new Card().getClass())) return cardList(rs);
+		if (o.getClass().equals(new Order().getClass())) return orderList(rs);
+		return null;
+	}
+	
+	private static LinkedList addressList(ResultSet rs) throws SQLException {
+		LinkedList ll = new LinkedList();
 		while (rs.next()) {
-			String res1 = "";
-			for (int i = 1; i <= len; i++) {
-				res1  += rs.getString(i);
-				if (i < len) res1 += "?";
-			}
-			res.insert(res1);
+			Address a = new Address(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+					rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+			ll.insert(a);
 		}
-		return res;
+		return ll;
+	}
+	
+	private static LinkedList cardList (ResultSet rs) throws SQLException {
+		LinkedList ll = new LinkedList();
+		while (rs.next()) {
+			Card c = new Card(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+					rs.getString(5), rs.getString(6));
+			ll.insert(c);
+		}
+		return ll;
+	}
+	
+	private static LinkedList orderList (ResultSet rs) throws SQLException {
+		LinkedList ll = new LinkedList();
+		while (rs.next()) {
+			Order o = new Order(rs.getString(1), rs.getString(2), rs.getInt(3),
+					("" + rs.getString(4).charAt(0) + rs.getString(4).charAt(1) + rs.getString(4).charAt(2)),
+					rs.getString(4), new Timestamp(rs.getLong(5)));
+			ll.insert(o);
+		}
+		return ll;
 	}
 	
 	static String sessionVerify (String sessionID) throws SQLException {
@@ -470,7 +500,7 @@ public class CoreOperations {
 	
 	static String checkSession(LinkedList ll) throws SQLException {
 		Node temp = ll.head;
-		if (!temp.getClass().equals("".getClass())) return "0x1003";
+		if (!temp.getObject().getClass().equals("".getClass())) return "0x1003";
 		return sessionVerify((String)temp.getObject());
 	}
 	

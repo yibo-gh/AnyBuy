@@ -41,7 +41,7 @@ public class Task implements Runnable {
 					fos.write(bytes, 0, length);
 					fos.flush();
 				}
-				System.out.println("======== 文件接收成功 [File Name：" + fileName + "] [Size：" + FileRecivier.getFormatFileSize(fileLength) + "] ========");
+				System.out.println("File Recieved. Name：" + fileName + ", Size：" + FileRecivier.getFormatFileSize(fileLength) + ".");
 				CreateServerThread.pushToClient(rename(fileName, orderID));
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -56,10 +56,10 @@ public class Task implements Runnable {
 		
 		static String rename (String old, String id) {
 			File f = new File(add + "" + old);
-			String c = f.getParent();
 			String fileName = f.getName();  
-	        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-			File mm=new File(c+File.pathSeparator + "id." + suffix); 
+			String c = f.getParent();
+			String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+			File mm=new File(c + "/" + id + "." + suffix);
 			if (f.renameTo(mm)) return "0x01";
 			else return "0x1F05";
 		}

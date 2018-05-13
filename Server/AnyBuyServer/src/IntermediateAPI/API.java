@@ -29,9 +29,9 @@ public class API {
 			case "reg": return CoreOperations.register(voidHead(ll));
 			case "lgi": return CoreOperations.login(voidHead(ll));
 			case "plo": return CoreOperations.placeOrder(voidHead(ll));
-			case "ldo": return CoreOperations.loadOrder(voidHead(ll));
+			case "ldo": return CoreOperations.loadCountryOrder(voidHead(ll));
 			case "cco": return CoreOperations.cancelOrder(voidHead(ll));
-			case "ldl": return CoreOperations.loadOrderList(voidHead(ll));
+			case "ldl": return CoreOperations.loadPersonalOrder(voidHead(ll));
 			case "gvr": return CoreOperations.giveRate(voidHead(ll));
 			case "art": return CoreOperations.acceptRate(voidHead(ll));
 			case "adc": return CoreOperations.addCard(voidHead(ll));
@@ -46,9 +46,7 @@ public class API {
 	
 
 	static LinkedList voidHead (LinkedList ll) {
-		System.out.println(ll.getLength());
 		ll.delete(1);
-		System.out.println(ll.getLength());
 		return ll;
 	}
 }
