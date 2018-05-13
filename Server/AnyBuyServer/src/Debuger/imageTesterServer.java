@@ -75,7 +75,7 @@ public class imageTesterServer extends ServerSocket {
                 // 文件名和长度  
                 String fileName = dis.readUTF();  
                 long fileLength = dis.readLong();  
-                File directory = new File("/Users/yiboguo/Desktop/serverRecieved");  
+                File directory = new File("/Users/yiboguo/Desktop/");  
                 if(!directory.exists()) {  
                     directory.mkdir();  
                 }  

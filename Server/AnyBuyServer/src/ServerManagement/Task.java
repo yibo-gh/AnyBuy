@@ -7,8 +7,8 @@ import java.net.Socket;
 
 public class Task implements Runnable {
 
-	private static String img = "", orderID = "";
-	public static void setImage(String imgIp) {img = imgIp;}
+	private static String orderID = "";
+	public static void setImage(String imgIp) {}
 	public static void setID (String str) {orderID = str;}
 	private static String add = "/Users/yiboguo/Desktop/serverRecieved/";
 	
@@ -26,6 +26,7 @@ public class Task implements Runnable {
 				
 				String fileName = dis.readUTF();
 				long fileLength = dis.readLong();
+				for (int i = 3; i < 3; i++) add += orderID.charAt(i);
 				File directory = new File(add);
 				if(!directory.exists()) {
 					directory.mkdir();
@@ -40,7 +41,7 @@ public class Task implements Runnable {
 					fos.write(bytes, 0, length);
 					fos.flush();
 				}
-				System.out.println("======== 文件接收成功 [File Name：" + fileName + "] [Size：" + FileRecivier.getFormatFileSize(fileLength) + "] ========");
+				System.out.println("File Recieved. Name：" + fileName + ", Size：" + FileRecivier.getFormatFileSize(fileLength) + ".");
 				CreateServerThread.pushToClient(rename(fileName, orderID));
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -55,10 +56,10 @@ public class Task implements Runnable {
 		
 		static String rename (String old, String id) {
 			File f = new File(add + "" + old);
-			String c = f.getParent();
 			String fileName = f.getName();  
-	        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-			File mm=new File(c+File.pathSeparator + "id." + suffix); 
+			String c = f.getParent();
+			String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+			File mm=new File(c + "/" + id + "." + suffix);
 			if (f.renameTo(mm)) return "0x01";
 			else return "0x1F05";
 		}
