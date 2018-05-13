@@ -76,13 +76,10 @@ public class RegisterActivity extends AppCompatActivity {
                         Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                         startActivity(intent);
 
-<<<<<<< HEAD
+
                         String combineRegisterPage= "lgi&" + emailstr + "?" + passwordstr + "&useSSL=true";
                         String sessionIDRegisterPage = SocketClient.run(combineRegisterPage);
-=======
 
-
->>>>>>> f97606a850d95a4a862be2ef1831e1a8dd795a5e
                     }
 
 
