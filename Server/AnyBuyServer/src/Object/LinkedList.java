@@ -13,9 +13,11 @@ public class LinkedList implements java.io.Serializable{
 		Node temp = new Node(o);
 		if (head == null) head = temp;
 		if (end == null) end = temp;
-		else end.next = temp;
-		temp.prev = end;
-		end = temp;
+		else {
+			end.next = temp;
+			temp.prev = end;
+			end = temp;
+		}
 		length++;
 	}
 	
@@ -23,13 +25,15 @@ public class LinkedList implements java.io.Serializable{
 	
 	public void delete(int index) {
 		Node temp = this.head;
-		for (int i = 0; i <= index; i++) {
+		int i = 1;
+		while (temp != null) {
 			if (i == index) {
 				if (temp.next == null) end = temp.prev;
-				temp.prev.next = temp.next;
+				else temp.next.prev = temp.prev;
 				if (temp.prev == null) head = temp.next;
-				temp.next.prev = temp.prev;
+				else temp.prev.next = temp.next;
 				this.length--;
+				break;
 			}
 			temp = temp.next;
 		}

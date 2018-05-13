@@ -46,7 +46,9 @@ public class API {
 	
 
 	static LinkedList voidHead (LinkedList ll) {
-		ll.delete(0);
+		System.out.println(ll.getLength());
+		ll.delete(1);
+		System.out.println(ll.getLength());
 		return ll;
 	}
 }

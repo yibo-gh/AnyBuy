@@ -409,21 +409,20 @@ public class CoreOperations {
 		
 		while (temp != null) {
 			if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
-			
+			String line1 = (String)temp.getObject();
 			Connection c = SQLControl.SQLOperation.getConnect(uid);
-			String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select zip from address where line1='" +  + "'");
-			System.out.println(str[1]);
+			String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select zip from address where line1='" + line1 + "'");
+			System.out.println(line1);
 			if (cardStatus == null) {
 				c.close();
 				return "0x1E07";
 			}
-			String sql = "delete from address where line1='" + str[1] + "';";
+			String sql = "delete from address where line1='" + line1 + "';";
 			String res = SQLControl.SQLOperation.updateData(c, sql);
 			c.close();
 			if (res != "UPS") return res;
 		}
-		
-		else return "0x01";
+		return "0x01";
 	}
 	
 	private static LinkedList generateResWithRS(ResultSet rs, int len) throws SQLException {
