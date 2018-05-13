@@ -15,15 +15,26 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        /*orderbutton = (Button) findViewById(R.id.orderButtonID);
 
-        orderbutton.setOnClickListener(new View.OnClickListener() {
+        Button Address = (Button) findViewById(R.id.AddressButtonID);
+
+        Button Payment = (Button) findViewById(R.id.PaymentButtonID);
+
+
+        Address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProfileActivity.this, OrdersActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, AddressActivity.class);
                 startActivity(intent);
             }
         });
-*/
+
+        Payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, PaymentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

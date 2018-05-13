@@ -24,7 +24,11 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".OrdersActivity"></activity>
+        <activity android:name=".OrdersActivity" />
+        <activity android:name=".PaymentActivity" />
+        <activity android:name=".AddressActivity" />
+        <activity android:name=".AddressAddActivity" />
+        <activity android:name=".PaymentAddActivity"></activity>
     </application>
 
 </manifest>

@@ -19,7 +19,6 @@
         android:layout_marginTop="56dp"
         app:layout_constraintBottom_toTopOf="@+id/ordersButtonID"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/preferenceButtonID"
         app:layout_constraintTop_toTopOf="parent"
@@ -51,32 +50,30 @@
         android:text="Seller History"
         android:background="@drawable/button_background"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/informationButtonID"
+        app:layout_constraintBottom_toTopOf="@+id/PaymentButtonID"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ordersButtonID" />
 
     <Button
-        android:id="@+id/informationButtonID"
+        android:id="@+id/PaymentButtonID"
 
-        android:background="@drawable/button_background"
         android:layout_width="192dp"
-
         android:layout_height="48dp"
-        android:layout_marginBottom="20dp"
-
 
         android:layout_marginEnd="8dp"
+
+
         android:layout_marginLeft="96dp"
         android:layout_marginRight="96dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/button_background"
 
-        android:text="Information"
+        android:text="Payment"
 
         android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/preferenceButtonID"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sellhistoryID" />
@@ -88,12 +85,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Prefrence"
         android:background="@drawable/button_background"
+        android:text="Preference"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/informationButtonID" />
+        app:layout_constraintTop_toBottomOf="@+id/AddressButtonID" />
+
 
     <Button
         android:id="@+id/legalButtonID"
@@ -110,5 +108,27 @@
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/preferenceButtonID" />
+
+    <Button
+        android:id="@+id/AddressButtonID"
+
+        android:layout_width="192dp"
+        android:layout_height="48dp"
+
+        android:layout_marginEnd="8dp"
+
+
+        android:layout_marginLeft="96dp"
+        android:layout_marginRight="96dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_background"
+
+        android:text="Address"
+
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PaymentButtonID" />
 
 </android.support.constraint.ConstraintLayout>
