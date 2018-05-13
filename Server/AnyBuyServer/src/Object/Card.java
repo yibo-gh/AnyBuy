@@ -2,6 +2,8 @@ package Object;
 
 public class Card implements java.io.Serializable{
 	
+	private static final long serialVersionUID = 5477821230680011497L;
+	
 	private String FN, LN, issuer, cardNum, zip, exp;
 	
 	public Card() {}
