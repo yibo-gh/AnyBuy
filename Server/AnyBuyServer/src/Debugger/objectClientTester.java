@@ -9,39 +9,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Object.LinkedList;
-import Object.User;  
   
 public class objectClientTester {  
       
     private final static Logger logger = Logger.getLogger(objectClientTester.class.getName());  
-      
-    public static void main(String[] args) throws Exception {
-            Socket socket = null;  
+
+    
+    public static Object run(LinkedList ll) throws Exception {
+            Socket socket = new Socket("yg-home.site", 18416); 
             ObjectOutputStream os = null;  
             ObjectInputStream is = null;  
               
             try {  
-                socket = new Socket("10.0.3.1", 18416);  
-      
-                os = new ObjectOutputStream(socket.getOutputStream());  
-                LinkedList ll = new LinkedList();
-                ll.insert("reg");
-                ll.insert(new User("Tiffiny", "snsd.or.kr", "loveYOONA!"));
+                os = new ObjectOutputStream(socket.getOutputStream());
                 os.writeObject(ll);  
                 os.flush();  
                   
                 is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));  
-                Object obj = is.readObject();  
-                if (obj != null) { 
-                	System.out.println(obj.getClass());
-                    LinkedList res = (LinkedList)obj;
-                    System.out.println((String)res.head.getObject());  
-                }  
+                Object obj = is.readObject();
                 is.close();
                 os.close();
                 socket.close();
+                return obj;
             } catch(IOException ex) {  
-                logger.log(Level.SEVERE, null, ex);  
+                logger.log(Level.SEVERE, null, ex);
             }
+            return null;
     }
 }

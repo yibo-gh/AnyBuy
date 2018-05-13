@@ -35,11 +35,9 @@ import Object.LinkedList;
                 
 //                while (input != null) {
                    System.out.println("Client(" + getName() +") say: " + input);
-                    Object status = API.getCommand(input);
-                    LinkedList ll = new LinkedList();
-                    ll.insert(status);
-                    pushToClient(ll);
-                    System.out.println("pushed message: " + status);
+                    Object o = API.getCommand(input);
+                    pushToClient(o);
+                    System.out.println("pushed message: " + o);
 //                    input = (LinkedList)obj;
 //                }
                 

@@ -25,18 +25,6 @@ public class Tester {
 		addCard();
 		loadCard();
 		deleteCard();
-		/*
-		str = "dta&snok10000?" + uInfo[1] + "&Yeongdong-daero 513";
-		System.out.println(IntermediateAPI.API.getCommand(str));
-		str = "ada&snok10000?" + uInfo[1] + "&yoona?lim&?Yeongdong-daero 513?Gangnam-gu?Seoul?KR?00000";
-		System.out.println(IntermediateAPI.API.getCommand(str));
-		*/
-		// Load order list from AZ
-//		str = "ldl&" + uInfo[0] + "?" + uInfo[1] + "&AZ";
-//		System.out.println(IntermediateAPI.API.getCommand(str));
-		// Place order
-//		str = "plo&" + uInfo[0] + "?" + uInfo[1] + "&KR?Yoona\\'s Choice?Innisfree?test.jpg?1";
-//		System.out.println(IntermediateAPI.API.getCommand(str));
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -144,7 +132,6 @@ public class Tester {
 		ll.insert(getSessionID());
 		ll.insert("KOR");
 		Object obj = IntermediateAPI.API.getCommand(ll);
-		System.out.println(obj.getClass());
 		LinkedList res = (LinkedList) obj;
 		Node temp = res.head;
 		if (temp != null && temp.getObject().getClass().equals("".getClass())) {
