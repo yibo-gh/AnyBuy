@@ -1,4 +1,4 @@
-package Debuger;
+package Debugger;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;

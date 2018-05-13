@@ -33,15 +33,15 @@ import Object.LinkedList;
                 LinkedList input = (LinkedList)obj;  
                 System.out.println("Client said " + (String)input.head.getObject());
                 
-                while (input != null) {
-                    System.out.println("Client(" + getName() +") say: " + input);
+//                while (input != null) {
+                   System.out.println("Client(" + getName() +") say: " + input);
                     Object status = API.getCommand(input);
                     LinkedList ll = new LinkedList();
                     ll.insert(status);
                     pushToClient(ll);
                     System.out.println("pushed message: " + status);
-                    input = (LinkedList)obj;
-                }
+//                    input = (LinkedList)obj;
+//                }
                 
                 LinkedList pushBack = new LinkedList();
                 pushBack.insert("bye, Client(" + getName() +")!");

@@ -1,4 +1,4 @@
-package Debuger;
+package Debugger;
 
 import java.io.DataOutputStream;  
 import java.io.File;  

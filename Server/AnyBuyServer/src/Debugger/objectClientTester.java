@@ -1,4 +1,4 @@
-package Debuger;
+package Debugger;
 
 import java.io.BufferedInputStream;  
 import java.io.IOException;  
@@ -8,24 +8,25 @@ import java.net.Socket;
 import java.util.logging.Level;  
 import java.util.logging.Logger;
 
-import Object.LinkedList;  
+import Object.LinkedList;
+import Object.User;  
   
 public class objectClientTester {  
       
     private final static Logger logger = Logger.getLogger(objectClientTester.class.getName());  
       
-    public static void main(String[] args) throws Exception {  
-        for (int i = 0; i < 1; i++) {  
+    public static void main(String[] args) throws Exception {
             Socket socket = null;  
             ObjectOutputStream os = null;  
             ObjectInputStream is = null;  
               
             try {  
-                socket = new Socket("localhost", 18416);  
+                socket = new Socket("10.0.3.1", 18416);  
       
                 os = new ObjectOutputStream(socket.getOutputStream());  
                 LinkedList ll = new LinkedList();
-                ll.insert("test.");
+                ll.insert("reg");
+                ll.insert(new User("Tiffiny", "snsd.or.kr", "loveYOONA!"));
                 os.writeObject(ll);  
                 os.flush();  
                   
@@ -36,19 +37,11 @@ public class objectClientTester {
                     LinkedList res = (LinkedList)obj;
                     System.out.println((String)res.head.getObject());  
                 }  
+                is.close();
+                os.close();
+                socket.close();
             } catch(IOException ex) {  
                 logger.log(Level.SEVERE, null, ex);  
-            } finally {  
-                try {  
-                    is.close();  
-                } catch(Exception ex) {}  
-                try {  
-                    os.close();  
-                } catch(Exception ex) {}  
-                try {  
-                    socket.close();  
-                } catch(Exception ex) {}  
-            }  
-        }  
+            }
     }
 }
