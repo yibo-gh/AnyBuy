@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".SellActivity" />
         <activity android:name=".HomeActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".BuyActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".OrdersActivity" />
         <activity android:name=".PaymentActivity" />

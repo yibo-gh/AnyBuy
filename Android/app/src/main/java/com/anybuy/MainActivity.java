@@ -121,13 +121,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         //open the register page if register button was clicked
-       // register1.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-         //   public void onClick(View view) {
-               // Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-               // startActivity(intent);
-         //   }
-       // });
+        register1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
