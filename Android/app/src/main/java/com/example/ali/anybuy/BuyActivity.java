@@ -1,9 +1,11 @@
 package com.example.ali.anybuy;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
@@ -22,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class BuyActivity extends AppCompatActivity  {
 
     EditText productBrand;
@@ -29,12 +33,15 @@ public class BuyActivity extends AppCompatActivity  {
     EditText county;
     EditText quantity;
 
+    Uri imageURI;
+
     ImageView productImage;
 
     Button orderButton;
-    String combine2;
+    String combineBuyPage;
 
-
+    String imageURIStr = "";
+    private static final int REQUEST_CODE = 1;
     LinearLayout  linearLayout;
     private final int PICK_IMAGE_REQUEST = 1;
     @Override
@@ -57,8 +64,8 @@ public class BuyActivity extends AppCompatActivity  {
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{chooseImage();}
-                catch (Exception ex){}
+                chooseImage();
+
 
             }
         });
@@ -83,8 +90,8 @@ public class BuyActivity extends AppCompatActivity  {
                 }
 
                 String sessionID = MainActivity.getID();
-                combine2 = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?test.jpg?"+ quantityNum;
-                String res = SocketClient.run(combine2);
+                combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
+                String res = SocketClient.run(combineBuyPage);
                 System.out.println(res);
                 System.out.println(sessionID);
                 //productImage.get
@@ -109,10 +116,11 @@ public class BuyActivity extends AppCompatActivity  {
     //choose from the phone pictures
     private void chooseImage()
     {
+
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"),REQUEST_CODE);
 
     }
 
@@ -120,22 +128,35 @@ public class BuyActivity extends AppCompatActivity  {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null)
         {
-            productImage.setImageURI(data.getData());
-                Uri ImageUri = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                Cursor cursor = managedQuery(ImageUri,
-                        filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                //picturePath就是图片在储存卡所在的位置
-                String picturePath = cursor.getString(columnIndex);
-                System.out.println(picturePath);
-                cursor.close();
+
+
+             imageURI = data.getData();
+            productImage.setImageURI(imageURI);
+
+            imageURIStr = imageURI.toString();
+            System.out.println("Heyyyyyyyyyyyyyyyyy && " + imageURIStr);
 
         }
     }
 
+    public String getRealPathFromURI(Uri contentURI, Activity context) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        @SuppressWarnings("deprecation")
+        Cursor cursor = context.managedQuery(contentURI, projection, null,
+                null, null);
+        if (cursor == null)
+            return null;
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        if (cursor.moveToFirst()) {
+            String s = cursor.getString(column_index);
+            // cursor.close();
+            return s;
+        }
+        // cursor.close();
+        return null;
+    }
 
 }
