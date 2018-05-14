@@ -11,6 +11,7 @@ import Object.LinkedList;
 import Object.Node;
 import Object.Order;
 import Object.User;
+import Object.imageRequest;
 import ServerManagement.FileRecivier;
 import SQLControl.SQLOperation;
 
@@ -83,7 +84,7 @@ public class CoreOperations {
 		}
 	}
 	
-	static String placeOrder (LinkedList ll) throws SQLException {
+	static Object placeOrder (LinkedList ll) throws SQLException {
 		
 		/**
 		 * This LinkedList should includes at least 2 Node. 
@@ -101,7 +102,6 @@ public class CoreOperations {
 
 		Node temp = ll.head;
 		LinkedList orderList = new LinkedList();
-		
 		temp = ll.head;
 		while (temp != null){
 			Object o = temp.getObject();
@@ -110,6 +110,9 @@ public class CoreOperations {
 			orderList.insert(od);
 			temp = temp.getNext();
 		}
+		
+		LinkedList imgReq = new LinkedList();
+		boolean hasImg = false;
 		
 		temp = orderList.head;
 		while (temp != null) {
@@ -126,7 +129,7 @@ public class CoreOperations {
 			}
 			
 			String orderID = obj.getCountry() + (SQLOperation.countLine(c, obj.getCountry()) + 10000);
-			boolean imageExist = (obj.getImage() != "");
+			boolean imageExist = (!obj.getImage().equals("") );
 			
 			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + imageExist + "','" + obj.getQuantity() + "','" + time + "','" + orderID + "'";
 			String sql = "INSERT INTO " + obj.getCountry() +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
@@ -145,11 +148,15 @@ public class CoreOperations {
 
 			c.close();
 			if (imageExist) {
-				String imageRes = acceptImage(obj.getImage(), orderID);
-				if(!imageRes.equalsIgnoreCase("0x01")) return imageRes;
+//				String imageRes = acceptImage(obj.getImage(), orderID);
+//				if(!imageRes.equalsIgnoreCase("0x01")) return imageRes;
+				imgReq.insert(new imageRequest(obj.getImage(), orderID));
+				hasImg = true;
 			}
 			temp = temp.getNext();
 		}
+		if (hasImg) return imgReq;
+		
 		return "0x01";
 	}
 	
@@ -255,6 +262,8 @@ public class CoreOperations {
 		
 		// verify session
 		
+		writeLog("Add Card.");
+		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
@@ -272,17 +281,19 @@ public class CoreOperations {
 			if (cardStatus != null) {
 				c.close();
 				cardExist = true;
-			}
-			cardStatus = validateCardInfo(card.getFN(), card.getLN(), card.getCardNum(), card.getZip(), card.getExp());
-			if ( !cardStatus.equals("0x01") ) {
+			} else {
+				cardStatus = validateCardInfo(card.getFN(), card.getLN(), card.getCardNum(), card.getZip(), card.getExp());
+				if ( !cardStatus.equals("0x01") ) {
+					c.close();
+					return cardStatus;
+				}
+				
+				String value = "'" + card.getFN() + "','" + card.getLN() + "','" + card.getIssuser() + "','" + card.getCardNum() + "','" + card.getExp() + "','" + card.getZip() + "'";
+				String sql = "INSERT INTO payment(fn, ln, issuer, cardNumber, exp, zip) VALUES(" + value + ");"; 
+				System.out.println(SQLOperation.updateData(c, sql));
 				c.close();
-				return cardStatus;
 			}
 			
-			String value = "'" + card.getFN() + "','" + card.getLN() + "','" + card.getIssuser() + "','" + card.getCardNum() + "','" + card.getExp() + "','" + card.getZip() + "'";
-			String sql = "INSERT INTO payment(fn, ln, issuer, cardNumber, exp, zip) VALUES(" + value + ");"; 
-			System.out.println(SQLOperation.updateData(c, sql));
-			c.close();
 			temp = temp.getNext();
 		}
 		if (cardExist) return "0x1E01";
@@ -300,6 +311,8 @@ public class CoreOperations {
 		 * The Node should contains sessionID.
 		 * ldc&<sessionID>
 		 */
+		
+		writeLog("Load Card.");
 		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
@@ -322,9 +335,13 @@ public class CoreOperations {
 		 * dlc&<sessionID>&<cardNum>
 		 */
 		
+		writeLog("Delete Card.");
+		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		Node temp = ll.head;
+		
+		boolean cardNotExist = false;
 		
 		while (temp != null) {
 			if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
@@ -335,14 +352,15 @@ public class CoreOperations {
 			String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select issuer from payment where cardNumber='" + cardNum + "'");
 			if (cardStatus == null) {
 				c.close();
-				return "0x1E04";
+				cardNotExist = true;
+			} else {
+				String res = SQLControl.SQLOperation.updateData(c, sql);
+				c.close();
+				if (res != "UPS") return res;
 			}
-			String res = SQLControl.SQLOperation.updateData(c, sql);
-			c.close();
-			if (res != "UPS") return res;
-			
 			temp = temp.getNext();
 		}
+		if (cardNotExist) return "0x1E04";
 		return "0x01";
 	}
 	
@@ -354,9 +372,13 @@ public class CoreOperations {
 		 * dlc&<sessionID>&<address>
 		 */
 		
+		writeLog("Add Address.");
+		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		Node temp = ll.head;
+		
+		boolean addressExist = false;
 		
 		while (temp != null) {
 			if (!(temp.getObject().getClass().equals(new Address().getClass()))) return "0x1002";
@@ -365,17 +387,17 @@ public class CoreOperations {
 			String addStatus = SQLControl.SQLOperation.readDatabase(c, "select line2 from address where line1='" + a.getL1() + "'");
 			if (addStatus != null) {
 				c.close();
-				return "0x1E06";
+				addressExist = true;
+			} else {
+				String value = "('" + a.getFN() + "','" + a.getLN() + "','" + a.getCom() + "','" + a.getL1() + "','" + a.getL2() + "','" + a.getCity() + "','" + a.getState() + "','" + a.getZip() + "')";
+				String sql = "INSERT INTO address(fn, ln, company, line1, line2, city, state, zip) VALUES" + value + ";";
+				System.out.println(SQLOperation.updateData(c, sql));
+				c.close();
 			}
-			
-			String value = "('" + a.getFN() + "','" + a.getLN() + "','" + a.getCom() + "','" + a.getL1() + "','" + a.getL2() + "','" + a.getCity() + "','" + a.getState() + "','" + a.getZip() + "')";
-			String sql = "INSERT INTO address(fn, ln, company, line1, line2, city, state, zip) VALUES" + value + ";";
-			System.out.println(SQLOperation.updateData(c, sql));
-			c.close();
 			temp = temp.getNext();
 		}
 		
-		
+		if (addressExist) return "0x1E06";
 		return "0x01";
 	}
 	
@@ -386,6 +408,8 @@ public class CoreOperations {
 		 * The Node should contains sessionID.
 		 * ldc&<sessionID>
 		 */
+		
+		writeLog("load Address.");
 		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
@@ -408,25 +432,31 @@ public class CoreOperations {
 		 * dla&<sessionID>&<L1>
 		 */
 		
+		writeLog("Delete Address.");
+		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		Node temp = ll.head;
+		
+		boolean addressNotExist = false;
 		
 		while (temp != null) {
 			if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
 			String line1 = (String)temp.getObject();
 			Connection c = SQLControl.SQLOperation.getConnect(uid);
 			String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select zip from address where line1='" + line1 + "'");
-			System.out.println(line1);
 			if (cardStatus == null) {
 				c.close();
-				return "0x1E07";
+				addressNotExist = true;
+			} else {
+				String sql = "delete from address where line1='" + line1 + "';";
+				String res = SQLControl.SQLOperation.updateData(c, sql);
+				c.close();
+				if (res != "UPS") return res;
 			}
-			String sql = "delete from address where line1='" + line1 + "';";
-			String res = SQLControl.SQLOperation.updateData(c, sql);
-			c.close();
-			if (res != "UPS") return res;
+			temp = temp.getNext();
 		}
+		if (addressNotExist) return "0x1E07";
 		return "0x01";
 	}
 	
@@ -513,6 +543,5 @@ public class CoreOperations {
 	public static void writeLog (String str) {
 		System.out.println(str);
 	}
-	
 	
 }
