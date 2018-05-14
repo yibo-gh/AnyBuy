@@ -69,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
                 //else{
 
 
-                    combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
-                    sessionID = SocketClient.run(combine1);
+                    //combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
+                    //sessionID = SocketClient.run(combine1);
 
-                    System.out.println(combine1);
-                    System.out.println(sessionID);
-                    if(sessionID.equals(loginerror1)) {
+                   // System.out.println(combine1);
+                   // System.out.println(sessionID);
+                    /*if(sessionID.equals(loginerror1)) {
                         Toast.makeText(MainActivity.this, "User not found", Toast.LENGTH_LONG).show();
                     }else if(sessionID.equals(loginerror2) || emailstr1.equals("") || passwordstr1.equals("")) {
                         Toast.makeText(MainActivity.this, "Username or Password is invalid", Toast.LENGTH_LONG).show();
@@ -82,10 +82,10 @@ public class MainActivity extends AppCompatActivity {
                     else if(sessionID.equals(loginerror3) || sessionID.equals(loginerror4)) {
                         Toast.makeText(MainActivity.this, "Wrong format", Toast.LENGTH_LONG).show();
                     }else{
-                        Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
+                     */   Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                         startActivity(intent);
-                    }
+                   // }
                     //}
 
             }

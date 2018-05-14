@@ -54,7 +54,7 @@ public class imageTester extends Socket {
                 dos.flush();
 
                 // 开始传输文件
-                System.out.println("======== 开始传输文件 ========");
+                System.out.println("======== dont know what this said in chinese either ========");
                 byte[] bytes = new byte[1024];
                 int length = 0;
                 long progress = 0;
@@ -65,7 +65,7 @@ public class imageTester extends Socket {
                     System.out.print("| " + (100*progress/file.length()) + "% |");
                 }
                 System.out.println();
-                System.out.println("======== 文件传输成功 ========");
+                System.out.println("======== dont know what this said in chinese ========");
             }
         } catch (Exception e) {
             e.printStackTrace();
