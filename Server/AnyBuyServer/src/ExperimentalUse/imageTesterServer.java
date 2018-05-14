@@ -1,4 +1,4 @@
-package Debugger;
+package ExperimentalUse;
 
 import java.io.DataInputStream;  
 import java.io.File;  
@@ -68,39 +68,41 @@ public class imageTesterServer extends ServerSocket {
         }  
   
         @Override  
-        public void run() {  
-            try {  
-                dis = new DataInputStream(socket.getInputStream());  
-  
-                // 文件名和长度  
-                String fileName = dis.readUTF();  
-                long fileLength = dis.readLong();  
-                File directory = new File("/Users/yiboguo/Desktop/");  
-                if(!directory.exists()) {  
-                    directory.mkdir();  
-                }  
-                File file = new File(directory.getAbsolutePath() + File.separatorChar + fileName);  
-                fos = new FileOutputStream(file);  
-  
-                // 开始接收文件  
-                byte[] bytes = new byte[1024];  
-                int length = 0;  
-                while((length = dis.read(bytes, 0, bytes.length)) != -1) {  
-                    fos.write(bytes, 0, length);  
-                    fos.flush();  
-                }  
-                System.out.println("======== 文件接收成功 [File Name：" + fileName + "] [Size：" + getFormatFileSize(fileLength) + "] ========");  
-            } catch (Exception e) {  
-                e.printStackTrace();  
-            } finally {  
-                try {  
-                    if(fos != null)  
-                        fos.close();  
-                    if(dis != null)  
-                        dis.close();  
-                    socket.close();  
-                } catch (Exception e) {}  
-            }  
+        public void run() {
+        	while (true) {
+        		try {  
+        			dis = new DataInputStream(socket.getInputStream());  
+        			
+        			// 文件名和长度  
+        			String fileName = dis.readUTF();  
+        			long fileLength = dis.readLong();  
+        			File directory = new File("/Users/yiboguo/Desktop/serverRecieved");  
+        			if(!directory.exists()) {  
+        				directory.mkdir();  
+        			}  
+        			File file = new File(directory.getAbsolutePath() + File.separatorChar + fileName);  
+        			fos = new FileOutputStream(file);  
+        			
+        			// 开始接收文件  
+        			byte[] bytes = new byte[1024];  
+        			int length = 0;  
+        			while((length = dis.read(bytes, 0, bytes.length)) != -1) {  
+        				fos.write(bytes, 0, length);  
+        				fos.flush();  
+        			}
+        			System.out.println("======== 文件接收成功 [File Name：" + fileName + "] [Size：" + getFormatFileSize(fileLength) + "] ========");  
+        		} catch (Exception e) {  
+        			e.printStackTrace();  
+        		} finally {  
+        			try {  
+        				if(fos != null)  
+        					fos.close();  
+        				if(dis != null)  
+        					dis.close();  
+        				socket.close();  
+        			} catch (Exception e) {}  
+        		}
+        	}
         }  
     }  
   

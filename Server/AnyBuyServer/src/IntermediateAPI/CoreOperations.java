@@ -11,6 +11,7 @@ import Object.LinkedList;
 import Object.Node;
 import Object.Order;
 import Object.User;
+import Object.imageRequest;
 import ServerManagement.FileRecivier;
 import SQLControl.SQLOperation;
 
@@ -83,7 +84,7 @@ public class CoreOperations {
 		}
 	}
 	
-	static String placeOrder (LinkedList ll) throws SQLException {
+	static Object placeOrder (LinkedList ll) throws SQLException {
 		
 		/**
 		 * This LinkedList should includes at least 2 Node. 
@@ -101,7 +102,6 @@ public class CoreOperations {
 
 		Node temp = ll.head;
 		LinkedList orderList = new LinkedList();
-		
 		temp = ll.head;
 		while (temp != null){
 			Object o = temp.getObject();
@@ -110,6 +110,9 @@ public class CoreOperations {
 			orderList.insert(od);
 			temp = temp.getNext();
 		}
+		
+		LinkedList imgReq = new LinkedList();
+		boolean hasImg = false;
 		
 		temp = orderList.head;
 		while (temp != null) {
@@ -126,7 +129,7 @@ public class CoreOperations {
 			}
 			
 			String orderID = obj.getCountry() + (SQLOperation.countLine(c, obj.getCountry()) + 10000);
-			boolean imageExist = (obj.getImage() != "");
+			boolean imageExist = (!obj.getImage().equals("") );
 			
 			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + imageExist + "','" + obj.getQuantity() + "','" + time + "','" + orderID + "'";
 			String sql = "INSERT INTO " + obj.getCountry() +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
@@ -145,11 +148,15 @@ public class CoreOperations {
 
 			c.close();
 			if (imageExist) {
-				String imageRes = acceptImage(obj.getImage(), orderID);
-				if(!imageRes.equalsIgnoreCase("0x01")) return imageRes;
+//				String imageRes = acceptImage(obj.getImage(), orderID);
+//				if(!imageRes.equalsIgnoreCase("0x01")) return imageRes;
+				imgReq.insert(new imageRequest(obj.getImage(), orderID));
+				hasImg = true;
 			}
 			temp = temp.getNext();
 		}
+		if (hasImg) return imgReq;
+		
 		return "0x01";
 	}
 	

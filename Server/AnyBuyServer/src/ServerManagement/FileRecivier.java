@@ -3,7 +3,9 @@ package ServerManagement;
 import java.math.RoundingMode;  
 import java.net.ServerSocket;  
 import java.net.Socket;  
-import java.text.DecimalFormat;  
+import java.text.DecimalFormat;
+
+import ExperimentalUse.imageTesterServer;  
 
 public class FileRecivier extends ServerSocket {
 
@@ -40,4 +42,13 @@ public class FileRecivier extends ServerSocket {
 		}
 		return length + "B";
 	}
+	
+	public static void main(String[] args) {  
+        try {  
+            FileRecivier server = new FileRecivier(); // 启动服务端  
+            server.load();  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+    }
 }
