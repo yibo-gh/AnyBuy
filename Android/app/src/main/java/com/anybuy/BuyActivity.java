@@ -1,4 +1,4 @@
-package com.example.ali.anybuy;
+package com.anybuy;
 
 import android.app.Activity;
 import android.content.Intent;

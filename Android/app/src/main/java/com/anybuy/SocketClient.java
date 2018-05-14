@@ -1,4 +1,4 @@
-package com.example.ali.anybuy;
+package com.anybuy;
 
 import Object.LinkedList;
 

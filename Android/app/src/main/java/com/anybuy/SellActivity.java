@@ -1,4 +1,4 @@
-package com.example.ali.anybuy;
+package com.anybuy;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
