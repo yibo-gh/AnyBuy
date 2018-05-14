@@ -7,13 +7,19 @@
     tools:context=".Activities.DeleteAddress">
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="152dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/deleteAddressButton"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
         android:layout_marginBottom="80dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginStart="100dp"
         android:text="Confirm"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="116dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:layout_width="285dp"
@@ -24,7 +30,7 @@
         tools:layout_editor_absoluteX="50dp">
 
         <TextView
-            android:id="@+id/result"
+            android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -39,7 +45,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/result"
+            android:id="@+id/des2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"

@@ -1,12 +1,13 @@
 package com.anybuy.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,22 +22,23 @@ public class DeleteAddress extends Activity {
 
     TextView result;
     Spinner spinner;
+    Button button;
+    Object o;
 
     private static String[] options;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_delete_address);
         result = (TextView) findViewById(R.id.result);
-        Spinner spinnerspinner = (Spinner) findViewById(R.id.spinner);
-        System.out.println("is spinner null? " + (result == null));
-
+        spinner = (Spinner) findViewById(R.id.spinner);
+        button = (Button) findViewById(R.id.deleteAddressButton);
         LinkedList l = new LinkedList();
         l.insert("lda");
         l.insert(MainActivity.getID());
         LinkedList aList = new LinkedList();
         try {
-            Object o = SocketClient.Run(l);
+            o = SocketClient.Run(l);
             if (o.getClass().equals(new LinkedList().getClass())){
                 l = (LinkedList) o;
                 Node temp = l.head;
@@ -89,6 +91,30 @@ public class DeleteAddress extends Activity {
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
 
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinkedList l = new LinkedList();
+                l.insert("dta");
+                l.insert(MainActivity.getID());
+                LinkedList obj = (LinkedList) o;
+                Node temp = obj.head;
+                for (int i = 1; i < Integer.parseInt("" + result.getText().charAt(0)); i++) {
+                    temp = temp.getNext();
+                }
+                System.out.println(temp.getObject().getClass());
+                l.insert((String)((Address)temp.getObject()).getL1());
+                try {
+                    Object o = SocketClient.Run(l);
+                    System.out.println((String)o);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(DeleteAddress.this, AddressActivity.class);
+                startActivity(intent);
             }
         });
 
