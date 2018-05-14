@@ -1,30 +1,21 @@
 package com.example.ali.anybuy;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import java.io.IOException;
+import java.sql.Timestamp;
+
+import Object.*;
 
 public class BuyActivity extends AppCompatActivity  {
 
@@ -90,10 +81,28 @@ public class BuyActivity extends AppCompatActivity  {
                 }
 
                 String sessionID = MainActivity.getID();
-                combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
-                String res = SocketClient.run(combineBuyPage);
-                System.out.println(res);
-                System.out.println(sessionID);
+            //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
+            //    String res = SocketClient.run(combineBuyPage);
+            //    System.out.println(res);
+            //    System.out.println(sessionID);
+
+                LinkedList l = new LinkedList();
+                l.insert("plo");
+                l.insert(sessionID);
+                Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
+                        countrystr, imageURIStr, new Timestamp(System.currentTimeMillis()));
+                l.insert(od);
+                try {
+                    Object o = SocketClient.Run(l);
+                    if (o.getClass().equals("".getClass())) System.out.println((String)o);
+                    else if (o.getClass().equals(new LinkedList().getClass())){
+                        LinkedList l1 = (LinkedList) o;
+                        System.out.println(l1.getLength() + " image(s) requested.");
+                    } else System.out.println("plo function returned sth else.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 //productImage.get
 
                 //combine the Strings to get it all fixed up for the database api's

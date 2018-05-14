@@ -281,17 +281,19 @@ public class CoreOperations {
 			if (cardStatus != null) {
 				c.close();
 				cardExist = true;
-			}
-			cardStatus = validateCardInfo(card.getFN(), card.getLN(), card.getCardNum(), card.getZip(), card.getExp());
-			if ( !cardStatus.equals("0x01") ) {
+			} else {
+				cardStatus = validateCardInfo(card.getFN(), card.getLN(), card.getCardNum(), card.getZip(), card.getExp());
+				if ( !cardStatus.equals("0x01") ) {
+					c.close();
+					return cardStatus;
+				}
+				
+				String value = "'" + card.getFN() + "','" + card.getLN() + "','" + card.getIssuser() + "','" + card.getCardNum() + "','" + card.getExp() + "','" + card.getZip() + "'";
+				String sql = "INSERT INTO payment(fn, ln, issuer, cardNumber, exp, zip) VALUES(" + value + ");"; 
+				System.out.println(SQLOperation.updateData(c, sql));
 				c.close();
-				return cardStatus;
 			}
 			
-			String value = "'" + card.getFN() + "','" + card.getLN() + "','" + card.getIssuser() + "','" + card.getCardNum() + "','" + card.getExp() + "','" + card.getZip() + "'";
-			String sql = "INSERT INTO payment(fn, ln, issuer, cardNumber, exp, zip) VALUES(" + value + ");"; 
-			System.out.println(SQLOperation.updateData(c, sql));
-			c.close();
 			temp = temp.getNext();
 		}
 		if (cardExist) return "0x1E01";
@@ -386,12 +388,12 @@ public class CoreOperations {
 			if (addStatus != null) {
 				c.close();
 				addressExist = true;
+			} else {
+				String value = "('" + a.getFN() + "','" + a.getLN() + "','" + a.getCom() + "','" + a.getL1() + "','" + a.getL2() + "','" + a.getCity() + "','" + a.getState() + "','" + a.getZip() + "')";
+				String sql = "INSERT INTO address(fn, ln, company, line1, line2, city, state, zip) VALUES" + value + ";";
+				System.out.println(SQLOperation.updateData(c, sql));
+				c.close();
 			}
-			
-			String value = "('" + a.getFN() + "','" + a.getLN() + "','" + a.getCom() + "','" + a.getL1() + "','" + a.getL2() + "','" + a.getCity() + "','" + a.getState() + "','" + a.getZip() + "')";
-			String sql = "INSERT INTO address(fn, ln, company, line1, line2, city, state, zip) VALUES" + value + ";";
-			System.out.println(SQLOperation.updateData(c, sql));
-			c.close();
 			temp = temp.getNext();
 		}
 		

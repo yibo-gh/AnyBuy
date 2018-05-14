@@ -13,7 +13,7 @@ public class Simulator {
 		LinkedList ll = new LinkedList();
 
 		ll.insert("reg");
-		User u = new User("sunny", "snsd.or.kr", "loveYOONA!");
+		User u = new User("yoona", "snsd.or.kr", "loveYOONA!");
 		ll.insert(u);
 		System.out.println((String)objectClientTester.run(ll));
 		

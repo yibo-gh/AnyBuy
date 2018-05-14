@@ -1,13 +1,15 @@
 package com.example.ali.anybuy;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import Object.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +63,27 @@ public class MainActivity extends AppCompatActivity {
                emailstr1 = email1.getText().toString();
                 passwordstr1 = password1.getText().toString();
 
+                LinkedList ll = new LinkedList();
+                ll.insert("lgi");
+                String[] uInfo = emailstr1.split("\\@");
+                if (uInfo.length == 2) {
+                    User u = new User(uInfo[0], uInfo[1], passwordstr1);
+                    ll.insert(u);
+                    try {
+                        System.out.println(ll.getClass() + " " + ll.getLength());
+                        Object o = (String)SocketClient.Run(ll);
+                        if (o.getClass().equals("".getClass())) {
+                            String str = (String) o;
+                            setSessionID(str);
+                        }
+                        System.out.println(sessionID);
+                    } catch (Exception e) {
+                        sessionID = "";
+                        e.printStackTrace();
+                    }
+                }
+                else sessionID = "";
+
                // if(!repeatPassword.getText().toString().equals(password1str))
                // {
                 //    Toast.makeText(MainActivity.this, "Email or Username is incorrect!", Toast.LENGTH_LONG).show();
@@ -97,13 +120,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         //open the register page if register button was clicked
-        register1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
+       // register1.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+         //   public void onClick(View view) {
+               // Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+               // startActivity(intent);
+         //   }
+       // });
 
     }
 

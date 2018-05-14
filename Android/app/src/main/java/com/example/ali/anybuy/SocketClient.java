@@ -1,43 +1,37 @@
 package com.example.ali.anybuy;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import Object.LinkedList;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SocketClient {
-    public static String run(String str) {
-        System.out.println("in client");
+    private final static Logger logger = Logger.getLogger(SocketClient.class.getName());
+
+    public static Object Run(LinkedList ll) throws Exception {
+        Socket socket = new Socket("yg-home.site", 18416);
+        ObjectOutputStream os = null;
+        ObjectInputStream is = null;
+
         try {
-            Socket socket = new Socket("yg-home.site", 18416);
-            socket.setSoTimeout(6000);
+            os = new ObjectOutputStream(socket.getOutputStream());
+            os.writeObject(ll);
+            os.flush();
 
-            System.out.println("Connection Established");
-
-            PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            String result = "";
-
-           // while (result.indexOf("bye") == -1) {
-
-               printWriter.println(str);
-                printWriter.flush();
-
-                result = bufferedReader.readLine();
-           // }
-
-
-
-
-            printWriter.close();
-            bufferedReader.close();
+            is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+            Object obj = is.readObject();
+            is.close();
+            os.close();
             socket.close();
-            return result;
-
-        } catch (Exception e) {
-            System.out.println("Exception:" + e);
-            return "0x1001";
+            return obj;
+        } catch(IOException ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 }

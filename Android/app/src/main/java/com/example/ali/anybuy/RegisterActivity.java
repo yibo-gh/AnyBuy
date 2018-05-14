@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import Object.LinkedList;
+import Object.User;
+
 public class RegisterActivity extends AppCompatActivity {
 
     public EditText email;
@@ -56,18 +59,58 @@ public class RegisterActivity extends AppCompatActivity {
                 else if (!repeatPassword.getText().toString().equals(passwordstr)) {
                     Toast.makeText(RegisterActivity.this, "You didn't repeat the password correctly!", Toast.LENGTH_LONG).show();
                 } else {
-                    combine = "reg&" + emailstr + "?" + passwordstr + "&useSSL=true";
-                    String res = SocketClient.run(combine);
-                    System.out.println(res);
-                    System.out.println(combine);
+
+                    LinkedList l = new LinkedList();
+                    l.insert("reg");
+                    String uInfo[] = emailstr.split("\\@");
+                    String res = "";
+                    if (uInfo.length == 2) {
+                        User u = new User(uInfo[0], uInfo[1], passwordstr);
+                        l.insert(u);
+                        try {
+                            Object o = SocketClient.Run(l);
+                            if (o.getClass().equals("".getClass())) {
+                                res = (String) o;
+                                System.out.println(res);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                 //   combine = "reg&" + emailstr + "?" + passwordstr + "&useSSL=true";
+                 //   String res = SocketClient.run(combine);
+                 //   System.out.println(res);
+                 //   System.out.println(combine);
 
                     if (res.equals(exist)) {
                         Toast.makeText(RegisterActivity.this, "Account already Exist", Toast.LENGTH_LONG).show();
                     } else {
-                        combineRegisterPage= "lgi&" + emailstr + "?" + passwordstr + "&useSSL=true";
+                    //    combineRegisterPage= "lgi&" + emailstr + "?" + passwordstr + "&useSSL=true";
 
-                        MainActivity.setSessionID(SocketClient.run(combineRegisterPage));
-                        System.out.println("com = " + combineRegisterPage);
+                        l = new LinkedList();
+                        l.insert("lgi");
+                        String[] uInfo2 = emailstr.split("\\@");
+                        if (uInfo.length == 2) {
+                            User u = new User(uInfo2[0], uInfo2[1], passwordstr);
+                            l.insert(u);
+                            try {
+                                Object o = (String)SocketClient.Run(l);
+                                if (o.getClass().equals("".getClass())) {
+                                    String str = (String) o;
+                                    MainActivity.setSessionID(str);
+                                }
+                                System.out.println(MainActivity.getID());
+                            } catch (Exception e) {
+                                MainActivity.setSessionID("");
+                                e.printStackTrace();
+                            }
+                        }
+                        else MainActivity.setSessionID("");
+
+
+                     //   MainActivity.setSessionID(SocketClient.run(combineRegisterPage));
+                     //   System.out.println("com = " + combineRegisterPage);
 
 
                         Toast.makeText(RegisterActivity.this, "You are good", Toast.LENGTH_LONG).show();
@@ -77,8 +120,8 @@ public class RegisterActivity extends AppCompatActivity {
                         startActivity(intent);
 
 
-                        String combineRegisterPage= "lgi&" + emailstr + "?" + passwordstr + "&useSSL=true";
-                        String sessionIDRegisterPage = SocketClient.run(combineRegisterPage);
+                     //   String combineRegisterPage= "lgi&" + emailstr + "?" + passwordstr + "&useSSL=true";
+                     //   String sessionIDRegisterPage = SocketClient.run(combineRegisterPage);
 
                     }
 
