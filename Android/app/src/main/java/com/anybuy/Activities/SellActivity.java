@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.anybuy.R;
-import com.example.ali.anybuy.R;
 
 public class SellActivity extends AppCompatActivity {
 
