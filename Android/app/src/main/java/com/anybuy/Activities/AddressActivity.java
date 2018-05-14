@@ -28,6 +28,7 @@ public class AddressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_address);
 
         Button newAddress = (Button) findViewById(R.id.NewAddressbuttonID);
+        Button deleteAddress = (Button) findViewById(R.id.deleteButton);
 
         TableLayout tableLayout = (TableLayout)findViewById(R.id.TableLayout01);
         tableLayout.setStretchAllColumns(true);
@@ -100,6 +101,14 @@ public class AddressActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddressActivity.this, AddressAddActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        deleteAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddressActivity.this, DeleteAddress.class);
                 startActivity(intent);
             }
         });
