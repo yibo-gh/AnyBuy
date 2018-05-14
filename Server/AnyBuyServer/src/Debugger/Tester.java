@@ -15,16 +15,16 @@ public class Tester {
 	static String sessionID = "";
 	
 	public static void main (String args[]) throws SQLException {
-		register("yoona", "snsd.or.kr", "loveYOONA!");
+//		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
-		placeOrder();
-		addAddress();
-		loadAddress(getSessionID());
+//		placeOrder();
+//		addAddress();
+//		loadAddress(getSessionID());
 		deleteAddress();
-		loadOrder();
-		addCard();
-		loadCard();
-		deleteCard();
+//		loadOrder();
+//		addCard();
+//		loadCard();
+//		deleteCard();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {

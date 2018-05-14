@@ -262,6 +262,8 @@ public class CoreOperations {
 		
 		// verify session
 		
+		writeLog("Add Card.");
+		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
@@ -308,6 +310,8 @@ public class CoreOperations {
 		 * ldc&<sessionID>
 		 */
 		
+		writeLog("Load Card.");
+		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
@@ -329,9 +333,13 @@ public class CoreOperations {
 		 * dlc&<sessionID>&<cardNum>
 		 */
 		
+		writeLog("Delete Card.");
+		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		Node temp = ll.head;
+		
+		boolean cardNotExist = false;
 		
 		while (temp != null) {
 			if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
@@ -342,14 +350,15 @@ public class CoreOperations {
 			String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select issuer from payment where cardNumber='" + cardNum + "'");
 			if (cardStatus == null) {
 				c.close();
-				return "0x1E04";
+				cardNotExist = true;
+			} else {
+				String res = SQLControl.SQLOperation.updateData(c, sql);
+				c.close();
+				if (res != "UPS") return res;
 			}
-			String res = SQLControl.SQLOperation.updateData(c, sql);
-			c.close();
-			if (res != "UPS") return res;
-			
 			temp = temp.getNext();
 		}
+		if (cardNotExist) return "0x1E04";
 		return "0x01";
 	}
 	
@@ -361,9 +370,13 @@ public class CoreOperations {
 		 * dlc&<sessionID>&<address>
 		 */
 		
+		writeLog("Add Address.");
+		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		Node temp = ll.head;
+		
+		boolean addressExist = false;
 		
 		while (temp != null) {
 			if (!(temp.getObject().getClass().equals(new Address().getClass()))) return "0x1002";
@@ -372,7 +385,7 @@ public class CoreOperations {
 			String addStatus = SQLControl.SQLOperation.readDatabase(c, "select line2 from address where line1='" + a.getL1() + "'");
 			if (addStatus != null) {
 				c.close();
-				return "0x1E06";
+				addressExist = true;
 			}
 			
 			String value = "('" + a.getFN() + "','" + a.getLN() + "','" + a.getCom() + "','" + a.getL1() + "','" + a.getL2() + "','" + a.getCity() + "','" + a.getState() + "','" + a.getZip() + "')";
@@ -382,7 +395,7 @@ public class CoreOperations {
 			temp = temp.getNext();
 		}
 		
-		
+		if (addressExist) return "0x1E06";
 		return "0x01";
 	}
 	
@@ -393,6 +406,8 @@ public class CoreOperations {
 		 * The Node should contains sessionID.
 		 * ldc&<sessionID>
 		 */
+		
+		writeLog("load Address.");
 		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
@@ -415,25 +430,31 @@ public class CoreOperations {
 		 * dla&<sessionID>&<L1>
 		 */
 		
+		writeLog("Delete Address.");
+		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		Node temp = ll.head;
+		
+		boolean addressNotExist = false;
 		
 		while (temp != null) {
 			if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
 			String line1 = (String)temp.getObject();
 			Connection c = SQLControl.SQLOperation.getConnect(uid);
 			String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select zip from address where line1='" + line1 + "'");
-			System.out.println(line1);
 			if (cardStatus == null) {
 				c.close();
-				return "0x1E07";
+				addressNotExist = true;
+			} else {
+				String sql = "delete from address where line1='" + line1 + "';";
+				String res = SQLControl.SQLOperation.updateData(c, sql);
+				c.close();
+				if (res != "UPS") return res;
 			}
-			String sql = "delete from address where line1='" + line1 + "';";
-			String res = SQLControl.SQLOperation.updateData(c, sql);
-			c.close();
-			if (res != "UPS") return res;
+			temp = temp.getNext();
 		}
+		if (addressNotExist) return "0x1E07";
 		return "0x01";
 	}
 	
@@ -520,6 +541,5 @@ public class CoreOperations {
 	public static void writeLog (String str) {
 		System.out.println(str);
 	}
-	
 	
 }
