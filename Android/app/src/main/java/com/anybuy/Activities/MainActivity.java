@@ -1,4 +1,4 @@
-package com.anybuy;
+package com.anybuy.Activities;
 
 import android.content.Intent;
 import android.os.Build;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.anybuy.R;
+import com.anybuy.Clients.SocketClient;
 
 import Object.*;
 
@@ -22,9 +25,7 @@ public class MainActivity extends AppCompatActivity {
     String passwordstr1;
     String loginerror1 = "0x1C01";
     String loginerror2 = "0x1C02";
-    String loginerror3 = "0x1A01";
     String loginerror4 = "0x1001";
-    String combine1;
 
     public static String getID() {
         return sessionID;
@@ -72,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
                     ll.insert(u);
                     try {
                         System.out.println(ll.getClass() + " " + ll.getLength());
-                        Object o = (String)SocketClient.Run(ll);
+                        Object o = (String) SocketClient.Run(ll);
                         if (o.getClass().equals("".getClass())) {
                             String str = (String) o;
                             setSessionID(str);
+                            System.out.println(getID());
                         }
                         System.out.println(sessionID);
                     } catch (Exception e) {
@@ -98,18 +100,18 @@ public class MainActivity extends AppCompatActivity {
 
                    // System.out.println(combine1);
                    // System.out.println(sessionID);
-                    /*if(sessionID.equals(loginerror1)) {
-                        Toast.makeText(MainActivity.this, "User not found", Toast.LENGTH_LONG).show();
+                    if(sessionID.equals(loginerror1)) {
+                        Toast.makeText(MainActivity.this, "User not found.", Toast.LENGTH_LONG).show();
                     }else if(sessionID.equals(loginerror2) || emailstr1.equals("") || passwordstr1.equals("")) {
-                        Toast.makeText(MainActivity.this, "Username or Password is invalid", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Invalid Username and/or Password.", Toast.LENGTH_LONG).show();
                     }
-                    else if(sessionID.equals(loginerror3) || sessionID.equals(loginerror4)) {
-                        Toast.makeText(MainActivity.this, "Wrong format", Toast.LENGTH_LONG).show();
+                    else if(sessionID.equals(loginerror4) || sessionID.equals(loginerror4)) {
+                        Toast.makeText(MainActivity.this, "Illegal Connection.", Toast.LENGTH_LONG).show();
                     }else{
-                     */   Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                         startActivity(intent);
-                   // }
+                    }
                     //}
 
             }

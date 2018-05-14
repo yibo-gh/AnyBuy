@@ -1,4 +1,4 @@
-package com.anybuy;
+package com.anybuy.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.anybuy.R;
+import com.anybuy.Clients.SocketClient;
 
 import java.sql.Timestamp;
 

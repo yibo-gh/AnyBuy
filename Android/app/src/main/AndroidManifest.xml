@@ -13,23 +13,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SellActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".BuyActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".OrdersActivity" />
-        <activity android:name=".PaymentActivity" />
-        <activity android:name=".AddressActivity" />
-        <activity android:name=".AddressAddActivity" />
-        <activity android:name=".PaymentAddActivity"></activity>
+        <activity android:name=".Activities.SellActivity" />
+        <activity android:name=".Activities.HomeActivity" />
+        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".Activities.BuyActivity" />
+        <activity android:name=".Activities.ProfileActivity" />
+        <activity android:name=".Activities.OrdersActivity" />
+        <activity android:name=".Activities.PaymentActivity" />
+        <activity android:name=".Activities.AddressActivity" />
+        <activity android:name=".Activities.AddressAddActivity" />
+        <activity android:name=".Activities.PaymentAddActivity"></activity>
     </application>
 
 </manifest>

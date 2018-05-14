@@ -1,7 +1,9 @@
-package com.anybuy;
+package com.anybuy.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.anybuy.R;
 
 public class PaymentAddActivity extends AppCompatActivity {
 
