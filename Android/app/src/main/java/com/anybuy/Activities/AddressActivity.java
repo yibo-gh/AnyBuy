@@ -66,13 +66,13 @@ public class AddressActivity extends AppCompatActivity {
                                 if (i == 0){
                                     tv.setText(a.getFN() + " " + a.getLN());
                                     tableRow.addView(tv);
-                                } else if (i == 1){
+                                } else if (i == 1 && !a.getCom().equals("")){
                                     tv.setText(a.getCom());
                                     tableRow.addView(tv);
                                 } else if (i == 2){
                                     tv.setText(a.getL1());
                                     tableRow.addView(tv);
-                                } else if (i == 3){
+                                } else if (i == 3 && !a.getL2().equals("")){
                                     tv.setText(a.getL2());
                                     tableRow.addView(tv);
                                 } else if (i == 4){

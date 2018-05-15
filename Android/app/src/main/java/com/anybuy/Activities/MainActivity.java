@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     ll.insert(u);
                     try {
                         System.out.println(ll.getClass() + " " + ll.getLength());
-                        Object o = (String) SocketClient.Run(ll);
+                        Object o = SocketClient.Run(ll);
                         if (o.getClass().equals("".getClass())) {
                             String str = (String) o;
                             setSessionID(str);
