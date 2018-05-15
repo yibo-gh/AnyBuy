@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               emailstr1 = email1.getText().toString();
+                emailstr1 = email1.getText().toString();
                 passwordstr1 = password1.getText().toString();
 
                 LinkedList ll = new LinkedList();
@@ -87,32 +87,32 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else sessionID = "";
 
-               // if(!repeatPassword.getText().toString().equals(password1str))
-               // {
+                // if(!repeatPassword.getText().toString().equals(password1str))
+                // {
                 //    Toast.makeText(MainActivity.this, "Email or Username is incorrect!", Toast.LENGTH_LONG).show();
                 //}
 
                 //else{
 
 
-                    //combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
-                    //sessionID = SocketClient.run(combine1);
+                //combine1 = "lgi&" + emailstr1 + "?" + passwordstr1 + "&useSSL=true";
+                //sessionID = SocketClient.run(combine1);
 
-                   // System.out.println(combine1);
-                   // System.out.println(sessionID);
-                    if(sessionID.equals(loginerror1)) {
-                        Toast.makeText(MainActivity.this, "User not found.", Toast.LENGTH_LONG).show();
-                    }else if(sessionID.equals(loginerror2) || emailstr1.equals("") || passwordstr1.equals("")) {
-                        Toast.makeText(MainActivity.this, "Invalid Username and/or Password.", Toast.LENGTH_LONG).show();
-                    }
-                    else if(sessionID.equals(loginerror4) || sessionID.equals(loginerror4)) {
-                        Toast.makeText(MainActivity.this, "Illegal Connection.", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                    }
-                    //}
+                // System.out.println(combine1);
+                // System.out.println(sessionID);
+                if(sessionID.equals(loginerror1)) {
+                    Toast.makeText(MainActivity.this, "User not found.", Toast.LENGTH_LONG).show();
+                }else if(sessionID.equals(loginerror2) || emailstr1.equals("") || passwordstr1.equals("")) {
+                    Toast.makeText(MainActivity.this, "Invalid Username and/or Password.", Toast.LENGTH_LONG).show();
+                }
+                else if(sessionID.equals(loginerror4) || sessionID.equals(loginerror4)) {
+                    Toast.makeText(MainActivity.this, "Illegal Connection.", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "You are good to log in", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                }
+                //}
 
             }
 
