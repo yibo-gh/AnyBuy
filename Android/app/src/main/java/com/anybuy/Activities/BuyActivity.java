@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.anybuy.R;
 import com.anybuy.Clients.SocketClient;
@@ -33,18 +34,43 @@ public class BuyActivity extends AppCompatActivity  {
     ImageView productImage;
 
     Button orderButton;
-    String combineBuyPage;
 
     String imageURIStr = "";
     private static final int REQUEST_CODE = 1;
     LinearLayout  linearLayout;
-    private final int PICK_IMAGE_REQUEST = 1;
 
     @Override
     public boolean onKeyDown(int keyCode,KeyEvent event){
         if(keyCode==KeyEvent.KEYCODE_BACK)
             return true;//不执行父类点击事件
         return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
+    }
+
+    private String strPreProcess(String str){
+        String tempStr[] = str.split("\\'");
+        String res = "";
+        for (int i = 0; i < tempStr.length; i++){
+            if (i != tempStr.length - 1) res = res + tempStr[i] + "\\'";
+            else res += tempStr[i];
+        }
+
+        tempStr = str.split("\\\"");
+        res = "";
+        for (int i = 0; i < tempStr.length; i++){
+            if (i != tempStr.length - 1) res = res + tempStr[i] + "\\\"";
+            else res += tempStr[i];
+        }
+
+        return res;
+    }
+
+    public static boolean isNumeric (String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isDigit(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -80,52 +106,61 @@ public class BuyActivity extends AppCompatActivity  {
                 String productBrandstr = productBrand.getText().toString();
                 String productNamestr = productName.getText().toString();
                 String countrystr = county.getText().toString();
-                String combineBuyPagestr;
                 String quantityNum = quantity.getText().toString();
 
-                try
-                {
-                    int numberOfOrders = Integer.parseInt(quantityNum);
+                if (!isNumeric(quantityNum)) {
+                    Toast.makeText(BuyActivity.this, "Invalid quantity.", Toast.LENGTH_LONG).show();
+                    return;
+                } else {
+                    productBrandstr = strPreProcess(productBrandstr);
+                    productNamestr = strPreProcess(productNamestr);
+
+
+                    try
+                    {
+                        int numberOfOrders = Integer.parseInt(quantityNum);
+                    }
+                    catch (NumberFormatException e)
+                    {
+                        // handle the exception
+                    }
+
+                    String sessionID = MainActivity.getID();
+                    //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
+                    //    String res = SocketClient.run(combineBuyPage);
+                    //    System.out.println(res);
+                    //    System.out.println(sessionID);
+
+                    LinkedList l = new LinkedList();
+                    l.insert("plo");
+                    l.insert(sessionID);
+                    Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
+                            countrystr, imageURIStr, new Timestamp(System.currentTimeMillis()));
+                    System.out.println("name: " + od.getProduct());
+                    l.insert(od);
+                    try {
+                        Object o = SocketClient.Run(l);
+                        if (o.getClass().equals("".getClass())) System.out.println((String)o);
+                        else if (o.getClass().equals(new LinkedList().getClass())){
+                            LinkedList l1 = (LinkedList) o;
+                            System.out.println(l1.getLength() + " image(s) requested.");
+                        } else System.out.println("plo function returned sth else.");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    //productImage.get
+
+                    //combine the Strings to get it all fixed up for the database api's
+                    //combineBuyPagestr = "plo&sessionID&" + countrystr + "?" + productNamestr + "?" + productBrandstr + "?"<Image>?<Quantity>
+                    //after giving the data to the back end we want to erase everything on the page so that the user can order another product
+                    productBrand.setText("");
+                    productName.setText("");
+                    quantity.setText("");
+                    county.setText("");
+
+                    productImage.setImageResource(android.R.drawable.ic_input_add);
                 }
-                catch (NumberFormatException e)
-                {
-                    // handle the exception
-                }
-
-                String sessionID = MainActivity.getID();
-            //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
-            //    String res = SocketClient.run(combineBuyPage);
-            //    System.out.println(res);
-            //    System.out.println(sessionID);
-
-                LinkedList l = new LinkedList();
-                l.insert("plo");
-                l.insert(sessionID);
-                Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
-                        countrystr, imageURIStr, new Timestamp(System.currentTimeMillis()));
-                l.insert(od);
-                try {
-                    Object o = SocketClient.Run(l);
-                    if (o.getClass().equals("".getClass())) System.out.println((String)o);
-                    else if (o.getClass().equals(new LinkedList().getClass())){
-                        LinkedList l1 = (LinkedList) o;
-                        System.out.println(l1.getLength() + " image(s) requested.");
-                    } else System.out.println("plo function returned sth else.");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                //productImage.get
-
-                //combine the Strings to get it all fixed up for the database api's
-                //combineBuyPagestr = "plo&sessionID&" + countrystr + "?" + productNamestr + "?" + productBrandstr + "?"<Image>?<Quantity>
-                //after giving the data to the back end we want to erase everything on the page so that the user can order another product
-                productBrand.setText("");
-                productName.setText("");
-                quantity.setText("");
-                county.setText("");
-
-                productImage.setImageResource(android.R.drawable.ic_input_add);
 
             }
         });

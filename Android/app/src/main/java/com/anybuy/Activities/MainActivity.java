@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    // Disable the return button on a physical Android phone.
     public boolean onKeyDown(int keyCode,KeyEvent event){
         if(keyCode==KeyEvent.KEYCODE_BACK)
             return true;//不执行父类点击事件
@@ -105,9 +106,10 @@ public class MainActivity extends AppCompatActivity {
 
                 // System.out.println(combine1);
                 // System.out.println(sessionID);
+
                 if(sessionID.equals(loginerror1)) {
                     Toast.makeText(MainActivity.this, "User not found.", Toast.LENGTH_LONG).show();
-                }else if(sessionID.equals(loginerror2) || emailstr1.equals("") || passwordstr1.equals("")) {
+                }else if(sessionID.equals(loginerror2) || emailstr1.equals("") || passwordstr1.equals("") || sessionID.equals("")) {
                     Toast.makeText(MainActivity.this, "Invalid Username and/or Password.", Toast.LENGTH_LONG).show();
                 }
                 else if(sessionID.equals(loginerror4) || sessionID.equals(loginerror4)) {

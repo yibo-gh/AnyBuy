@@ -25,10 +25,9 @@ public class RegisterActivity extends AppCompatActivity {
     String emailstr;
     String passwordstr;
     String exist = "0x1A08";
-    String emailPasswordForServer;
+    String interalError1 = "0x1A04";
+    String interalError2 = "0x1A05";
 
-    String combineRegisterPage;
-    String combine;
 
     @Override
     public boolean onKeyDown(int keyCode,KeyEvent event){
@@ -77,17 +76,26 @@ public class RegisterActivity extends AppCompatActivity {
                     String uInfo[] = emailstr.split("\\@");
                     String res = "";
                     if (uInfo.length == 2) {
-                        User u = new User(uInfo[0], uInfo[1], passwordstr);
-                        l.insert(u);
-                        try {
-                            Object o = SocketClient.Run(l);
-                            if (o.getClass().equals("".getClass())) {
-                                res = (String) o;
-                                System.out.println(res);
+                        String[] domain = uInfo[1].split("\\.");
+                        if(domain.length >= 2){
+                            User u = new User(uInfo[0], uInfo[1], passwordstr);
+                            l.insert(u);
+                            try {
+                                Object o = SocketClient.Run(l);
+                                if (o.getClass().equals("".getClass())) {
+                                    res = (String) o;
+                                    System.out.println(res);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Invalid email address " + res, Toast.LENGTH_LONG).show();
+                            return;
                         }
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Invalid email address " + res, Toast.LENGTH_LONG).show();
+                        return;
                     }
 
                  //   combine = "reg&" + emailstr + "?" + passwordstr + "&useSSL=true";
@@ -97,6 +105,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if (res.equals(exist)) {
                         Toast.makeText(RegisterActivity.this, "Account already Exist", Toast.LENGTH_LONG).show();
+                    } else if (res.equals(interalError1) || res.equals(interalError2)) {
+                        Toast.makeText(RegisterActivity.this, "Server Internal Error " + res, Toast.LENGTH_LONG).show();
+                    } else if (res.equals("0x1A07")) {
+                        Toast.makeText(RegisterActivity.this, "Invalid email address " + res, Toast.LENGTH_LONG).show();
                     } else {
                     //    combineRegisterPage= "lgi&" + emailstr + "?" + passwordstr + "&useSSL=true";
 
