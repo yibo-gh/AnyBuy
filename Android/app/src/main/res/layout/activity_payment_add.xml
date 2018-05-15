@@ -2,106 +2,96 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newCardButtonID"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.PaymentAddActivity">
 
     <Button
-        android:id="@+id/AddAddressbuttonID"
+        android:id="@+id/AddCardButtonID"
         android:layout_width="178dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
         android:text="Add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expEditText" />
 
     <EditText
         android:id="@+id/FNeditText"
-        android:layout_width="138dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@+id/Addressline1editText"
+        app:layout_constraintBottom_toTopOf="@+id/CardNumEditText"
         app:layout_constraintEnd_toStartOf="@+id/LNeditText"
-        app:layout_constraintHorizontal_bias="0.714"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/LNeditText"
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginTop="112dp"
-        android:ems="10"
-        android:hint="Last Name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/Addressline1editText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/CardNumEditText"
-        android:layout_width="317dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="196dp"
-        android:ems="10"
-        android:hint="Card Number"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/Addressline2editText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/expEditText"
-        android:layout_width="143dp"
+        android:id="@+id/LNeditText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="192dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:ems="10"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/FNeditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/FNeditText" />
+
+    <EditText
+        android:id="@+id/CardNumEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginStart="40dp"
+        android:ems="10"
+        android:hint="Card Number"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/expEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FNeditText" />
+
+    <EditText
+        android:id="@+id/expEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
         android:ems="10"
         android:hint="Card Exp"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/zipeditText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/AddCardButtonID"
+        app:layout_constraintEnd_toStartOf="@+id/zipEditText"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CardNumEditText" />
 
     <EditText
         android:id="@+id/zipEditText"
-        android:layout_width="155dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
         android:ems="10"
         android:hint="zip"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/AddAddressbuttonID"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/expEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/expEditText" />
 
 
 </android.support.constraint.ConstraintLayout>

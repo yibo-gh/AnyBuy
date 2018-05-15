@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,13 @@ public class PaymentAddActivity extends AppCompatActivity {
     EditText FN, LN,  CN, ZP, EXP;
     Button addCardButton;
     String f, l, i, c, z, e;
+
+    @Override
+    public boolean onKeyDown(int keyCode,KeyEvent event){
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+            return true;//不执行父类点击事件
+        return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,8 @@ public class PaymentAddActivity extends AppCompatActivity {
         ZP = (EditText) findViewById(R.id.zipEditText);
         EXP = (EditText) findViewById(R.id.expEditText);
 
-        addCardButton = (Button) findViewById(R.id.newCardButtonID);
+        addCardButton = (Button) findViewById(R.id.AddCardButtonID);
+        System.out.println("Card created.");
 
         addCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,8 +67,9 @@ public class PaymentAddActivity extends AppCompatActivity {
                 else if (c.charAt(0) == '6' && c.charAt(1) == '2' && (c.length() == 16 || c.length() == 19)) i = "unpy";
                 else i = "unkn";
 
+
                 LinkedList ll = new LinkedList();
-                ll.insert("ada");
+                ll.insert("adc");
                 ll.insert(MainActivity.getID());
                 Card cd = new Card(f, l, i, c, e, z);
                 System.out.println("FN = " + cd.getFN());

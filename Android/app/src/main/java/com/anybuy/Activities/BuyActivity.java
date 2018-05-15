@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,14 @@ public class BuyActivity extends AppCompatActivity  {
     private static final int REQUEST_CODE = 1;
     LinearLayout  linearLayout;
     private final int PICK_IMAGE_REQUEST = 1;
+
+    @Override
+    public boolean onKeyDown(int keyCode,KeyEvent event){
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+            return true;//不执行父类点击事件
+        return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

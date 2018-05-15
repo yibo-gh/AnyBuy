@@ -7,13 +7,14 @@
     tools:context=".Activities.PaymentActivity">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="431dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="16dp">
+        android:id="@+id/scrollView2"
+        android:layout_width="324dp"
+        android:layout_height="454dp"
+        app:layout_constraintBottom_toTopOf="@+id/deleteButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,23 +40,22 @@
 
     <Button
         android:id="@+id/newCardButtonID"
-        android:layout_width="wrap_content"
+        android:layout_width="118dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginRight="17dp"
         android:text="New Card"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/deleteButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/deleteButton" />
 
     <Button
         android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
+        android:layout_width="118dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp"
         android:text="Delete Card"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/newCardButtonID"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 </android.support.constraint.ConstraintLayout>

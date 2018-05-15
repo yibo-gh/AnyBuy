@@ -3,6 +3,7 @@ package com.anybuy.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,11 +25,19 @@ public class PaymentActivity extends AppCompatActivity {
     private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
 
     @Override
+    public boolean onKeyDown(int keyCode,KeyEvent event){
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+            return true;//不执行父类点击事件
+        return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        Button newpayment = (Button) findViewById(R.id.newCardButtonID);
+        Button newPayment = (Button) findViewById(R.id.newCardButtonID);
+        Button deletePayment = (Button) findViewById(R.id.deleteButton);
 
         TableLayout tableLayout = (TableLayout)findViewById(R.id.TableLayout01);
         tableLayout.setStretchAllColumns(true);
@@ -40,12 +49,12 @@ public class PaymentActivity extends AppCompatActivity {
         try {
             Object o = SocketClient.Run(l);
             if (o.getClass().equals("".getClass())) {
-                System.out.println((String) o);
                 TableRow tableRow = new TableRow(this);
                 TextView tv = new TextView(this);
                 tv.setText((String) o);
                 tableRow.addView(tv);
                 tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
+                deletePayment.setEnabled(false);
             } else {
                 l = (LinkedList) o;
                 System.out.println("length of LinkedList is " + l.getLength());
@@ -53,6 +62,7 @@ public class PaymentActivity extends AppCompatActivity {
                     TableRow tableRow = new TableRow(this);
                     TextView tv = new TextView(this);
                     tv.setText("No card found on profile.");
+                    deletePayment.setEnabled(false);
                     tableRow.addView(tv);
                     tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
                 } else {
@@ -89,10 +99,18 @@ public class PaymentActivity extends AppCompatActivity {
         }
 
 
-        newpayment.setOnClickListener(new View.OnClickListener() {
+        newPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PaymentActivity.this, PaymentAddActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        deletePayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PaymentActivity.this, PaymentDelete.class);
                 startActivity(intent);
             }
         });
