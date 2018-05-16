@@ -9,10 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anybuy.R;
@@ -26,8 +30,8 @@ public class BuyActivity extends AppCompatActivity  {
 
     EditText productBrand;
     EditText productName;
-    EditText county;
     EditText quantity;
+    Spinner spinner;
 
     Uri imageURI;
 
@@ -36,6 +40,8 @@ public class BuyActivity extends AppCompatActivity  {
     Button orderButton;
 
     String imageURIStr = "";
+    String countryStr;
+
     private static final int REQUEST_CODE = 1;
     LinearLayout  linearLayout;
 
@@ -88,8 +94,7 @@ public class BuyActivity extends AppCompatActivity  {
         productBrand = (EditText) findViewById(R.id.productBrandEditTextID);
         productName = (EditText) findViewById(R.id.productNameEditTextID);
         quantity = (EditText) findViewById(R.id.quantityEditTextID);
-        county = (EditText)findViewById(R.id.countryEditTextID);
-
+        spinner = (Spinner) findViewById(R.id.spinnerCountry);
         productImage = (ImageView) findViewById(R.id.productImageViewID);
 
         orderButton = (Button) findViewById(R.id.orderButtonID);
@@ -106,13 +111,118 @@ public class BuyActivity extends AppCompatActivity  {
             }
         });
 
+        final String[] countryCode = {""
+
+                , "CA"
+                , "CAB", "CBC", "CMB"
+                , "CNB", "CNL"
+                , "CNS", "CNT", "CNU", "CON"
+                , "CPE", "CQC", "CSK"
+                , "CTY"
+
+                , "IR"
+
+                , "TW"
+                , "RHK", "RMO"
+                , "RML", "RTW"
+
+                , "KR"
+                , "RKR", "RKP"
+
+                , "SG"
+
+                , "US", "KDC"
+                , "KAL", "KAZ", "KAR"
+                , "KCA", "KCO"
+                , "KCT", "KDE", "KFL"
+                , "KGA", "KHI", "KID"
+                , "KIL", "KIN", "KIA"
+                , "KKS", "KKY", "KLA"
+                , "KME", "KMD", "KMA"
+                , "KMI", "KMN", "KMS"
+                , "KMO", "KMT", "KNE"
+                , "KNV", "KNH", "KNJ"
+                , "KNM", "KNY", "KNC"
+                , "KND", "KOH", "KOK"
+                , "KOR", "KPA", "KRI"
+                , "KSC", "KSD", "KTN"
+                , "KTX", "KUT", "KVT"
+                , "KVA", "KWA", "KWV"
+                , "KWI", "KWY"};
+
+        final String[] options = {"Please selete a country from the list."
+
+                , "Canada"
+                , "Canada - Alberta", "Canada - British Columbia", "Canada - Manitoba"
+                , "Canada - New Brunswick" , "Canada - Newfoundland and Labrador"
+                , "Canada - NW Territories", "Canada - Nova Scotia", "Canada - Nunavut", "Canada - Ontario"
+                , "Canada - Prince Edward Island", "Canada - Quebec", "Canada - Saskatchewan"
+                , "Canada - Yukon"
+
+                , "Islamic Republic of Iran جمهوری اسلامی ایران"
+
+                , "Republic of China 中華民國"
+                , "Republic of China - Hong Kong 中華民國 香港", "Republic of China - Macau中華冥國 澳門"
+                , "Republic of China - Mainland 中華民國 大陸", "Republic of China - Taiwan 中華民國 台灣"
+
+                , "Republic of Korea 대한민국"
+                , "Republic of Korea - South 대한민국 남부", "Republic of Korea - North 대한민국 북부"
+
+                , "Republic of Singapore 新加坡共和國"
+
+                , "United States", "Washington D.C."
+                , "United States - Alabama"
+                , "United States - Alaska", "United States - Arizona", "United States = Arkansas"
+                , "United States - California the Great", "United States - Colorado"
+                , "United States - Connecticut", "United States - Delaware", "United States - Florida"
+                , "United States - Georgia", "United States - Hawaii", "United States - Idaho"
+                , "United States - Illinois", "United States - Indiana", "United States - Iowa"
+                , "United States - Kansas", "United States - Kentucky", "United States - Louisiana"
+                , "United States - Maine", "United States - Maryland", "United States - Massachusetts"
+                , "United States - Michigan", "United States - Minnesota" , "United States - Mississippi"
+                , "United States - Missouri", "United States - Montana", "United States - Nebraska"
+                , "United States - Nevada", "United States - New Hampshire", "United States - New Jerset"
+                , "United States - New Mexico", "United States - New York", "United States - N. Carolina"
+                , "United States - N.Dakota", "United States - Ohio", "United States - Oklahoma"
+                , "United States - Oregon", "United States - Pennsylvania", "United States - Rhode Island"
+                , "United States - S. Carolina", "United States - S. Dakota", "United States - Tennessee"
+                , "United States - Texas", "United States - Utah", "United States - Vermont"
+                , "United States - Virginia", "United States - Washington", "United States - W. Virginia"
+                , "United States - Wisconsin", "United States - Wyoming"};
+
+
+        System.out.println("spinner initialized.");
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, options);
+        //设置下拉列表风格
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //将适配器添加到spinner中去
+        System.out.println("adapter is null = " + adapter == null);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                // TODO Auto-generated method stub
+                String str = adapter.getItem(arg2);
+                System.out.println("Choice is " + str);
+
+                int countryIndex = 0;
+                while (!options[countryIndex].equals(str)) countryIndex++;
+                countryStr = countryCode[countryIndex];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Strings to set the edit text to them
                 String productBrandstr = productBrand.getText().toString();
                 String productNamestr = productName.getText().toString();
-                String countrystr = county.getText().toString();
                 String quantityNum = quantity.getText().toString();
 
                 if (!isNumeric(quantityNum)) {
@@ -138,11 +248,15 @@ public class BuyActivity extends AppCompatActivity  {
                     //    System.out.println(res);
                     //    System.out.println(sessionID);
 
+                    if (countryStr.equals("")) {
+                        Toast.makeText(BuyActivity.this, "Invalid Country Selection.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     LinkedList l = new LinkedList();
                     l.insert("plo");
                     l.insert(sessionID);
                     Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
-                            countrystr, imageURIStr, new Timestamp(System.currentTimeMillis()));
+                            countryStr, imageURIStr, new Timestamp(System.currentTimeMillis()));
                     System.out.println("name: " + od.getProduct());
                     l.insert(od);
                     try {
@@ -164,7 +278,6 @@ public class BuyActivity extends AppCompatActivity  {
                     productBrand.setText("");
                     productName.setText("");
                     quantity.setText("");
-                    county.setText("");
 
                     productImage.setImageResource(android.R.drawable.ic_input_add);
                 }
