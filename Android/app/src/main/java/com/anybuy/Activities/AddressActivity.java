@@ -3,6 +3,7 @@ package com.anybuy.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +22,13 @@ public class AddressActivity extends AppCompatActivity {
 
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
+
+    @Override
+    public boolean onKeyDown(int keyCode,KeyEvent event){
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+            return true;//不执行父类点击事件
+        return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,7 @@ public class AddressActivity extends AppCompatActivity {
                 tv.setText((String) o);
                 tableRow.addView(tv);
                 tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
+                deleteAddress.setEnabled(false);
             } else if (o.getClass().equals(new LinkedList().getClass())){
                 l = (LinkedList) o;
                 if (l.getLength() == 0) {
@@ -54,6 +63,7 @@ public class AddressActivity extends AppCompatActivity {
                     tv.setText("No address found on profile.");
                     tableRow.addView(tv);
                     tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
+                    deleteAddress.setEnabled(false);
                 } else {
                     Node temp = l.head;
                     while (temp != null) {
@@ -66,13 +76,13 @@ public class AddressActivity extends AppCompatActivity {
                                 if (i == 0){
                                     tv.setText(a.getFN() + " " + a.getLN());
                                     tableRow.addView(tv);
-                                } else if (i == 1){
+                                } else if (i == 1 && !a.getCom().equals("")){
                                     tv.setText(a.getCom());
                                     tableRow.addView(tv);
                                 } else if (i == 2){
                                     tv.setText(a.getL1());
                                     tableRow.addView(tv);
-                                } else if (i == 3){
+                                } else if (i == 3 && !a.getL2().equals("")){
                                     tv.setText(a.getL2());
                                     tableRow.addView(tv);
                                 } else if (i == 4){

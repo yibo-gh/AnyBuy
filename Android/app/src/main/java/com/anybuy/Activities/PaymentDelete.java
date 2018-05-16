@@ -3,6 +3,7 @@ package com.anybuy.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -16,17 +17,17 @@ import com.anybuy.Clients.SocketClient;
 import com.anybuy.R;
 
 import Object.LinkedList;
-import Object.Address;
+import Object.Card;
 import Object.Node;
 
-public class DeleteAddress extends Activity {
+
+public class PaymentDelete extends AppCompatActivity {
 
     TextView result;
     Spinner spinner;
     Button button;
     Object o;
-
-    private static String[] options;
+    String[] options;
 
     @Override
     public boolean onKeyDown(int keyCode,KeyEvent event){
@@ -38,14 +39,16 @@ public class DeleteAddress extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delete_address);
+        setContentView(R.layout.activity_payment_delete);
+
         result = (TextView) findViewById(R.id.result);
         spinner = (Spinner) findViewById(R.id.spinner);
-        button = (Button) findViewById(R.id.deleteAddressButton);
+        button = (Button) findViewById(R.id.deleteCardButton);
         LinkedList l = new LinkedList();
-        l.insert("lda");
+        l.insert("ldc");
         l.insert(MainActivity.getID());
-        LinkedList aList = new LinkedList();
+        LinkedList cList = new LinkedList();
+
         try {
             o = SocketClient.Run(l);
             if (o.getClass().equals(new LinkedList().getClass())){
@@ -54,25 +57,24 @@ public class DeleteAddress extends Activity {
                 int i = 1;
                 while (temp != null){
                     String str = i + ". ";
-                    Address a = (Address) temp.getObject();
-                    str += a.getFN();
-                    str += " ";
-                    str += a.getLN();
-                    str += ", ";
-                    str = str + a.getCom() + "\n" + a.getL1() + "\n" + a.getL2();
-                    str = str + "\n" + a.getCity() + ", " + a.getState() + " " + a.getZip();
-                    aList.insert(str);
+                    Card cd = (Card) temp.getObject();
+                    str = str + cd.getFN() + " " + cd.getLN();
+                    str = str + "\n" + cd.getIssuser() + " " + cd.getCardNum();
+                    str = str + "\n" + cd.getExp() + " " + cd.getZip();
+                    cList.insert(str);
                     i++;
                     temp = temp.getNext();
                 }
-            } else aList.insert("null");
+            } else {
+                cList.insert("null");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        options = new String[aList.getLength()];
+        options = new String[cList.getLength()];
 
-        Node temp = aList.head;
+        Node temp = cList.head;
 
         int i = 0;
         while (temp != null){
@@ -107,7 +109,7 @@ public class DeleteAddress extends Activity {
             @Override
             public void onClick(View view) {
                 LinkedList l = new LinkedList();
-                l.insert("dta");
+                l.insert("dtc");
                 l.insert(MainActivity.getID());
                 LinkedList obj = (LinkedList) o;
                 Node temp = obj.head;
@@ -115,18 +117,17 @@ public class DeleteAddress extends Activity {
                     temp = temp.getNext();
                 }
                 System.out.println(temp.getObject().getClass());
-                l.insert((String)((Address)temp.getObject()).getL1());
+                l.insert((String)((Card)temp.getObject()).getCardNum());
                 try {
                     Object o = SocketClient.Run(l);
                     System.out.println((String)o);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(DeleteAddress.this, AddressActivity.class);
+                Intent intent = new Intent(PaymentDelete.this, PaymentActivity.class);
                 startActivity(intent);
             }
         });
 
     }
-
 }

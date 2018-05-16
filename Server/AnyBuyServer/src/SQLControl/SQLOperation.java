@@ -85,6 +85,25 @@ public class SQLOperation {
 		return "0x1F01";
 	}
 	
+	// Create table for order's offers in generalOffer
+	public static String createOfferTable(Connection c, String orderID) {
+		String sql = "CREATE TABLE " + orderID
+				+ " sellerID VARCHAR(45) NOT NULL,"
+				+ " rate DOUBLE(12,2) NOT NULL,"
+				+ " expressCost DOUBLE(12,2) NOT NULL,"
+				+ " shippingMethod INT(1) NOT NULL,"
+				+ " acceptance BIT(1) NOT NULL,"
+				+ " remark VARCHAR(140) NULL";
+		try {
+			c.createStatement().executeUpdate(sql);
+		} catch (SQLException e) {
+			// Failed CREATE TABLE for order
+			return "0xPAIN";
+		}
+		// Failed CREATE TABLE for order
+		return "0xPAIN";
+	}
+	
 	public static int countLine(Connection c, String tableName) throws SQLException {
 		String sql = "select count(*) as rowCount from " + tableName;
 		ResultSet rset = c.createStatement().executeQuery(sql);

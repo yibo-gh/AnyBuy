@@ -20,17 +20,111 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.SellActivity" />
+
+
         <activity android:name=".Activities.HomeActivity" />
-        <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.BuyActivity" />
-        <activity android:name=".Activities.ProfileActivity" />
-        <activity android:name=".Activities.OrdersActivity" />
-        <activity android:name=".Activities.PaymentActivity" />
-        <activity android:name=".Activities.AddressActivity" />
-        <activity android:name=".Activities.AddressAddActivity" />
-        <activity android:name=".Activities.PaymentAddActivity" />
-        <activity android:name=".Activities.DeleteAddress"></activity>
+
+
+        <activity android:name=".Activities.BuyActivity"
+            android:parentActivityName=".Activities.HomeActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.HomeActivity" />
+        </activity>
+
+        <activity android:name=".Activities.SellActivity"
+            android:parentActivityName=".Activities.HomeActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.HomeActivity" />
+        </activity>
+
+
+        <activity android:name=".Activities.ProfileActivity"
+            android:parentActivityName=".Activities.HomeActivity" >
+        <!-- The meta-data tag is required if you support API level 15 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Activities.HomeActivity" />
+        </activity>
+
+        <activity android:name=".Activities.RegisterActivity"
+            android:parentActivityName=".Activities.MainActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
+
+
+        <activity android:name=".Activities.OrdersActivity"
+            android:parentActivityName=".Activities.ProfileActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.ProfileActivity" />
+        </activity>
+
+
+        <activity android:name=".Activities.PaymentActivity"
+            android:parentActivityName=".Activities.ProfileActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.ProfileActivity" />
+        </activity>
+
+        <activity android:name=".Activities.AddressActivity"
+            android:parentActivityName=".Activities.ProfileActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.ProfileActivity" />
+        </activity>
+
+
+        <activity android:name=".Activities.AddressAddActivity"
+            android:parentActivityName=".Activities.AddressActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.AddressActivity" />
+        </activity>
+
+
+        <activity android:name=".Activities.DeleteAddress"
+            android:parentActivityName=".Activities.AddressActivity" >
+        <!-- The meta-data tag is required if you support API level 15 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Activities.AddressActivity" />
+        </activity>
+
+
+        <activity android:name=".Activities.PaymentAddActivity"
+            android:parentActivityName=".Activities.PaymentActivity" >
+        <!-- The meta-data tag is required if you support API level 15 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Activities.PaymentActivity" />
+        </activity>
+
+
+        <activity android:name=".Activities.PaymentDelete"
+            android:parentActivityName=".Activities.PaymentActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.PaymentActivity" />
+        </activity>
+
+
+
+
+
+
     </application>
 
 </manifest>
