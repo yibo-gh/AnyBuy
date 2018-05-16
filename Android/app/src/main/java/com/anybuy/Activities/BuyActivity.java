@@ -16,6 +16,11 @@ import android.widget.LinearLayout;
 import com.anybuy.R;
 import com.anybuy.Clients.SocketClient;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Timestamp;
 
 import Object.*;
@@ -29,8 +34,13 @@ public class BuyActivity extends AppCompatActivity  {
 
     Uri imageURI;
 
+    InputStream inputStream;
+
+    String path = "didnt work";
+    String fileNaame = "also didn't work";
     ImageView productImage;
 
+    File file;
     Button orderButton;
     String combineBuyPage;
 
@@ -107,7 +117,6 @@ public class BuyActivity extends AppCompatActivity  {
                 }
 
                 //productImage.get
-
                 //combine the Strings to get it all fixed up for the database api's
                 //combineBuyPagestr = "plo&sessionID&" + countrystr + "?" + productNamestr + "?" + productBrandstr + "?"<Image>?<Quantity>
                 //after giving the data to the back end we want to erase everything on the page so that the user can order another product
@@ -117,7 +126,6 @@ public class BuyActivity extends AppCompatActivity  {
                 county.setText("");
 
                 productImage.setImageResource(android.R.drawable.ic_input_add);
-
             }
         });
 
@@ -143,8 +151,7 @@ public class BuyActivity extends AppCompatActivity  {
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null)
         {
 
-
-             imageURI = data.getData();
+            imageURI = data.getData();
             productImage.setImageURI(imageURI);
 
             imageURIStr = imageURI.toString();
@@ -152,23 +159,4 @@ public class BuyActivity extends AppCompatActivity  {
 
         }
     }
-
-    public String getRealPathFromURI(Uri contentURI, Activity context) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        @SuppressWarnings("deprecation")
-        Cursor cursor = context.managedQuery(contentURI, projection, null,
-                null, null);
-        if (cursor == null)
-            return null;
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        if (cursor.moveToFirst()) {
-            String s = cursor.getString(column_index);
-            // cursor.close();
-            return s;
-        }
-        // cursor.close();
-        return null;
-    }
-
 }
