@@ -47,18 +47,25 @@ public class BuyActivity extends AppCompatActivity  {
     }
 
     private String strPreProcess(String str){
-        String tempStr[] = str.split("\\'");
-        String res = "";
-        for (int i = 0; i < tempStr.length; i++){
-            if (i != tempStr.length - 1) res = res + tempStr[i] + "\\'";
-            else res += tempStr[i];
+
+        String res = str;
+
+        if (str.contains("'")){
+            String tempStr[] = str.split("\\'");
+            res = "";
+            for (int i = 0; i < tempStr.length; i++){
+                if (i != tempStr.length - 1) res = res + tempStr[i] + "\\'";
+                else res += tempStr[i];
+            }
         }
 
-        tempStr = str.split("\\\"");
-        res = "";
-        for (int i = 0; i < tempStr.length; i++){
-            if (i != tempStr.length - 1) res = res + tempStr[i] + "\\\"";
-            else res += tempStr[i];
+        if (str.contains("\"")){
+            String[] tempStr = str.split("\\\"");
+            res = "";
+            for (int i = 0; i < tempStr.length; i++){
+                if (i != tempStr.length - 1) res = res + tempStr[i] + "\\\"";
+                else res += tempStr[i];
+            }
         }
 
         return res;
