@@ -21,6 +21,11 @@ import android.widget.Toast;
 import com.anybuy.R;
 import com.anybuy.Clients.SocketClient;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Timestamp;
 
 import Object.*;
@@ -34,8 +39,13 @@ public class BuyActivity extends AppCompatActivity  {
 
     Uri imageURI;
 
+    InputStream inputStream;
+
+    String path = "didnt work";
+    String fileNaame = "also didn't work";
     ImageView productImage;
 
+    File file;
     Button orderButton;
 
     String imageURIStr = "";
@@ -304,7 +314,48 @@ public class BuyActivity extends AppCompatActivity  {
 
                     productImage.setImageResource(android.R.drawable.ic_input_add);
                 }
+<<<<<<< HEAD
+                catch (NumberFormatException e)
+                {
+                    // handle the exception
+                }
 
+                String sessionID = MainActivity.getID();
+            //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
+            //    String res = SocketClient.run(combineBuyPage);
+            //    System.out.println(res);
+            //    System.out.println(sessionID);
+
+                LinkedList l = new LinkedList();
+                l.insert("plo");
+                l.insert(sessionID);
+                Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
+                        countrystr, imageURIStr, new Timestamp(System.currentTimeMillis()));
+                l.insert(od);
+                try {
+                    Object o = SocketClient.Run(l);
+                    if (o.getClass().equals("".getClass())) System.out.println((String)o);
+                    else if (o.getClass().equals(new LinkedList().getClass())){
+                        LinkedList l1 = (LinkedList) o;
+                        System.out.println(l1.getLength() + " image(s) requested.");
+                    } else System.out.println("plo function returned sth else.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                //productImage.get
+                //combine the Strings to get it all fixed up for the database api's
+                //combineBuyPagestr = "plo&sessionID&" + countrystr + "?" + productNamestr + "?" + productBrandstr + "?"<Image>?<Quantity>
+                //after giving the data to the back end we want to erase everything on the page so that the user can order another product
+                productBrand.setText("");
+                productName.setText("");
+                quantity.setText("");
+                county.setText("");
+
+                productImage.setImageResource(android.R.drawable.ic_input_add);
+=======
+
+>>>>>>> b9deab9ee6d89e16ef36919947ade4c0be8d3f3b
             }
         });
 
@@ -330,8 +381,7 @@ public class BuyActivity extends AppCompatActivity  {
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null)
         {
 
-
-             imageURI = data.getData();
+            imageURI = data.getData();
             productImage.setImageURI(imageURI);
 
             imageURIStr = imageURI.toString();
@@ -339,23 +389,4 @@ public class BuyActivity extends AppCompatActivity  {
 
         }
     }
-
-    public String getRealPathFromURI(Uri contentURI, Activity context) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        @SuppressWarnings("deprecation")
-        Cursor cursor = context.managedQuery(contentURI, projection, null,
-                null, null);
-        if (cursor == null)
-            return null;
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        if (cursor.moveToFirst()) {
-            String s = cursor.getString(column_index);
-            // cursor.close();
-            return s;
-        }
-        // cursor.close();
-        return null;
-    }
-
 }
