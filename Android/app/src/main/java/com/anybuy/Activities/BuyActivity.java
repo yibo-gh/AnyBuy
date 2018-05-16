@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anybuy.R;
@@ -113,6 +112,8 @@ public class BuyActivity extends AppCompatActivity  {
 
         final String[] countryCode = {""
 
+                ,""
+
                 , "CA"
                 , "CAB", "CBC", "CMB"
                 , "CNB", "CNL"
@@ -120,16 +121,26 @@ public class BuyActivity extends AppCompatActivity  {
                 , "CPE", "CQC", "CSK"
                 , "CTY"
 
+                ,""
+
                 , "IR"
+
+                ,""
 
                 , "TW"
                 , "RHK", "RMO"
                 , "RML", "RTW"
 
+                ,""
+
                 , "KR"
                 , "RKR", "RKP"
 
+                ,""
+
                 , "SG"
+
+                ,""
 
                 , "US", "KDC"
                 , "KAL", "KAZ", "KAR"
@@ -150,7 +161,9 @@ public class BuyActivity extends AppCompatActivity  {
                 , "KVA", "KWA", "KWV"
                 , "KWI", "KWY"};
 
-        final String[] options = {"Please selete a country from the list."
+        final String[] options = {"Please select where you want your item."
+
+                ,"------ ( •̀ .̫ •́ )✧ ------"
 
                 , "Canada"
                 , "Canada - Alberta", "Canada - British Columbia", "Canada - Manitoba"
@@ -159,20 +172,30 @@ public class BuyActivity extends AppCompatActivity  {
                 , "Canada - Prince Edward Island", "Canada - Quebec", "Canada - Saskatchewan"
                 , "Canada - Yukon"
 
+                ,"------ (๑¯◡¯๑) ------"
+
                 , "Islamic Republic of Iran جمهوری اسلامی ایران"
 
+                ,"------ (๑•̀ㅂ•́) ✧ ------"
+
                 , "Republic of China 中華民國"
-                , "Republic of China - Hong Kong 中華民國 香港", "Republic of China - Macau中華冥國 澳門"
+                , "Republic of China - Hong Kong 中華民國 香港", "Republic of China - Macau中華民國 澳門"
                 , "Republic of China - Mainland 中華民國 大陸", "Republic of China - Taiwan 中華民國 台灣"
+
+                ,"------ ლ(╹◡╹ლ) ------"
 
                 , "Republic of Korea 대한민국"
                 , "Republic of Korea - South 대한민국 남부", "Republic of Korea - North 대한민국 북부"
 
+                ,"------ (๑•́ ∀ •̀๑) ------"
+
                 , "Republic of Singapore 新加坡共和國"
 
-                , "United States", "Washington D.C."
+                ,"------ (ง •̀_•́)ง ------"
+
+                , "United States", "United States - Washington D.C."
                 , "United States - Alabama"
-                , "United States - Alaska", "United States - Arizona", "United States = Arkansas"
+                , "United States - Alaska", "United States - Arizona", "United States - Arkansas"
                 , "United States - California the Great", "United States - Colorado"
                 , "United States - Connecticut", "United States - Delaware", "United States - Florida"
                 , "United States - Georgia", "United States - Hawaii", "United States - Idaho"

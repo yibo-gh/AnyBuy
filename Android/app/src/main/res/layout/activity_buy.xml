@@ -5,74 +5,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ali.anybuy.com.anybuy.BuyActivity">
+    tools:context="com.anybuy.Activities.BuyActivity">
 
     <Button
         android:id="@+id/orderButtonID"
-        android:layout_width="wrap_content"
+        android:layout_width="183dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:text="Order"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView3"
+        app:layout_constraintVertical_bias="0.198" />
 
     <ScrollView
 
-        android:layout_width="405dp"
-        android:layout_height="match_parent"
+        android:id="@+id/scrollView3"
+        android:layout_width="0dp"
 
-        android:isScrollContainer="false"
+        android:layout_height="414dp"
+        android:isScrollContainer="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/productBrandEditTextID"
-                    android:layout_width="200dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Product Brand"
-                    android:inputType="textPersonName"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toStartOf="@+id/countryEditTextID"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Spinner
-                    android:id="@+id/spinnerCountry"
-                    android:layout_width="98dp"
-                    android:layout_height="42dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:maxLength="3"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,6 +77,48 @@
 
             </LinearLayout>
 
+            <Spinner
+                android:id="@+id/spinnerCountry"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:textSize="5sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/productBrandEditTextID"
+                    android:layout_width="200dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Product Brand"
+                    android:inputType="textPersonName"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@+id/countryEditTextID"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </LinearLayout>
+
             <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -123,20 +128,19 @@
 
                 <LinearLayout
                     android:id="@+id/picsLayoutID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_width="395dp"
+                    android:layout_height="220dp"
+                    android:layout_marginTop="16dp"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_editor_absoluteX="0dp">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
 
                     <ImageView
                         android:id="@+id/productImageViewID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginBottom="8dp"
                         android:layout_marginTop="96dp"
                         android:src="@android:drawable/ic_input_add"
