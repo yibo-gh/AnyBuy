@@ -40,6 +40,7 @@ public class API {
 			case "ada": return CoreOperations.addAddress(voidHead(ll));
 			case "lda": return CoreOperations.loadAddress(voidHead(ll));
 			case "dta": return CoreOperations.deleteAddress(voidHead(ll));
+			case "lop": return CoreOperations.loadPartialCountryOrder(voidHead(ll));
 			default: return CoreOperations.illegalInput();
 		}
 	}

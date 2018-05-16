@@ -74,7 +74,8 @@ public class SQLOperation {
 		String sql = "CREATE TABLE " + country + "(Product VARCHAR(45) NOT NULL,"
 				+ " Brand VARCHAR(45) NOT NULL, Quantity INT(10) NOT NULL, Image VARCHAR(255) NULL,"
 				+ " orderTime VARCHAR(45) NULL,"
-				+ " orderID VARCHAR(10) NOT NULL PRIMARY KEY)";
+				+ " orderID VARCHAR(10) NOT NULL PRIMARY KEY),"
+				+ " orderStatus INT(1) NOT NULL";
 		try {
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
