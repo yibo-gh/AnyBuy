@@ -24,7 +24,7 @@ import Object.LinkedList;
             start();
         }
  
-        public void run() {
+		public void run() {
             try {
             	is = new ObjectInputStream(new BufferedInputStream(client.getInputStream()));  
                 os = new ObjectOutputStream(client.getOutputStream());  
@@ -47,6 +47,8 @@ import Object.LinkedList;
                  
                 System.out.println("Client(" + getName() +") exit!");
                 client.close();
+                this.interrupt();
+                System.out.println("Thread stoped.");
             }catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
