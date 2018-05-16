@@ -131,9 +131,9 @@ public class CoreOperations {
 			String orderID = obj.getCountry() + (SQLOperation.countLine(c, obj.getCountry()) + 10000);
 			boolean imageExist = (!obj.getImage().equals("") );
 			
-			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + imageExist + "','" + obj.getQuantity() + "','" + time + "','" + orderID + "'";
-			String sql = "INSERT INTO " + obj.getCountry() +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
-			
+			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + imageExist + "','" + obj.getQuantity() + "','" + time + "','" + orderID + "','0'";
+			String sql = "INSERT INTO " + obj.getCountry() +" (Product, Brand, Image, Quantity, orderTime, orderID, orderStatus) VALUES (" + value + ");"; 
+			System.out.println(value);
 			
 			// insert data into table
 			System.out.println(SQLOperation.updateData(c, sql));
@@ -192,14 +192,12 @@ public class CoreOperations {
 		 * The First Node should contains sessionID.
 		 * The second Node should contains country code.
 		 * This function is different from loadPersonalOrder() function in profile page.
-		 * plo&sessionID&<Country>?<Product>?<Brand>?<Image>?<Quantity>
 		 */
 		
 		// ldl&sessionID&<Country>
 		writeLog("Load Order List");
 		
 		// verify session
-		
 		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
@@ -220,6 +218,46 @@ public class CoreOperations {
 		if (res.head == null) return "0x1F03"; // Country table not found
 		
 		return res;
+	}
+	
+	static Object loadPartialCountryOrder(LinkedList ll) throws SQLException {
+		/**
+		 * In this function, the input LinkedList may have different status.
+		 * For initial inquiry, the LinkedList should includes 3 Nodes.
+		 * The First Node, as usually, is sessionID.
+		 * The second Node, should includes the country code the client wish to pull.
+		 * The third Node is how much order info the client want. 
+		 * So, initial inquiries should looks like: <sessionID>&<countryCode>&<amount>
+		 * 
+		 * However, things may be changed from the second inquiry.
+		 * The second Node should be the largest order number in last pull.
+		 * The third Node should be the smallest order number in last pull.
+		 * The fourth Node should tell if the client want older orders or newer orders.
+		 * The fifth Node should tells how much.
+		 * As a conclusion, the LinkedList received should looks like this:
+		 * <sessionID>&<lastMaxOrderNum>&<lastMinOrderNum>&<olderOrNewer>&<howMuch>
+		 * For older and newer part, please use 1 for Newer and 0 for Older.
+		 * 
+		 * If a client want order info from another country, please follow the instruction of initial inquiry.
+		 */
+		
+		writeLog("Load partial order.");
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
+		
+		if (ll.getLength() == 2) return initialLoad(ll);
+		else if (ll.getLength() == 4) return continueLoad(ll);
+		else return null;
+	}
+	
+	private static Object initialLoad(LinkedList ll) {
+		writeLog("Initialed partial order.");
+		return null;
+	}
+	
+	private static Object continueLoad(LinkedList ll) {
+		writeLog("Continued partial order.");
+		return null;
 	}
 	
 	static Object cancelOrder (LinkedList ll) throws SQLException {
@@ -322,7 +360,7 @@ public class CoreOperations {
 		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
 		LinkedList res = generateResWithRS(rs, new Card());
 		c.close();
-		if (res.head == null) res.insert("0x1E04");
+		if (res.head == null) return "0x1E04";
 		return res;
 	}
 	
