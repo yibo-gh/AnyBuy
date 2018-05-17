@@ -1,4 +1,4 @@
-package com.anybuy.Activities;
+package app.anybuy.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -266,12 +266,9 @@ public class BuyActivity extends AppCompatActivity  {
                     productNamestr = strPreProcess(productNamestr);
 
 
-                    try
-                    {
+                    try {
                         int numberOfOrders = Integer.parseInt(quantityNum);
-                    }
-                    catch (NumberFormatException e)
-                    {
+                    } catch (NumberFormatException e) {
                         // handle the exception
                     }
 
@@ -294,8 +291,8 @@ public class BuyActivity extends AppCompatActivity  {
                     l.insert(od);
                     try {
                         Object o = SocketClient.Run(l);
-                        if (o.getClass().equals("".getClass())) System.out.println((String)o);
-                        else if (o.getClass().equals(new LinkedList().getClass())){
+                        if (o.getClass().equals("".getClass())) System.out.println((String) o);
+                        else if (o.getClass().equals(new LinkedList().getClass())) {
                             LinkedList l1 = (LinkedList) o;
                             System.out.println(l1.getLength() + " image(s) requested.");
                         } else System.out.println("plo function returned sth else.");
@@ -314,11 +311,7 @@ public class BuyActivity extends AppCompatActivity  {
 
                     productImage.setImageResource(android.R.drawable.ic_input_add);
                 }
-<<<<<<< HEAD
-                catch (NumberFormatException e)
-                {
-                    // handle the exception
-                }
+
 
                 String sessionID = MainActivity.getID();
             //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
@@ -330,7 +323,7 @@ public class BuyActivity extends AppCompatActivity  {
                 l.insert("plo");
                 l.insert(sessionID);
                 Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
-                        countrystr, imageURIStr, new Timestamp(System.currentTimeMillis()));
+                        countryStr, imageURIStr, new Timestamp(System.currentTimeMillis()));
                 l.insert(od);
                 try {
                     Object o = SocketClient.Run(l);
@@ -350,12 +343,10 @@ public class BuyActivity extends AppCompatActivity  {
                 productBrand.setText("");
                 productName.setText("");
                 quantity.setText("");
-                county.setText("");
 
                 productImage.setImageResource(android.R.drawable.ic_input_add);
-=======
 
->>>>>>> b9deab9ee6d89e16ef36919947ade4c0be8d3f3b
+
             }
         });
 

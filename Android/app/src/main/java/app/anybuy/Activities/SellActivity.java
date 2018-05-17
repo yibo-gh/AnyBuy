@@ -1,4 +1,4 @@
-package com.anybuy.Activities;
+package app.anybuy.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,7 +6,9 @@ import android.view.KeyEvent;
 
 import com.anybuy.R;
 
-public class OrdersActivity extends AppCompatActivity {
+public class SellActivity extends AppCompatActivity {
+
+    String orders;
 
     @Override
     public boolean onKeyDown(int keyCode,KeyEvent event){
@@ -18,6 +20,9 @@ public class OrdersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_orders);
+        setContentView(R.layout.activity_sell);
+
+
+
     }
 }

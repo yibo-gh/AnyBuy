@@ -1,4 +1,4 @@
-package com.anybuy.Clients;
+package app.anybuy.Clients;
 
 import Object.LinkedList;
 
@@ -14,7 +14,7 @@ public class SocketClient {
     private final static Logger logger = Logger.getLogger(SocketClient.class.getName());
 
     public static Object Run(LinkedList ll) throws Exception {
-        Socket socket = new Socket("yg-home.site", 18416);
+        Socket socket = new Socket("anybuy.app", 18416);
         ObjectOutputStream os = null;
         ObjectInputStream is = null;
 

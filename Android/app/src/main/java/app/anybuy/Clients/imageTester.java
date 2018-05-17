@@ -1,4 +1,4 @@
-package com.anybuy.Clients;
+package app.anybuy.Clients;
 
 
 import java.io.DataOutputStream;
@@ -16,7 +16,7 @@ import java.net.Socket;
  */
 public class imageTester extends Socket {
 
-    private static final String SERVER_IP = "169.233.234.108"; // 服务端IP
+    private static final String SERVER_IP = "anybuy.app"; // 服务端IP
     private static final int SERVER_PORT = 17805; // 服务端端口
 
     private Socket client;
