@@ -11,8 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.anybuy.R;
-import com.anybuy.Clients.SocketClient;
+import app.anybuy.Clients.SocketClient;
 
 import Object.*;
 

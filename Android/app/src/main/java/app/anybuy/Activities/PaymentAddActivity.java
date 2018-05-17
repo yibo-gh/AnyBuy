@@ -10,8 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.anybuy.Clients.SocketClient;
-import com.anybuy.R;
+import app.anybuy.Clients.SocketClient;
 import Object.LinkedList;
 import Object.Card;
 

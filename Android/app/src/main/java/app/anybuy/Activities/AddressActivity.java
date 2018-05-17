@@ -15,8 +15,7 @@ import Object.LinkedList;
 import Object.Address;
 import Object.Node;
 
-import com.anybuy.Clients.SocketClient;
-import com.anybuy.R;
+import app.anybuy.Clients.SocketClient;
 
 public class AddressActivity extends AppCompatActivity {
 

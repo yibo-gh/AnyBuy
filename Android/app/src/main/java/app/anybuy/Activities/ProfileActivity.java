@@ -7,8 +7,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.anybuy.R;
-
 public class ProfileActivity extends AppCompatActivity {
 
     Button orderbutton;

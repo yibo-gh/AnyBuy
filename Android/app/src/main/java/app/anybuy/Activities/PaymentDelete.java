@@ -13,8 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.anybuy.Clients.SocketClient;
-import com.anybuy.R;
+import app.anybuy.Clients.SocketClient;
 
 import Object.LinkedList;
 import Object.Card;

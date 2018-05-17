@@ -14,7 +14,8 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.TextView;
 
-import com.anybuy.R;
+import app.anybuy.Clients.SocketClient;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;

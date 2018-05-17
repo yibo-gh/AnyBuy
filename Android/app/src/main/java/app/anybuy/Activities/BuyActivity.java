@@ -18,8 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.anybuy.R;
-import com.anybuy.Clients.SocketClient;
+import app.anybuy.Clients.SocketClient;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -347,17 +346,14 @@ public class BuyActivity extends AppCompatActivity  {
                 productBrand.setText("");
                 productName.setText("");
                 quantity.setText("");
-<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/BuyActivity.java
 
                 productImage.setImageResource(android.R.drawable.ic_input_add);
 
 
-=======
                 country.setText("");
 
                 productImage.setImageResource(android.R.drawable.ic_input_add);
 
->>>>>>> 7bbdd48cedee433dd5db7be53a67ce4135996d4e:Android/app/src/main/java/com/anybuy/Activities/BuyActivity.java
             }
         });
 

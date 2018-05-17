@@ -11,8 +11,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.anybuy.Clients.SocketClient;
-import com.anybuy.R;
+import app.anybuy.Clients.SocketClient;
 import Object.Card;
 import Object.LinkedList;
 import Object.Node;
