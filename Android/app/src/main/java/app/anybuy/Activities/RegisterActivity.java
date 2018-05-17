@@ -13,6 +13,7 @@ import app.anybuy.Clients.SocketClient;
 
 import Object.LinkedList;
 import Object.User;
+import app.anybuy.R;
 
 public class RegisterActivity extends AppCompatActivity {
 

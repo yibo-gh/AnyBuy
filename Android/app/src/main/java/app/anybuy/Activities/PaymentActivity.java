@@ -15,8 +15,7 @@ import app.anybuy.Clients.SocketClient;
 import Object.Card;
 import Object.LinkedList;
 import Object.Node;
-
-import java.net.Socket;
+import app.anybuy.R;
 
 public class PaymentActivity extends AppCompatActivity {
 

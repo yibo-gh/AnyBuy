@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import app.anybuy.R;
 
 import app.anybuy.Clients.SocketClient;
 

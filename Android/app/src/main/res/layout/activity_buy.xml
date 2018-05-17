@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.anybuy.Activities.BuyActivity">
+    tools:context="app.anybuy.Activities.BuyActivity">
 
     <Button
         android:id="@+id/orderButtonID"
@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
 
                 android:layout_height="match_parent"
-                tools:context="com.example.ali.anybuy.com.anybuy.BuyActivity">
+                tools:context="app.anybuy.app.anybuy.BuyActivity">
 
                 <LinearLayout
                     android:id="@+id/picsLayoutID"
