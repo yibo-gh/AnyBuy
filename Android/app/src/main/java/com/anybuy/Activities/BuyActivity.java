@@ -35,7 +35,9 @@ public class BuyActivity extends AppCompatActivity  {
     EditText productBrand;
     EditText productName;
     EditText quantity;
+    EditText country;
     Spinner spinner;
+
 
     Uri imageURI;
 
@@ -105,6 +107,8 @@ public class BuyActivity extends AppCompatActivity  {
         quantity = (EditText) findViewById(R.id.quantityEditTextID);
         spinner = (Spinner) findViewById(R.id.spinnerCountry);
         productImage = (ImageView) findViewById(R.id.productImageViewID);
+
+        country = (EditText) findViewById(R.id.countryEditTextID);
 
         orderButton = (Button) findViewById(R.id.orderButtonID);
 
@@ -314,11 +318,7 @@ public class BuyActivity extends AppCompatActivity  {
 
                     productImage.setImageResource(android.R.drawable.ic_input_add);
                 }
-<<<<<<< HEAD
-                catch (NumberFormatException e)
-                {
-                    // handle the exception
-                }
+
 
                 String sessionID = MainActivity.getID();
             //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
@@ -330,7 +330,7 @@ public class BuyActivity extends AppCompatActivity  {
                 l.insert("plo");
                 l.insert(sessionID);
                 Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
-                        countrystr, imageURIStr, new Timestamp(System.currentTimeMillis()));
+                        countryStr, imageURIStr, new Timestamp(System.currentTimeMillis()));
                 l.insert(od);
                 try {
                     Object o = SocketClient.Run(l);
@@ -350,12 +350,10 @@ public class BuyActivity extends AppCompatActivity  {
                 productBrand.setText("");
                 productName.setText("");
                 quantity.setText("");
-                county.setText("");
+                country.setText("");
 
                 productImage.setImageResource(android.R.drawable.ic_input_add);
-=======
 
->>>>>>> b9deab9ee6d89e16ef36919947ade4c0be8d3f3b
             }
         });
 
