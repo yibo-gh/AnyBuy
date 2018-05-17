@@ -25,8 +25,12 @@
 0x1E06: Profile Error: Address exists.
 0x1E07: Profile Error: Address not found.
 
-0x1F01: Order Error: Table not found. Failed to create table for country
-0x1F02: Order Error: Load failed. Order not found
-0x1F03: Order Error: List table failed. Table not found
+0x1F01: Order Error: Table not found. Failed to create table for country.
+0x1F03: Order Error: List table failed. Table not found.
 0x1F04: Order Error: Cannot upload image.
 0x1F05: Order Error: Cannot rename file.
+
+0x1FA1: Order Error: No order found.
+0x1FA2: Order Error: Order not found.
+0x1FA3: Order Error: No newer order found.
+0x1FA4: Order Error: No older order found.
