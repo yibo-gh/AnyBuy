@@ -35,7 +35,9 @@ public class BuyActivity extends AppCompatActivity  {
     EditText productBrand;
     EditText productName;
     EditText quantity;
+    EditText country;
     Spinner spinner;
+
 
     Uri imageURI;
 
@@ -105,6 +107,8 @@ public class BuyActivity extends AppCompatActivity  {
         quantity = (EditText) findViewById(R.id.quantityEditTextID);
         spinner = (Spinner) findViewById(R.id.spinnerCountry);
         productImage = (ImageView) findViewById(R.id.productImageViewID);
+
+        country = (EditText) findViewById(R.id.countryEditTextID);
 
         orderButton = (Button) findViewById(R.id.orderButtonID);
 
@@ -343,10 +347,17 @@ public class BuyActivity extends AppCompatActivity  {
                 productBrand.setText("");
                 productName.setText("");
                 quantity.setText("");
+<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/BuyActivity.java
 
                 productImage.setImageResource(android.R.drawable.ic_input_add);
 
 
+=======
+                country.setText("");
+
+                productImage.setImageResource(android.R.drawable.ic_input_add);
+
+>>>>>>> 7bbdd48cedee433dd5db7be53a67ce4135996d4e:Android/app/src/main/java/com/anybuy/Activities/BuyActivity.java
             }
         });
 
