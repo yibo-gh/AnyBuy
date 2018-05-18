@@ -8,44 +8,37 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.TextView;
-<<<<<<< HEAD
 
-import app.anybuy.Clients.SocketClient;
-import com.anybuy.R;
-=======
-import app.anybuy.R;
-
-<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/SellActivity.java
-=======
-import com.anybuy.Clients.SocketClient;
-import com.anybuy.R;
->>>>>>> 3c12cd02c34c5c0f1a98e6a0bf97d849b429c776:Android/app/src/main/java/com/anybuy/Activities/SellActivity.java
->>>>>>> 8d517b96f3d42144209dfd44b97c004740ffeedc
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Locale;
 
+import Object.LinkedList;
 import Object.*;
+
+import app.anybuy.Clients.SocketClient;
+import app.anybuy.R;
 
 public class SellActivity extends AppCompatActivity {
 
+    String maxOrder = "";
+    String minOrder = "";
 
     private TextView textView;
 
-
+    String sessionID;
     // use to get the location
     protected FusedLocationProviderClient mFusedLocationClient;
+
     double lattitude = -1;
     double longitude = -1;
 
@@ -53,8 +46,9 @@ public class SellActivity extends AppCompatActivity {
     List<Address> addresses;
     Geocoder geocoder;
 
-    static String userCountryCode;
+    static String userCountryCode = null;
 
+    //setter and getter to store the country code
     public static void setUserCountryCode(String str) {userCountryCode = str;}
     public static String getUserCountryCode() {return userCountryCode;}
 
@@ -73,6 +67,7 @@ public class SellActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
 
+
         textView = (TextView) findViewById(R.id.locationTextViewID);
 
 
@@ -81,13 +76,14 @@ public class SellActivity extends AppCompatActivity {
 
 
         //get the address from the location
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(SellActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
             return;
         }
-
-<<<<<<< HEAD
-
-
 
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
 
@@ -121,108 +117,48 @@ public class SellActivity extends AppCompatActivity {
                     } catch (Exception e) {
 
                     }
-
-                    System.out.println(getUserCountryCode() + " not dead 1.");
-                    //textView.setText(countryName);
                 }
-                System.out.println(getUserCountryCode() + " not dead 2.");
+
             }
 
-
         });
+        System.out.println(getUserCountryCode() + " heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 
-        /* String sessionID = MainActivity.getID();
+        sessionID = MainActivity.getID();
         LinkedList l = new LinkedList();
-        l.insert("ldo");
+        l.insert("lop");
         l.insert(sessionID);
         l.insert(getUserCountryCode());
-       try {
+        l.insert(10);
+
+        try {
             Object o = SocketClient.Run(l);
-            if (o.getClass().equals("".getClass())) System.out.println((String)o);
-            else if (o.getClass().equals(new Object.LinkedList().getClass())){
-                Object.LinkedList l1 = (Object.LinkedList) o;
-                System.out.println(l1.getLength() + " image(s) requested.");
-            } else System.out.println("plo function returned sth else.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
+            if (o.getClass().equals("".getClass())) System.out.println((String) o);
+            else if (o.getClass().equals(new LinkedList().getClass())) {
+                LinkedList l1 = (LinkedList) o;
 
+                Node temp = l1.end;
 
-        System.out.println("heyyyyyyyyyyyyyyyyyyyyyyyyyyy " + getUserCountryCode() );
-=======
-      /*  String sessionID = MainActivity.getID();
-        LinkedList l = new LinkedList();
-        l.insert("plo");
-        l.insert(sessionID);
-        //insert the location here l.insert();
+                temp = temp.getPrev().getPrev();
+                while (temp != null) {
 
-*/
-        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    Order od = (Order) temp.getObject();
 
-            @Override
-            public void onSuccess(Location location) {
+                    System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
+                            " " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
+                    if (temp.getNext().getNext() == null) maxOrder = ((Order)temp.getObject()).getImage();
 
-                // Got last known location. In some rare situations this can be null.
-                if (location != null) {
-                    // Logic to handle location object
-                    //textView.setText("altetude: " + location.getLatitude() + " \n Longtitude: " + location.getLongitude());
+                    temp = temp.getPrev();
 
-                    lattitude = location.getLatitude();
-                    longitude = location.getLongitude();
-
-                    geocoder = new Geocoder(SellActivity.this, Locale.getDefault());
-
-                    try {
-                        addresses = geocoder.getFromLocation(lattitude, longitude, 1);
-
-                        //get the info of the user
-                        // String address = addresses.get(0).getAddressLine(0);
-                        //String area = addresses.get(0).getLocality();
-                        //String city = addresses.get(0).getAdminArea();
-                        //String countryName = addresses.get(0).getCountryName();
-
-                        setUserCountryCode(addresses.get(0).getCountryCode());
-
-                        //String postalCode = addresses.get(0).getPostalCode();
-
-                        textView.setText("contry code: " + getUserCountryCode().getClass() + " " +  getUserCountryCode());
-                    } catch (Exception e) {
-
-                    }
-
-                    System.out.println(getUserCountryCode() + " not dead 1.");
-                    //textView.setText(countryName);
                 }
-                System.out.println(getUserCountryCode() + " not dead 2.");
-            }
 
-
-        });
-
-       /* try {
-            Object o = SocketClient.Run(l);
-            if (o.getClass().equals("".getClass())) System.out.println((String)o);
-            else if (o.getClass().equals(new Object.LinkedList().getClass())){
-                Object.LinkedList l1 = (Object.LinkedList) o;
-                System.out.println(l1.getLength() + " image(s) requested.");
-            } else System.out.println("plo function returned sth else.");
+            } else System.out.println("lop function returned sth else.");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        */
 
-
-        System.out.println(getUserCountryCode() + " not dead 4.");
->>>>>>> 8d517b96f3d42144209dfd44b97c004740ffeedc
     }
 
-
-
-
     // tryed to make a function for it but failed, feel free to try
-
-
-
 
 }

@@ -2,21 +2,17 @@ package app.anybuy.Activities;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import app.anybuy.Clients.SocketClient;
-<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/AddressAddActivity.java
-=======
-import app.anybuy.R;
->>>>>>> 3c12cd02c34c5c0f1a98e6a0bf97d849b429c776:Android/app/src/main/java/app/anybuy/Activities/AddressAddActivity.java
-import Object.LinkedList;
 import Object.Address;
+import Object.LinkedList;
+import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
 
 public class AddressAddActivity extends AppCompatActivity {
@@ -63,7 +59,7 @@ public class AddressAddActivity extends AppCompatActivity {
 
 
 
-        AddAddressButton = (Button) findViewById(R.id.AddAddressbuttonID);
+        AddAddressButton = (Button) findViewById(R.id.NewAddressbuttonID);
 
         AddAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override

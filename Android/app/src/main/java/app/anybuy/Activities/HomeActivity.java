@@ -8,10 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import app.anybuy.R;
 
-<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/HomeActivity.java
-=======
 import app.anybuy.R;
->>>>>>> 3c12cd02c34c5c0f1a98e6a0bf97d849b429c776:Android/app/src/main/java/app/anybuy/Activities/HomeActivity.java
+
 
 
 public class HomeActivity extends AppCompatActivity {
