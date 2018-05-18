@@ -257,8 +257,8 @@ public class CoreOperations {
 		 */
 		
 		writeLog("Load partial order.");
-		String uid = checkSession(ll);
-		if (!verifySessionRes(uid, ll)) return uid;
+//		String uid = checkSession(ll);
+//		if (!verifySessionRes(uid, ll)) return uid;
 		
 		if (ll.getLength() == 2) return initialLoad(ll);
 		else if (ll.getLength() == 6) return continueLoad(ll);
@@ -353,6 +353,9 @@ public class CoreOperations {
 						+ countryCode + " limit " + (trueLine + 1) + "," + (howMuch) + ";";
 				ResultSet r = SQLOperation.readDatabaseRS(c, sql);
 				LinkedList res = generateResWithRS(r, new Order());
+				res.insert("" + trueLine); //Max row number
+				res.insert("" + (trueLine - howMuch -1)); //Min row number, 1 over the real min
+				c.close();
 				c.close();
 				if (res.head == null) return "0x1FA1"; // Country table not found
 				return res;
@@ -388,6 +391,9 @@ public class CoreOperations {
 				sql = "select Product, Brand, Quantity, orderID, orderTime from " + countryCode + " limit " + (trueLine - howMuch) + "," + howMuch + ";";
 				ResultSet r = SQLOperation.readDatabaseRS(c, sql);
 				LinkedList res = generateResWithRS(r, new Order());
+				res.insert("" + trueLine); //Max row number
+				res.insert("" + (trueLine - howMuch -1)); //Min row number, 1 over the real min
+				c.close();
 				c.close();
 				if (res.head == null) return "0x1FA1"; // Country table not found
 				return res;

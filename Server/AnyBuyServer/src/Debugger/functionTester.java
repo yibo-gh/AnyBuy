@@ -10,6 +10,7 @@ import Object.Order;
 public class functionTester {
 
 	public static void main(String[] args) throws SQLException {
+		
 		LinkedList l = new LinkedList();
 		l.insert("KR");
 		l.insert("10");
@@ -24,9 +25,12 @@ public class functionTester {
 		String maxOrder = "";
 		String minOrder = "";
 		
-		minOrder = ((Order) temp.getObject()).getImage();
-		
 		while (temp.getNext().getNext() != null) {
+			if (temp == l.head) minOrder = ((Order) temp.getObject()).getImage();
+			Order od = (Order) temp.getObject();
+			System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
+				" " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
+			if (temp.getNext().getNext() == null) maxOrder = ((Order)temp.getObject()).getImage();
 			temp = temp.getNext();
 		}
 		maxOrder = ((Order) temp.getPrev().getObject()).getImage();
@@ -35,12 +39,12 @@ public class functionTester {
 		String maxLine = (String)l.end.getPrev().getObject();
 		
 		l = new LinkedList();
-		l.insert("18");
-		l.insert("7");
-		l.insert("KR91008");
-		l.insert("KR61000");
+		l.insert(maxLine);
+		l.insert(minLine);
+		l.insert(maxOrder);
+		l.insert(minOrder);
 		l.insert("0");
-		l.insert("10");
+		l.insert("15");
 		
 		o = CoreOperations.loadPartialCountryOrder(l);
 		System.out.println(o == null);
@@ -56,6 +60,8 @@ public class functionTester {
 					" " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
 			temp = temp.getNext();
 		}
+		
+		
 		
 	}
 }
