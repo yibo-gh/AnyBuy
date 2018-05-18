@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     package="app.anybuy" >
+=======
+<<<<<<< HEAD
+    package="com.anybuy" >
+=======
+    package="app.anybuy" >
+>>>>>>> e442b0b4aa78ad5351d0f3268769c1e9229a652c
+>>>>>>> 3c12cd02c34c5c0f1a98e6a0bf97d849b429c776
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

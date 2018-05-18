@@ -19,6 +19,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import app.anybuy.R;
 
+<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/BuyActivity.java
+=======
+import app.anybuy.R;
+>>>>>>> 3c12cd02c34c5c0f1a98e6a0bf97d849b429c776:Android/app/src/main/java/app/anybuy/Activities/BuyActivity.java
 import app.anybuy.Clients.SocketClient;
 
 import java.io.File;
