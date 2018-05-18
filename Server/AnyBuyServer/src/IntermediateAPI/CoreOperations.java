@@ -341,9 +341,11 @@ public class CoreOperations {
 			
 			if (trueLine + howMuch > totalLine) {
 				sql = "select Product, Brand, Quantity, orderID, orderTime from "
-						+ countryCode + " limit " + trueLine + "," + totalLine + ";";
+						+ countryCode + " limit " + trueLine + "," + 20 + ";";
 				rs = SQLOperation.readDatabaseRS(c, sql);
 				LinkedList res = generateResWithRS(rs, new Order());
+				res.insert("" + trueLine); //Max row number
+				res.insert("" + (trueLine - howMuch -1)); //Min row number, 1 over the real min
 				c.close();
 				if (res.head == null) return "0x1FA1"; // Country table not found
 				return res;
@@ -383,6 +385,8 @@ public class CoreOperations {
 				sql = "select Product, Brand, Quantity, orderID, orderTime from " + countryCode + " limit " + trueLine + ";";
 				rs = SQLOperation.readDatabaseRS(c, sql);
 				LinkedList res = generateResWithRS(rs, new Order());
+				res.insert("" + trueLine); //Max row number
+				res.insert("" + (trueLine - howMuch -1)); //Min row number, 1 over the real min
 				c.close();
 				if (res.head == null) return "0x1FA1"; // Country table not found
 				return res;

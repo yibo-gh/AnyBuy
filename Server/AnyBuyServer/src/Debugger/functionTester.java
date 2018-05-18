@@ -54,14 +54,38 @@ public class functionTester {
 		System.out.println(l.getLength());
 		temp = l.head;
 		
-		while (temp != null) {
+		while (temp.getNext().getNext() != null) {
 			Order od = (Order) temp.getObject();
 			System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
 					" " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
 			temp = temp.getNext();
 		}
 		
+		minLine = (String)l.end.getObject();
+		maxLine = (String)l.end.getPrev().getObject();
 		
+		l = new LinkedList();
+		l.insert(maxLine);
+		l.insert(minLine);
+		l.insert(maxOrder);
+		l.insert(minOrder);
+		l.insert("1");
+		l.insert("20");
+		
+		o = CoreOperations.loadPartialCountryOrder(l);
+		System.out.println(o == null);
+		if (o.getClass().equals("".getClass())) System.out.println((String)o);
+		
+		l = (LinkedList)o;
+		System.out.println(l.getLength());
+		temp = l.head;
+		
+		while (temp.getNext().getNext() != null) {
+			Order od = (Order) temp.getObject();
+			System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
+					" " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
+			temp = temp.getNext();
+		}
 		
 	}
 }
