@@ -1,4 +1,4 @@
-package com.anybuy.Activities;
+package app.anybuy.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +11,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.anybuy.Clients.SocketClient;
-import com.anybuy.R;
+import app.anybuy.Clients.SocketClient;
+import app.anybuy.R;
 import Object.Card;
 import Object.LinkedList;
 import Object.Node;

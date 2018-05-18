@@ -1,4 +1,4 @@
-package com.anybuy.Activities;
+package app.anybuy.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +15,8 @@ import Object.LinkedList;
 import Object.Address;
 import Object.Node;
 
-import com.anybuy.Clients.SocketClient;
-import com.anybuy.R;
+import app.anybuy.Clients.SocketClient;
+import app.anybuy.R;
 
 public class AddressActivity extends AppCompatActivity {
 

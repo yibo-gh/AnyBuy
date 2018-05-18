@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ali.anybuy.MainActivity"
+    tools:context="app.anybuy.Activities.MainActivity"
     android:background="@drawable/background"
     tools:layout_editor_absoluteY="81dp">
 
