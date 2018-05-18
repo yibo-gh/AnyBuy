@@ -69,7 +69,7 @@ public class functionTester {
 		l.insert(minLine);
 		l.insert(maxOrder);
 		l.insert(minOrder);
-		l.insert("1");
+		l.insert("0");
 		l.insert("20");
 		
 		o = CoreOperations.loadPartialCountryOrder(l);
