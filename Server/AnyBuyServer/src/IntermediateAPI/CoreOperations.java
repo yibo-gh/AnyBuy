@@ -124,17 +124,19 @@ public class CoreOperations {
 			Connection c = SQLControl.SQLOperation.getConnect("generalOrder");
 			
 			// make new table for country if needed
-			String countryStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT * FROM" + obj.getCountry());
+			String countryStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT * FROM " + obj.getCountry());
 			if (countryStatus == null) {
 				SQLControl.SQLOperation.createCountryTable(c, obj.getCountry());
 			}
 			
-			String orderID = obj.getCountry() + (SQLOperation.countLine(c, obj.getCountry()) + 10000);
+			int lastOrderNum = getLastOrderNum(c, obj.getCountry());
+			String orderID = obj.getCountry() + (lastOrderNum + 1);
+			
 			boolean imageExist = (!obj.getImage().equals("") );
 			
-			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + imageExist + "','" + obj.getQuantity() + "','" + time + "','" + orderID + "','0'";
-			String sql = "INSERT INTO " + obj.getCountry() +" (Product, Brand, Image, Quantity, orderTime, orderID, orderStatus) VALUES (" + value + ");"; 
-			System.out.println(value);
+			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + imageExist + "','" + obj.getQuantity() + "','" + time + "','" + orderID + "'";
+			String sql = "INSERT INTO " + obj.getCountry() +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
+//			System.out.println(value);
 			
 			// insert data into table
 			System.out.println(SQLOperation.updateData(c, sql));
@@ -159,6 +161,19 @@ public class CoreOperations {
 		if (hasImg) return imgReq;
 		
 		return "0x01";
+	}
+	
+	private static int getLastOrderNum(Connection c, String countryCode) throws SQLException {
+		int SQLTotalLine = SQLOperation.countLine(c, countryCode);
+		if (SQLTotalLine != 0) {
+			String lastID = SQLControl.SQLOperation.readDatabase(c, "SELECT orderID FROM " + countryCode + " limit " + (SQLTotalLine - 1) + ",1");
+			String temp1 = "";
+			for (int i = 2; i < lastID.length(); i++) {
+				if (i == 2 && Character.isDigit(lastID.charAt(i))) temp1 += lastID.charAt(2);
+				else if (i > 2) temp1 += lastID.charAt(i);
+			}
+			return Integer.parseInt(temp1);
+		} else return 9999;
 	}
 	
 	public static String acceptImage(String img, String orderID) {
@@ -221,7 +236,7 @@ public class CoreOperations {
 		return res;
 	}
 	
-	static Object loadPartialCountryOrder(LinkedList ll) throws SQLException {
+	public static Object loadPartialCountryOrder(LinkedList ll) throws SQLException {
 		/**
 		 * In this function, the input LinkedList may have different status.
 		 * For initial inquiry, the LinkedList should includes 3 Nodes.
@@ -236,7 +251,7 @@ public class CoreOperations {
 		 * The fourth Node should tell if the client want older orders or newer orders.
 		 * The fifth Node should tells how much.
 		 * As a conclusion, the LinkedList received should looks like this:
-		 * <sessionID>&<lastMaxOrderNum>&<lastMinOrderNum>&<olderOrNewer>&<howMuch>
+		 * <sessionID>&<lastMaxLineNum>&<lastMinLineNum>&<lastMaxOrderNum>&<lastMinOrderNum>&<olderOrNewer>&<howMuch>
 		 * For older and newer part, please use 1 for Newer and 0 for Older.
 		 * 
 		 * If a client want order info from another country, please follow the instruction of initial inquiry.
@@ -247,18 +262,155 @@ public class CoreOperations {
 		if (!verifySessionRes(uid, ll)) return uid;
 		
 		if (ll.getLength() == 2) return initialLoad(ll);
-		else if (ll.getLength() == 4) return continueLoad(ll);
+		else if (ll.getLength() == 6) return continueLoad(ll);
 		else return null;
 	}
 	
-	private static Object initialLoad(LinkedList ll) {
+	private static Object initialLoad(LinkedList ll) throws SQLException {
+		//<countryCode>&<amount>
 		writeLog("Initialed partial order.");
+		if (ll.getLength() !=  2 || !ll.head.getObject().getClass().equals(("".getClass()))
+				|| !ll.head.getObject().getClass().equals(("".getClass())))
+			return "0x1002";
+		String country = ll.head.getObject().toString();
+		int orderQuaRequested = Integer.parseInt(ll.head.getNext().getObject().toString());
+		Connection c = SQLOperation.getConnect("generalOrder");
+		int totalOrder = SQLOperation.countLine(c, country);
+		if (totalOrder == 0) return "0x1F06";
+		String sql;
+		if (totalOrder < orderQuaRequested) sql = "select Product, Brand, Quantity, orderID, orderTime from " + country;
+		else sql = "select Product, Brand, Quantity, orderID, orderTime from " 
+				+ country + " limit " + (totalOrder - orderQuaRequested) + "," + totalOrder + ";";
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		LinkedList res = generateResWithRS(rs, new Order());
+		res.insert("" + totalOrder); //Max row number
+		res.insert("" + (totalOrder - orderQuaRequested -1)); //Min row number, 1 over the real min
+		c.close();
+		return res;
+	}
+	
+	private static Object continueLoad(LinkedList ll) throws SQLException {
+		//<lastMaxLineNum>&<lastMinLineNum>&<lastMaxOrderNum>&<lastMinOrderNum>&<olderOrNewer>&<howMuch>
+		writeLog("Continued partial order.");
+		
+		if (ll.getLength() != 6) return "0x1000";
+		Node temp = ll.head;
+		Object o1 = temp.getObject();
+		temp = temp.getNext();
+		Object o2 = temp.getObject();
+		temp = temp.getNext();
+		Object o3 = temp.getObject();
+		temp = temp.getNext();
+		Object o4 = temp.getObject();
+		temp = temp.getNext();
+		Object o5 = temp.getObject();
+		temp = temp.getNext();
+		Object o6 = temp.getObject();
+		
+		if (!o1.getClass().equals("".getClass()) || !o2.getClass().equals("".getClass())
+				|| !o3.getClass().equals("".getClass()) || !o4.getClass().equals("".getClass())
+				|| !o5.getClass().equals("".getClass())|| !o6.getClass().equals("".getClass()))
+			return "0x1002";
+		
+		int lastMaxLineNum = Integer.parseInt((String) o1);
+		int lastMinLineNum = Integer.parseInt((String) o2);
+		String lastMaxOrderNum = (String)o3;
+		String lastMinOrderNum = (String)o4;
+		int olderOrNewer = Integer.parseInt((String)o5);
+		int howMuch = Integer.parseInt((String)o6);
+		
+		String countryCode = getCountryCodeWithOrderID(lastMaxOrderNum);
+		Connection c = SQLOperation.getConnect("generalOrder");
+		
+		ResultSet rs = null;
+		
+		// Newer Order
+		if (olderOrNewer == 1) {
+			int totalLine = SQLOperation.countLine(c, countryCode);
+			if (lastMaxLineNum == totalLine) return "0x1FA3";
+			String sql = "seleect orderID from " + countryCode + " limit " + lastMaxLineNum + ";";
+			rs = SQLOperation.readDatabaseRS(c, sql);
+			// get true line number which has last max order number.
+			int trueLine = lastMaxLineNum;
+			while (rs != null && rs.next()) {
+				String temp1 = rs.getString(1);
+				if (getOrderNumberWithOrderID(countryCode, temp1)
+						> getOrderNumberWithOrderID(countryCode, lastMaxOrderNum))
+					trueLine--;
+				else break;
+			}
+			
+			if (trueLine + howMuch > totalLine) {
+				sql = "select Product, Brand, Quantity, orderID, orderTime from "
+						+ countryCode + " limit " + trueLine + "," + totalLine + ";";
+				rs = SQLOperation.readDatabaseRS(c, sql);
+				LinkedList res = generateResWithRS(rs, new Order());
+				c.close();
+				if (res.head == null) return "0x1FA1"; // Country table not found
+				return res;
+				
+			} else {
+				sql = "select Product, Brand, Quantity, orderID, orderTime from "
+						+ countryCode + " limit " + (trueLine + 1) + "," + (howMuch) + ";";
+				ResultSet r = SQLOperation.readDatabaseRS(c, sql);
+				LinkedList res = generateResWithRS(r, new Order());
+				c.close();
+				if (res.head == null) return "0x1FA1"; // Country table not found
+				return res;
+			}
+		}
+		
+		// Go older orders
+		else if (olderOrNewer == 0) {
+			if (lastMinLineNum == 0) return "0x1FA3";
+			String sql = "select orderID from " + countryCode + " limit " + (lastMinLineNum + 1) + ";";
+			rs = SQLOperation.readDatabaseRS(c, sql);
+			// get true line number which has last max order number.
+			int trueLine = 0;
+			while (rs != null && rs.next()) {
+				String temp1 = rs.getString(1);
+				
+				if (getOrderNumberWithOrderID(countryCode, temp1)
+						<= getOrderNumberWithOrderID(countryCode, lastMinOrderNum)) {
+					trueLine++;
+				}
+				else break;
+			}
+			
+			if (trueLine - howMuch < 0) {
+				sql = "select Product, Brand, Quantity, orderID, orderTime from " + countryCode + " limit " + trueLine + ";";
+				rs = SQLOperation.readDatabaseRS(c, sql);
+				LinkedList res = generateResWithRS(rs, new Order());
+				c.close();
+				if (res.head == null) return "0x1FA1"; // Country table not found
+				return res;
+				
+			} else {
+				sql = "select Product, Brand, Quantity, orderID, orderTime from " + countryCode + " limit " + (trueLine - howMuch) + "," + howMuch + ";";
+				ResultSet r = SQLOperation.readDatabaseRS(c, sql);
+				LinkedList res = generateResWithRS(r, new Order());
+				c.close();
+				if (res.head == null) return "0x1FA1"; // Country table not found
+				return res;
+			}
+		}
+		
 		return null;
 	}
 	
-	private static Object continueLoad(LinkedList ll) {
-		writeLog("Continued partial order.");
-		return null;
+	static String getCountryCodeWithOrderID(String str) {
+		String res = "";
+		res = res + str.charAt(0) + str.charAt(1);
+		if (!Character.isDigit(str.charAt(2))) res += str.charAt(2);
+		return res;
+	}
+	
+	static int getOrderNumberWithOrderID(String countryCode, String orderID) {
+		String res = "";
+		for (int i = countryCode.length(); i < orderID.length(); i++) {
+			res += orderID.charAt(i);
+		}
+		return Integer.parseInt(res);
 	}
 	
 	static Object cancelOrder (LinkedList ll) throws SQLException {
@@ -531,7 +683,7 @@ public class CoreOperations {
 	
 	private static LinkedList addressList(ResultSet rs) throws SQLException {
 		LinkedList ll = new LinkedList();
-		while (rs.next()) {
+		while (rs!= null && rs.next()) {
 			Address a = new Address(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
 					rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
 			ll.insert(a);
@@ -541,7 +693,7 @@ public class CoreOperations {
 	
 	private static LinkedList cardList (ResultSet rs) throws SQLException {
 		LinkedList ll = new LinkedList();
-		while (rs.next()) {
+		while (rs != null && rs.next()) {
 			Card c = new Card(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
 					rs.getString(5), rs.getString(6));
 			ll.insert(c);
@@ -551,9 +703,10 @@ public class CoreOperations {
 	
 	private static LinkedList orderList (ResultSet rs) throws SQLException {
 		LinkedList ll = new LinkedList();
-		while (rs.next()) {
-			Order o = new Order(rs.getString(1), rs.getString(2), rs.getInt(3),
-					("" + rs.getString(4).charAt(0) + rs.getString(4).charAt(1) + rs.getString(4).charAt(2)),
+		while (rs != null && rs.next()) {
+			String country = "" + rs.getString(4).charAt(0) + rs.getString(4).charAt(1);
+			if (!Character.isDigit(rs.getString(4).charAt(2))) country += rs.getString(4).charAt(2);
+			Order o = new Order(rs.getString(1), rs.getString(2), rs.getInt(3), country,
 					rs.getString(4), new Timestamp(rs.getLong(5)));
 			ll.insert(o);
 		}

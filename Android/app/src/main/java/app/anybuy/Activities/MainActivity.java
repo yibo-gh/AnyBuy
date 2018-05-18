@@ -1,4 +1,4 @@
-package com.anybuy.Activities;
+package app.anybuy.Activities;
 
 import android.content.Intent;
 import android.os.Build;
@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.anybuy.R;
-import com.anybuy.Clients.SocketClient;
+import app.anybuy.R;
+import app.anybuy.Clients.SocketClient;
 
 import Object.*;
 

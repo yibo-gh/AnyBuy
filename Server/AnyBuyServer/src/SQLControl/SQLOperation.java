@@ -74,8 +74,7 @@ public class SQLOperation {
 		String sql = "CREATE TABLE " + country + "(Product VARCHAR(45) NOT NULL,"
 				+ " Brand VARCHAR(45) NOT NULL, Quantity INT(10) NOT NULL, Image VARCHAR(255) NULL,"
 				+ " orderTime VARCHAR(45) NULL,"
-				+ " orderID VARCHAR(10) NOT NULL PRIMARY KEY),"
-				+ " orderStatus INT(1) NOT NULL";
+				+ " orderID VARCHAR(10) NOT NULL PRIMARY KEY)";
 		try {
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
@@ -113,7 +112,6 @@ public class SQLOperation {
 		ResultSet rset = c.createStatement().executeQuery(sql);
 		rset.next();
 		int rtn = rset.getInt("rowCount");
-//		int rtn = rset.getMetaData().
 		return rtn;
 	}
 	

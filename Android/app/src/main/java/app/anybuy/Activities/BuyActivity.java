@@ -1,4 +1,4 @@
-package com.anybuy.Activities;
+package app.anybuy.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,8 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.anybuy.R;
-import com.anybuy.Clients.SocketClient;
+import app.anybuy.R;
+import app.anybuy.Clients.SocketClient;
 
 import java.io.File;
 import java.io.FileNotFoundException;

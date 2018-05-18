@@ -22,7 +22,7 @@ public class Tester {
 //		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
-//		loadOrder();
+		loadOrder();
 //		addCard();
 //		loadCard();
 //		deleteCard();
@@ -48,32 +48,40 @@ public class Tester {
 	}
 	
 	private static void placeOrder() throws SQLException {
+		
+		String res = "";
 		LinkedList l = new LinkedList();
 		l.insert("plo");
 		l.insert(getSessionID());
-		String p, b, c, img;
-		int q;
-		Timestamp ts;
 		
-		p = "Yoona\\'s Choice";
-		b = "Innisfree";
-		q = 1;
-		c = "KOR";
-		img = "";
-		ts = new Timestamp(System.currentTimeMillis());
-		Order u = new Order(p, b, q, c, img, ts);
-		l.insert(u);
+		for (int i = 0; i < 0x2; i++) {
+			String p, b, c, img;
+			int q;
+			Timestamp ts;
+			
+			p = "Yoona\\'s Choice";
+			b = "Innisfree";
+			q = 1;
+			c = "RKR";
+			img = "";
+			ts = new Timestamp(System.currentTimeMillis());
+			Order u = new Order(p, b, q, c, img, ts);
+			l.insert(u);
+			
+			p = "Zero Balance Cleasing";
+			b = "Banila Co.";
+			q = 1;
+			c = "RKR";
+			img = "";
+			ts = new Timestamp(System.currentTimeMillis());
+			u = new Order(p, b, q, c, img, ts);
+			l.insert(u);
+			
+		}
 		
-		p = "Zero Balance Cleasing";
-		b = "Banila Co.";
-		q = 1;
-		c = "KOR";
-		img = "";
-		ts = new Timestamp(System.currentTimeMillis());
-		u = new Order(p, b, q, c, img, ts);
-		l.insert(u);
+		System.out.println("Finish Insert.");
+		res = (String)IntermediateAPI.API.getCommand(l);
 		
-		String res = (String)IntermediateAPI.API.getCommand(l);
 		System.out.println(res);
 	}
 	
@@ -132,7 +140,7 @@ public class Tester {
 		LinkedList ll = new LinkedList();
 		ll.insert("ldo");
 		ll.insert(getSessionID());
-		ll.insert("KOR");
+		ll.insert("RKR");
 		Object obj = IntermediateAPI.API.getCommand(ll);
 		LinkedList res = (LinkedList) obj;
 		Node temp = res.head;
