@@ -1,4 +1,4 @@
-package com.example.ali.anybuy;
+package app.anybuy;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

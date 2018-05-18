@@ -13,14 +13,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.TextView;
-
 import app.anybuy.R;
+
+<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/SellActivity.java
+=======
+import com.anybuy.Clients.SocketClient;
+import com.anybuy.R;
+>>>>>>> 3c12cd02c34c5c0f1a98e6a0bf97d849b429c776:Android/app/src/main/java/com/anybuy/Activities/SellActivity.java
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Locale;
+
+import Object.*;
 
 public class SellActivity extends AppCompatActivity {
 
@@ -37,7 +46,11 @@ public class SellActivity extends AppCompatActivity {
     List<Address> addresses;
     Geocoder geocoder;
 
-    String userCountryCode;
+    static String userCountryCode;
+
+    public static void setUserCountryCode(String str) {userCountryCode = str;}
+    public static String getUserCountryCode() {return userCountryCode;}
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK)
@@ -61,101 +74,80 @@ public class SellActivity extends AppCompatActivity {
 
         //get the address from the location
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return ;
+            return;
         }
 
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
+      /*  String sessionID = MainActivity.getID();
+        LinkedList l = new LinkedList();
+        l.insert("plo");
+        l.insert(sessionID);
+        //insert the location here l.insert();
 
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            //textView.setText("altetude: " + location.getLatitude() + " \n Longtitude: " + location.getLongitude());
+*/
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
 
-                            lattitude = location.getLatitude();
-                            longitude = location.getLongitude();
+            @Override
+            public void onSuccess(Location location) {
 
-                            geocoder = new Geocoder(SellActivity.this, Locale.getDefault());
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    // Logic to handle location object
+                    //textView.setText("altetude: " + location.getLatitude() + " \n Longtitude: " + location.getLongitude());
 
-                            try {
-                                addresses = geocoder.getFromLocation(lattitude, longitude, 1);
+                    lattitude = location.getLatitude();
+                    longitude = location.getLongitude();
 
-                                //get the info of the user
-                                // String address = addresses.get(0).getAddressLine(0);
-                                //String area = addresses.get(0).getLocality();
-                                //String city = addresses.get(0).getAdminArea();
-                                String countryName = addresses.get(0).getCountryName();
+                    geocoder = new Geocoder(SellActivity.this, Locale.getDefault());
 
-                                userCountryCode = addresses.get(0).getCountryCode();
+                    try {
+                        addresses = geocoder.getFromLocation(lattitude, longitude, 1);
 
-                                String postalCode = addresses.get(0).getPostalCode();
+                        //get the info of the user
+                        // String address = addresses.get(0).getAddressLine(0);
+                        //String area = addresses.get(0).getLocality();
+                        //String city = addresses.get(0).getAdminArea();
+                        //String countryName = addresses.get(0).getCountryName();
 
-                                // textView.setText("contry code: " + countryCode + " \n country name: " + count);
-                            } catch (Exception e) {
-                                System.out.println("didnt work");
-                            }
-                            //textView.setText(countryName);
-                        }
+                        setUserCountryCode(addresses.get(0).getCountryCode());
+
+                        //String postalCode = addresses.get(0).getPostalCode();
+
+                        textView.setText("contry code: " + getUserCountryCode().getClass() + " " +  getUserCountryCode());
+                    } catch (Exception e) {
+
                     }
-                });
 
-        System.out.println("heyyyyyyyyyyyyyyyyy " + userCountryCode);
+                    System.out.println(getUserCountryCode() + " not dead 1.");
+                    //textView.setText(countryName);
+                }
+                System.out.println(getUserCountryCode() + " not dead 2.");
+            }
+
+
+        });
+
+       /* try {
+            Object o = SocketClient.Run(l);
+            if (o.getClass().equals("".getClass())) System.out.println((String)o);
+            else if (o.getClass().equals(new Object.LinkedList().getClass())){
+                Object.LinkedList l1 = (Object.LinkedList) o;
+                System.out.println(l1.getLength() + " image(s) requested.");
+            } else System.out.println("plo function returned sth else.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        */
+
+
+        System.out.println(getUserCountryCode() + " not dead 4.");
     }
+
+
 
 
     // tryed to make a function for it but failed, feel free to try
 
 
-   /* String countryCode = "not working";
-    //this function will get the address
-    public String getUserCountryCode(FusedLocationProviderClient m) {
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return countryCode;
-        }
 
-        m.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            //textView.setText("altetude: " + location.getLatitude() + " \n Longtitude: " + location.getLongitude());
-
-                            lattitude = location.getLatitude();
-                            longitude = location.getLongitude();
-
-                            geocoder = new Geocoder(SellActivity.this, Locale.getDefault());
-
-                            try {
-                                addresses = geocoder.getFromLocation(lattitude, longitude, 1);
-
-                                //get the info of the user
-                               // String address = addresses.get(0).getAddressLine(0);
-                                //String area = addresses.get(0).getLocality();
-                                //String city = addresses.get(0).getAdminArea();
-                                String countryName = addresses.get(0).getCountryName();
-
-                                 countryCode = addresses.get(0).getCountryCode();
-
-                                String postalCode = addresses.get(0).getPostalCode();
-
-                               // textView.setText("contry code: " + countryCode + " \n country name: " + count);
-                            } catch (Exception e) {
-                                System.out.println("didnt work");
-                            }
-                            //textView.setText(countryName);
-                        }
-                    }
-                });
-
-    System.out.println("heyyyyyyyyyyyyyyyy " + countryCode);
-        return countryCode;
-    }
-*/
 }
-

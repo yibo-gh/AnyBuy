@@ -17,8 +17,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import app.anybuy.R;
+
+<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/BuyActivity.java
+=======
+import app.anybuy.R;
+>>>>>>> 3c12cd02c34c5c0f1a98e6a0bf97d849b429c776:Android/app/src/main/java/app/anybuy/Activities/BuyActivity.java
 import app.anybuy.Clients.SocketClient;
 
 import java.io.File;
@@ -270,12 +274,9 @@ public class BuyActivity extends AppCompatActivity  {
                     productNamestr = strPreProcess(productNamestr);
 
 
-                    try
-                    {
+                    try {
                         int numberOfOrders = Integer.parseInt(quantityNum);
-                    }
-                    catch (NumberFormatException e)
-                    {
+                    } catch (NumberFormatException e) {
                         // handle the exception
                     }
 
@@ -298,8 +299,8 @@ public class BuyActivity extends AppCompatActivity  {
                     l.insert(od);
                     try {
                         Object o = SocketClient.Run(l);
-                        if (o.getClass().equals("".getClass())) System.out.println((String)o);
-                        else if (o.getClass().equals(new LinkedList().getClass())){
+                        if (o.getClass().equals("".getClass())) System.out.println((String) o);
+                        else if (o.getClass().equals(new LinkedList().getClass())) {
                             LinkedList l1 = (LinkedList) o;
                             System.out.println(l1.getLength() + " image(s) requested.");
                         } else System.out.println("plo function returned sth else.");
@@ -350,6 +351,10 @@ public class BuyActivity extends AppCompatActivity  {
                 productBrand.setText("");
                 productName.setText("");
                 quantity.setText("");
+
+                productImage.setImageResource(android.R.drawable.ic_input_add);
+
+
                 country.setText("");
 
                 productImage.setImageResource(android.R.drawable.ic_input_add);

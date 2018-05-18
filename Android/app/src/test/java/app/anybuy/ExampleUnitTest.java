@@ -1,4 +1,4 @@
-package com.example.ali.anybuy;
+package app.anybuy;
 
 import org.junit.Test;
 

@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/ProfileActivity.java
+=======
 
+>>>>>>> 3c12cd02c34c5c0f1a98e6a0bf97d849b429c776:Android/app/src/main/java/app/anybuy/Activities/ProfileActivity.java
 import app.anybuy.R;
 
 public class ProfileActivity extends AppCompatActivity {
