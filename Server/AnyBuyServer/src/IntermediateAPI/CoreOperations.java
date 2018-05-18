@@ -342,7 +342,7 @@ public class CoreOperations {
 			
 			if (trueLine + howMuch > totalLine) {
 				sql = "select Product, Brand, Quantity, orderID, orderTime from "
-						+ countryCode + " limit " + trueLine + "," + 20 + ";";
+						+ countryCode + " limit " + trueLine + "," + (totalLine - howMuch) + ";";
 				rs = SQLOperation.readDatabaseRS(c, sql);
 				LinkedList res = generateResWithRS(rs, new Order());
 				res.insert("" + trueLine); //Max row number
@@ -353,7 +353,7 @@ public class CoreOperations {
 				
 			} else {
 				sql = "select Product, Brand, Quantity, orderID, orderTime from "
-						+ countryCode + " limit " + (trueLine + 1) + "," + (howMuch) + ";";
+						+ countryCode + " limit " + (trueLine) + "," + (howMuch) + ";";
 				ResultSet r = SQLOperation.readDatabaseRS(c, sql);
 				LinkedList res = generateResWithRS(r, new Order());
 				res.insert("" + trueLine); //Max row number
