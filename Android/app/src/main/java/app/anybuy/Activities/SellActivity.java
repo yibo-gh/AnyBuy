@@ -14,9 +14,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.TextView;
+<<<<<<< HEAD
 
 import app.anybuy.Clients.SocketClient;
 import com.anybuy.R;
+=======
+import app.anybuy.R;
+
+<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/SellActivity.java
+=======
+import com.anybuy.Clients.SocketClient;
+import com.anybuy.R;
+>>>>>>> 3c12cd02c34c5c0f1a98e6a0bf97d849b429c776:Android/app/src/main/java/com/anybuy/Activities/SellActivity.java
+>>>>>>> 8d517b96f3d42144209dfd44b97c004740ffeedc
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -75,6 +85,7 @@ public class SellActivity extends AppCompatActivity {
             return;
         }
 
+<<<<<<< HEAD
 
 
 
@@ -139,6 +150,71 @@ public class SellActivity extends AppCompatActivity {
 
 
         System.out.println("heyyyyyyyyyyyyyyyyyyyyyyyyyyy " + getUserCountryCode() );
+=======
+      /*  String sessionID = MainActivity.getID();
+        LinkedList l = new LinkedList();
+        l.insert("plo");
+        l.insert(sessionID);
+        //insert the location here l.insert();
+
+*/
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+
+            @Override
+            public void onSuccess(Location location) {
+
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    // Logic to handle location object
+                    //textView.setText("altetude: " + location.getLatitude() + " \n Longtitude: " + location.getLongitude());
+
+                    lattitude = location.getLatitude();
+                    longitude = location.getLongitude();
+
+                    geocoder = new Geocoder(SellActivity.this, Locale.getDefault());
+
+                    try {
+                        addresses = geocoder.getFromLocation(lattitude, longitude, 1);
+
+                        //get the info of the user
+                        // String address = addresses.get(0).getAddressLine(0);
+                        //String area = addresses.get(0).getLocality();
+                        //String city = addresses.get(0).getAdminArea();
+                        //String countryName = addresses.get(0).getCountryName();
+
+                        setUserCountryCode(addresses.get(0).getCountryCode());
+
+                        //String postalCode = addresses.get(0).getPostalCode();
+
+                        textView.setText("contry code: " + getUserCountryCode().getClass() + " " +  getUserCountryCode());
+                    } catch (Exception e) {
+
+                    }
+
+                    System.out.println(getUserCountryCode() + " not dead 1.");
+                    //textView.setText(countryName);
+                }
+                System.out.println(getUserCountryCode() + " not dead 2.");
+            }
+
+
+        });
+
+       /* try {
+            Object o = SocketClient.Run(l);
+            if (o.getClass().equals("".getClass())) System.out.println((String)o);
+            else if (o.getClass().equals(new Object.LinkedList().getClass())){
+                Object.LinkedList l1 = (Object.LinkedList) o;
+                System.out.println(l1.getLength() + " image(s) requested.");
+            } else System.out.println("plo function returned sth else.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        */
+
+
+        System.out.println(getUserCountryCode() + " not dead 4.");
+>>>>>>> 8d517b96f3d42144209dfd44b97c004740ffeedc
     }
 
 

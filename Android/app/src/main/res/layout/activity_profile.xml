@@ -96,16 +96,18 @@
     <Button
         android:id="@+id/legalButtonID"
         android:layout_width="192dp"
-        android:background="@drawable/button_background"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="29dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/button_background"
         android:text="Legal"
+
         android:textAllCaps="false"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/preferenceButtonID" />
 
