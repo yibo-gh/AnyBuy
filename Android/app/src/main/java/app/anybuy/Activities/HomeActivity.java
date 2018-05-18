@@ -1,4 +1,4 @@
-package com.anybuy.Activities;
+package app.anybuy.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.anybuy.R;
+import app.anybuy.R;
 
 
 public class HomeActivity extends AppCompatActivity {
