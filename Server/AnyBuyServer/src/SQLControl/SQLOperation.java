@@ -89,20 +89,23 @@ public class SQLOperation {
 	// Create table for order's offers in generalOffer
 	public static String createOfferTable(Connection c, String orderID) {
 		String sql = "CREATE TABLE " + orderID
-				+ " sellerID VARCHAR(45) NOT NULL,"
-				+ " rate DOUBLE(12,2) NOT NULL,"
-				+ " expressCost DOUBLE(12,2) NOT NULL,"
-				+ " shippingMethod INT(1) NOT NULL,"
-				+ " acceptance BIT(1) NOT NULL,"
-				+ " remark VARCHAR(140) NULL";
+				+ " ("
+				+ " sellerID VARCHAR(45) NOT NULL"
+				+ ", rate DOUBLE(12,2) NOT NULL"
+				+ ", expressCost DOUBLE(12,2) NOT NULL"
+				+ ", shippingMethod INT(1) NOT NULL"
+				+ ", acceptance TINYINT(4) NOT NULL"
+				+ ", remark VARCHAR(140) NULL"
+				+ ", PRIMARY KEY (sellerID)"
+				+ " );";
 		try {
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
 			// Failed CREATE TABLE for order
 			return "0xPAIN";
 		}
-		// Failed CREATE TABLE for order
-		return "0xPAIN";
+		// Successfully CREATE TABLE for order
+		return "0x01";
 	}
 	
 	public static int countLine(Connection c, String tableName) throws SQLException {

@@ -8,6 +8,7 @@ import Object.Card;
 import Object.LinkedList;
 import Object.Node;
 import Object.Order;
+import Object.Offer;
 import Object.User;
 
 public class Tester {
@@ -18,13 +19,14 @@ public class Tester {
 //		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
 //		placeOrder();
-		addAddress();
+//		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
 //		loadOrder();
 //		addCard();
 //		loadCard();
 //		deleteCard();
+		giveRate();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -205,6 +207,31 @@ public class Tester {
 		ll.insert(getSessionID());
 		ll.insert("379812345678901");
 		ll.insert("4678901234567890");
+		
+		String res = (String)IntermediateAPI.API.getCommand(ll);
+		System.out.println(res);
+	}
+	
+	private static void giveRate() throws SQLException {
+		LinkedList ll = new LinkedList();
+		ll.insert("gvr");
+		ll.insert(getSessionID());
+		
+		String OID, SID, RM;
+		double RA, EC;
+		int SM;
+		boolean A;
+		
+		OID = "KR10000";
+		SID = "snok10000";
+		RA = 100.00;
+		EC = 10.00;
+		SM = 1;
+		A = false;
+		RM = "PAIN AND SUFFERING";
+		
+		Offer offer = new Offer(OID, SID, RA, EC, SM, A, RM);
+		ll.insert(offer);
 		
 		String res = (String)IntermediateAPI.API.getCommand(ll);
 		System.out.println(res);

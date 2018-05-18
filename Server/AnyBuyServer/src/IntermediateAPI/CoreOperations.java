@@ -10,6 +10,7 @@ import Object.Card;
 import Object.LinkedList;
 import Object.Node;
 import Object.Order;
+import Object.Offer;
 import Object.User;
 import Object.imageRequest;
 import ServerManagement.FileRecivier;
@@ -272,12 +273,35 @@ public class CoreOperations {
 	
 	static String giveRate (LinkedList ll) throws SQLException {
 		writeLog("Give Rate");
-		// TODO
 		
+		// Verify session
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
-		return null;
+		// Check that Offer object was given
+		Object obj = ll.head.getObject();
+		if (!obj.getClass().equals(new Offer().getClass())) return "NOT AN OFFER";
+		Offer offer = (Offer)obj;
+		
+		// Connect to generalOffer
+		Connection c = SQLControl.SQLOperation.getConnect("generalOffer");
+		
+		// Make new table for order's offers if needed
+		String orderStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT * FROM " + offer.getOrderID());
+		if (orderStatus == null) {
+			SQLControl.SQLOperation.createOfferTable(c, offer.getOrderID());
+		}
+		
+		// Insert data into table, turn boolean acceptance to bit accept
+		String accept;
+		if (offer.getAcceptance()) {accept = "1";}
+		else {accept = "0";}
+		String value = "'" + offer.getSellerID() + "','" + offer.getRate() + "','" + offer.getExpressCost() + "','" + offer.getShippingMethod() + "','" + accept + "','" + offer.getRemark() + "'";
+		String sql = "INSERT INTO " + offer.getOrderID() +" (sellerID, rate, expressCost, shippingMethod, acceptance, remark) VALUES (" + value + ");"; 
+		System.out.println(SQLOperation.updateData(c, sql));
+		
+		c.close();
+		return "0x01";
 	}
 	
 	static String acceptRate (LinkedList ll) throws SQLException {
