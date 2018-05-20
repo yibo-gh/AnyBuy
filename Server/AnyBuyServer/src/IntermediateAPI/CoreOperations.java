@@ -131,6 +131,7 @@ public class CoreOperations {
 			
 			int lastOrderNum = getLastOrderNum(c, obj.getCountry());
 			String orderID = obj.getCountry() + (lastOrderNum + 1);
+			System.out.println(orderID);
 			
 			boolean imageExist = (!obj.getImage().equals("") );
 			
@@ -258,8 +259,8 @@ public class CoreOperations {
 		 */
 		
 		writeLog("Load partial order.");
-//		String uid = checkSession(ll);
-//		if (!verifySessionRes(uid, ll)) return uid;
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
 		
 		if (ll.getLength() == 2) return initialLoad(ll);
 		else if (ll.getLength() == 6) return continueLoad(ll);

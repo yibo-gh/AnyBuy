@@ -18,15 +18,15 @@ public class Tester {
 	public static void main (String args[]) throws SQLException {
 //		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
-//		placeOrder();
+		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
-		loadOrder();
+//		loadOrder();
 //		addCard();
 //		loadCard();
 //		deleteCard();
-		giveRate();
+//		giveRate();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -54,7 +54,7 @@ public class Tester {
 		l.insert("plo");
 		l.insert(getSessionID());
 		
-		for (int i = 0; i < 0x2; i++) {
+		for (int i = 0; i < 0x1; i++) {
 			String p, b, c, img;
 			int q;
 			Timestamp ts;
@@ -62,7 +62,7 @@ public class Tester {
 			p = "Yoona\\'s Choice";
 			b = "Innisfree";
 			q = 1;
-			c = "RKR";
+			c = "US";
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			Order u = new Order(p, b, q, c, img, ts);
@@ -71,7 +71,7 @@ public class Tester {
 			p = "Zero Balance Cleasing";
 			b = "Banila Co.";
 			q = 1;
-			c = "RKR";
+			c = "US";
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			u = new Order(p, b, q, c, img, ts);

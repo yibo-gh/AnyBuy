@@ -12,8 +12,8 @@ public class functionTester {
 	public static void main(String[] args) throws SQLException {
 		
 		LinkedList l = new LinkedList();
-		l.insert("KR");
-		l.insert("10");
+		l.insert("US");
+		l.insert("10000");
 		Object o = CoreOperations.loadPartialCountryOrder(l);
 		
 		if (o.getClass().equals("".getClass())) System.out.println((String)o);
