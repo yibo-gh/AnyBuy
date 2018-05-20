@@ -1,12 +1,9 @@
 package app.anybuy.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,22 +14,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-import app.anybuy.R;
-
-<<<<<<< HEAD:Android/app/src/main/java/app/anybuy/Activities/BuyActivity.java
-=======
-import app.anybuy.R;
->>>>>>> 3c12cd02c34c5c0f1a98e6a0bf97d849b429c776:Android/app/src/main/java/app/anybuy/Activities/BuyActivity.java
-import app.anybuy.Clients.SocketClient;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.Timestamp;
 
-import Object.*;
+import Object.LinkedList;
+import Object.Order;
+import app.anybuy.Clients.SocketClient;
+import app.anybuy.R;
 
 public class BuyActivity extends AppCompatActivity  {
 
