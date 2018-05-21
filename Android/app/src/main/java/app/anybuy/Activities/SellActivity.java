@@ -129,7 +129,7 @@ public class SellActivity extends AppCompatActivity {
 
                         //String postalCode = addresses.get(0).getPostalCode();
 
-                        textView.setText("contry code: "+ getUserCountryCode());
+                       
                     } catch (Exception e) {
 
                     }
