@@ -13,6 +13,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -22,9 +24,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.List;
 import java.util.Locale;
 
-import Object.*;
+import Object.LinkedList;
+import Object.Node;
+import Object.Order;
 import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
+
+
 
 public class SellActivity extends AppCompatActivity {
 
@@ -65,7 +71,17 @@ public class SellActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
 
+        Button orderButton = (Button) findViewById(R.id.getOrderButtonID);
 
+/*
+
+        Button newAddress = (Button) findViewById(R.id.NewAddressbuttonID);
+        Button deleteAddress = (Button) findViewById(R.id.deleteButton);
+
+        TableLayout tableLayout = (TableLayout)findViewById(R.id.TableLayout01);
+        tableLayout.setStretchAllColumns(true);
+
+ */
         textView = (TextView) findViewById(R.id.locationTextViewID);
 
 
@@ -124,44 +140,126 @@ public class SellActivity extends AppCompatActivity {
         });
 
 
-        System.out.println(getUserCountryCode() + " heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+        /*
+         LinkedList l = new LinkedList();
+        l.insert("lda");
+        l.insert(MainActivity.getID());
 
-        sessionID = MainActivity.getID();
-        LinkedList l = new LinkedList();
-        l.insert("lop");
-        l.insert(sessionID);
-        l.insert(getUserCountryCode());
-        l.insert(10);
-
-        System.out.println("noooooooooooooooooooooooooooooooooooo");
 
         try {
             Object o = SocketClient.Run(l);
-            if (o.getClass().equals("".getClass())) System.out.println((String) o);
-            else if (o.getClass().equals(new LinkedList().getClass())) {
-                 LinkedList l1 = (LinkedList) o;
+            if (o.getClass().equals("".getClass())) {
+                TableRow tableRow = new TableRow(this);
+                TextView tv = new TextView(this);
+                tv.setText((String) o);
+                tableRow.addView(tv);
+                tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
+                deleteAddress.setEnabled(false);
+            } else if (o.getClass().equals(new LinkedList().getClass())){
+                l = (LinkedList) o;
+                if (l.getLength() == 0) {
+                    TableRow tableRow = new TableRow(this);
+                    TextView tv = new TextView(this);
+                    tv.setText("No address found on profile.");
+                    tableRow.addView(tv);
+                    tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
+                    deleteAddress.setEnabled(false);
+                } else {
+                    Node temp = l.head;
+                    while (temp != null) {
+                        Address a = (Address) temp.getObject();
 
-                Node temp = l1.end;
+                        for (int i = 0; i < 7; i++) {
+                            TableRow tableRow = new TableRow(this);
+                                System.out.println("Writing row " + i + ".");
+                                TextView tv = new TextView(this);
+                                if (i == 0){
+                                    tv.setText(a.getFN() + " " + a.getLN());
+                                    tableRow.addView(tv);
+                                } else if (i == 1 && !a.getCom().equals("")){
+                                    tv.setText(a.getCom());
+                                    tableRow.addView(tv);
+                                } else if (i == 2){
+                                    tv.setText(a.getL1());
+                                    tableRow.addView(tv);
+                                } else if (i == 3 && !a.getL2().equals("")){
+                                    tv.setText(a.getL2());
+                                    tableRow.addView(tv);
+                                } else if (i == 4){
+                                    tv.setText(a.getCity() + ", " + a.getState());
+                                    tableRow.addView(tv);
+                                } else if (i == 5){
+                                    tv.setText(a.getZip());
+                                    tableRow.addView(tv);
+                                } else if (i == 6) {
+                                    tv.setText("");
+                                    tableRow.addView(tv);
+                                }
 
-                temp = temp.getPrev().getPrev();
-               while (temp != null) {
-
-                    Order od = (Order) temp.getObject();
-
-                    System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
-                            " " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
-                    if (temp.getNext().getNext() == null) maxOrder = ((Order)temp.getObject()).getImage();
-
-                    temp = temp.getPrev();
-
+                            tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
+                            System.out.println("Line added.");
+                        }
+                        temp = temp.getNext();
+                    }
                 }
-
-            } else System.out.println("lop function returned sth else.");
-      } catch (Exception e) {
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
+         */
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println(getUserCountryCode() + " heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 
-        System.out.println("helllllllll yeaaaaaaaaaaaaaaaaaaaaaaaa");
+                String data = "";
+                sessionID = MainActivity.getID();
+                LinkedList l = new LinkedList();
+                l.insert("lop");
+                l.insert(sessionID);
+                l.insert(getUserCountryCode());
+                l.insert(10);
+
+                System.out.println("noooooooooooooooooooooooooooooooooooo");
+
+                try {
+
+                    Object o = SocketClient.Run(l);
+                    if (o.getClass().equals("".getClass())) System.out.println((String) o);
+                    else if (o.getClass().equals(new LinkedList().getClass())) {
+                        LinkedList l1 = (LinkedList) o;
+
+                        Node temp = l1.end;
+
+                        temp = temp.getPrev().getPrev();
+                        while (temp != null) {
+
+                            Order od = (Order) temp.getObject();
+
+
+                            System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
+                                    " " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
+
+
+                            data += "Product Name: " + od.getProduct() + "\nBrand Name: " + od.getBrand() +
+                                    "\nQuantity: " + od.getQuantity() + "\nCountry Code: " + od.getCountry() + "\n" + "\n";
+
+                            textView.setText(data);
+                            if (temp.getNext().getNext() == null) maxOrder = ((Order)temp.getObject()).getImage();
+
+                            temp = temp.getPrev();
+                            System.out.println("next order");
+                        }
+
+                    } else System.out.println("lop function returned sth else.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("helllllllll yeaaaaaaaaaaaaaaaaaaaaaaaa");
+            }
+        });
+
 
     }
 
