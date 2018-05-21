@@ -7,29 +7,18 @@
     tools:context=".Activities.AddressAddActivity">
 
     <Button
-        android:id="@+id/AddressDeleteButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:text="Delete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/addAddressbuttonID"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stateeditText" />
-
-    <Button
         android:id="@+id/addAddressbuttonID"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:text="Add"
-        app:layout_constraintBaseline_toBaselineOf="@+id/AddressDeleteButton"
+        android:layout_marginStart="24dp"
+        android:text="ADD"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/AddressDeleteButton" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stateeditText" />
 
     <EditText
         android:id="@+id/FNeditText"
@@ -137,7 +126,7 @@
         android:ems="10"
         android:hint="state"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/AddressDeleteButton"
+        app:layout_constraintBottom_toTopOf="@+id/addAddressbuttonID"
         app:layout_constraintEnd_toStartOf="@+id/zipeditText"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

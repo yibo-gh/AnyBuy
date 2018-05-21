@@ -1,14 +1,20 @@
 package app.anybuy.Activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import Object.Address;
+import Object.LinkedList;
+import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
+
 
 public class AddressAddActivity extends AppCompatActivity {
 
@@ -21,7 +27,7 @@ public class AddressAddActivity extends AppCompatActivity {
     EditText state;
     EditText zip;
 
-    Button addAddressButton;
+    Button AddAddressButton;
     String f, l, co, l1, l2, c, s, z;
 
     @Override
@@ -52,26 +58,30 @@ public class AddressAddActivity extends AppCompatActivity {
         zip = (EditText) findViewById(R.id.zipeditText);
 
 
+        AddAddressButton = (Button) findViewById(R.id.addAddressbuttonID);
 
 
-       /* addAddressButton = (Button) findViewById(R.id.NewAddressbuttonID);
-
-        addAddressButton.setOnClickListener(new View.OnClickListener() {
+        AddAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
 
-        addAddressButton.setOnClickListener(new View.OnClickListener() {
+        AddAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 f = FN.getText().toString();
+                f = BuyActivity.strPreProcess(f);
                 l = LN.getText().toString();
+                l = BuyActivity.strPreProcess(l);
                 co = com.getText().toString();
+                co = BuyActivity.strPreProcess(co);
                 l1 = line1.getText().toString();
+                l1 = BuyActivity.strPreProcess(l1);
                 l2 = line2.getText().toString();
+                l2 = BuyActivity.strPreProcess(l2);
                 c = city.getText().toString();
                 s = state.getText().toString();
                 z = zip.getText().toString();
@@ -79,11 +89,11 @@ public class AddressAddActivity extends AppCompatActivity {
                 LinkedList ll = new LinkedList();
                 ll.insert("ada");
                 ll.insert(MainActivity.getID());
+                System.out.println(f + " " + l + " " + co + " " + l1 + " " + l2 + " " + c + " " + s + " " + z);
                 Address a = new Address(f, l, co, l1, l2, c, s, z);
-                System.out.println("FN = " + a.getFN());
                 ll.insert(a);
                 try {
-                    String str = (String)SocketClient.Run(ll);
+                    String str = (String) SocketClient.Run(ll);
                     System.out.println(str);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -92,9 +102,9 @@ public class AddressAddActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(AddressAddActivity.this, AddressActivity.class);
                 startActivity(intent);
-                */
-           // }
-        //});
+
+            }
+        });
 
 
 

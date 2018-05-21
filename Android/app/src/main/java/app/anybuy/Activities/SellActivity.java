@@ -140,14 +140,14 @@ public class SellActivity extends AppCompatActivity {
         });
 
 
+
         /*
-         LinkedList l = new LinkedList();
-        l.insert("lda");
-        l.insert(MainActivity.getID());
+
 
 
         try {
             Object o = SocketClient.Run(l);
+
             if (o.getClass().equals("".getClass())) {
                 TableRow tableRow = new TableRow(this);
                 TextView tv = new TextView(this);
@@ -211,6 +211,7 @@ public class SellActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println(getUserCountryCode() + " heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+
 
                 String data = "";
                 sessionID = MainActivity.getID();
