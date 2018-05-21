@@ -57,7 +57,7 @@ public class BuyActivity extends AppCompatActivity  {
         return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
     }
 
-    private String strPreProcess(String str){
+    public static String strPreProcess(String str){
 
         String res = str;
 

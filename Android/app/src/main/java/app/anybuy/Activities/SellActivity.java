@@ -131,12 +131,13 @@ public class SellActivity extends AppCompatActivity {
         l.insert("lop");
         l.insert(sessionID);
         l.insert(getUserCountryCode());
-        l.insert(10);
+        l.insert("10");
 
         System.out.println("noooooooooooooooooooooooooooooooooooo");
 
         try {
             Object o = SocketClient.Run(l);
+            System.out.println("class of o: " + o.getClass());
             if (o.getClass().equals("".getClass())) System.out.println((String) o);
             else if (o.getClass().equals(new LinkedList().getClass())) {
                  LinkedList l1 = (LinkedList) o;

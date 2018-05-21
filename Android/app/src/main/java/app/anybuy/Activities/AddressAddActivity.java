@@ -59,17 +59,22 @@ public class AddressAddActivity extends AppCompatActivity {
 
 
 
-        AddAddressButton = (Button) findViewById(R.id.NewAddressbuttonID);
+        AddAddressButton = (Button) findViewById(R.id.addAddressbuttonID);
 
         AddAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 f = FN.getText().toString();
+                f = BuyActivity.strPreProcess(f);
                 l = LN.getText().toString();
+                l = BuyActivity.strPreProcess(l);
                 co = com.getText().toString();
+                co = BuyActivity.strPreProcess(co);
                 l1 = line1.getText().toString();
+                l1 = BuyActivity.strPreProcess(l1);
                 l2 = line2.getText().toString();
+                l2 = BuyActivity.strPreProcess(l2);
                 c = city.getText().toString();
                 s = state.getText().toString();
                 z = zip.getText().toString();
@@ -77,8 +82,8 @@ public class AddressAddActivity extends AppCompatActivity {
                 LinkedList ll = new LinkedList();
                 ll.insert("ada");
                 ll.insert(MainActivity.getID());
+                System.out.println(f + " " + l + " " + co + " " + l1 + " " + l2 + " " + c + " " + s + " " + z);
                 Address a = new Address(f, l, co, l1, l2, c, s, z);
-                System.out.println("FN = " + a.getFN());
                 ll.insert(a);
                 try {
                     String str = (String)SocketClient.Run(ll);
