@@ -45,8 +45,8 @@
 
     <TextView
         android:id="@+id/buyTextView"
-        android:layout_width="300"
-        android:layout_height="300"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:text="This will be all the info from the ad listing"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp" />

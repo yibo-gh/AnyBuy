@@ -22,9 +22,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.List;
 import java.util.Locale;
 
-import Object.LinkedList;
 import Object.*;
-
 import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
 
@@ -74,8 +72,9 @@ public class SellActivity extends AppCompatActivity {
         //get the location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+        //ask the user to allow access to their location
 
-        //get the address from the location
+        //if no permission to access the location, ask again
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED) {
@@ -85,6 +84,7 @@ public class SellActivity extends AppCompatActivity {
             return;
         }
 
+        //get the address from the location
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
 
             @Override
@@ -122,6 +122,8 @@ public class SellActivity extends AppCompatActivity {
             }
 
         });
+
+
         System.out.println(getUserCountryCode() + " heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 
         sessionID = MainActivity.getID();
@@ -131,16 +133,18 @@ public class SellActivity extends AppCompatActivity {
         l.insert(getUserCountryCode());
         l.insert(10);
 
+        System.out.println("noooooooooooooooooooooooooooooooooooo");
+
         try {
             Object o = SocketClient.Run(l);
             if (o.getClass().equals("".getClass())) System.out.println((String) o);
             else if (o.getClass().equals(new LinkedList().getClass())) {
-                LinkedList l1 = (LinkedList) o;
+                 LinkedList l1 = (LinkedList) o;
 
                 Node temp = l1.end;
 
                 temp = temp.getPrev().getPrev();
-                while (temp != null) {
+               while (temp != null) {
 
                     Order od = (Order) temp.getObject();
 
@@ -153,12 +157,13 @@ public class SellActivity extends AppCompatActivity {
                 }
 
             } else System.out.println("lop function returned sth else.");
-        } catch (Exception e) {
+      } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.out.println("helllllllll yeaaaaaaaaaaaaaaaaaaaaaaaa");
 
     }
 
     // tryed to make a function for it but failed, feel free to try
-
 }

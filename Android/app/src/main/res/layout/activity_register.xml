@@ -9,54 +9,67 @@
 
     <EditText
         android:id="@+id/emailEditTextID"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="44dp"
+        android:layout_marginEnd="84dp"
         android:layout_marginLeft="84dp"
+        android:layout_marginRight="84dp"
         android:layout_marginStart="84dp"
         android:layout_marginTop="100dp"
         android:ems="10"
         android:hint="Email:"
         android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/passwordEditTextID"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="46dp"
+        android:layout_marginEnd="84dp"
         android:layout_marginLeft="84dp"
+        android:layout_marginRight="84dp"
         android:layout_marginStart="84dp"
         android:layout_marginTop="68dp"
         android:ems="10"
         android:hint="Password:"
         android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditTextID" />
 
     <Button
         android:id="@+id/registerButtonID1"
-        android:layout_width="88dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginBottom="179dp"
+        android:layout_marginEnd="148dp"
         android:layout_marginLeft="148dp"
-        android:background="@drawable/button_background"
+        android:layout_marginRight="148dp"
         android:layout_marginStart="148dp"
         android:layout_marginTop="52dp"
+        android:background="@drawable/button_background"
         android:text="Register"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repeatPassEditTextID"
         android:textAllCaps="false"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repeatPassEditTextID" />
 
     <EditText
         android:id="@+id/repeatPassEditTextID"
-        android:layout_width="215dp"
+        android:layout_width="0dp"
         android:layout_height="46dp"
+        android:layout_marginEnd="84dp"
         android:layout_marginLeft="84dp"
+        android:layout_marginRight="84dp"
         android:layout_marginStart="84dp"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Reapeat Your Password:"
         android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditTextID" />
 
