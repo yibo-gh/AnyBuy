@@ -71,7 +71,7 @@ public class SellActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
 
-        Button orderButton = (Button) findViewById(R.id.getOrderButtonID);
+        final Button orderButton = (Button) findViewById(R.id.getOrderButtonID);
 
 /*
 
@@ -210,6 +210,7 @@ public class SellActivity extends AppCompatActivity {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                orderButton.setText("Next Orders");
                 System.out.println(getUserCountryCode() + " heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 
 
@@ -243,7 +244,7 @@ public class SellActivity extends AppCompatActivity {
 
 
                             data += "Product Name: " + od.getProduct() + "\nBrand Name: " + od.getBrand() +
-                                    "\nQuantity: " + od.getQuantity() + "\nCountry Code: " + od.getCountry() + "\n" + "\n";
+                                    "\nQuantity: " + od.getQuantity() + "\nCountry Code: " + od.getCountry() + "\nOrder Number: " + od.getImage() + "\n \n";
 
                             textView.setText(data);
                             if (temp.getNext().getNext() == null) maxOrder = ((Order)temp.getObject()).getImage();
