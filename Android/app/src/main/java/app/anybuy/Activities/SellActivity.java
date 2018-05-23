@@ -129,7 +129,7 @@ public class SellActivity extends AppCompatActivity {
 
                         //String postalCode = addresses.get(0).getPostalCode();
 
-                       
+
                     } catch (Exception e) {
 
                     }
