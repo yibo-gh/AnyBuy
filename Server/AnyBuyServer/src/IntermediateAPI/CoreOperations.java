@@ -425,11 +425,35 @@ public class CoreOperations {
 	}
 	
 	static Object cancelOrder (LinkedList ll) throws SQLException {
-		// TODO
+		//<sessionID>&<orderID>
 		writeLog("Cancel Order");
+		Connection c;
+		String sql, orderID, country;
 		
+		// verify session
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
+		
+		// get orderID from list
+		Object obj = ll.head.getObject();
+		if (!obj.getClass().equals(("".getClass()))) {return "0x1002";}
+		orderID = obj.toString();
+		// get country from orderID
+		country = getCountryCodeWithOrderID(orderID);
+		
+		// delete order from generalOrder
+		c = SQLControl.SQLOperation.getConnect("generalOrder");
+		sql = "DELETE FROM " + country
+				+ " WHERE orderID = " + orderID
+				+ ";";
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
+		
+		// delete table for order's offers
+		c = SQLControl.SQLOperation.getConnect("generalOffer");
+		sql = "DROP TABLE " + orderID;
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
 		
 		return "0x01";
 	}
