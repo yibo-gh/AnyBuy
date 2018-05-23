@@ -430,18 +430,18 @@ public class CoreOperations {
 		Connection c;
 		String sql, orderID, country;
 		
-		// verify session
+		// Verify session
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
-		// get orderID from list
+		// Get orderID from list
 		Object obj = ll.head.getObject();
 		if (!obj.getClass().equals(("".getClass()))) {return "0x1002";}
 		orderID = obj.toString();
-		// get country from orderID
+		// Get country from orderID
 		country = getCountryCodeWithOrderID(orderID);
 		
-		// delete order from generalOrder
+		// Delete order from generalOrder
 		c = SQLControl.SQLOperation.getConnect("generalOrder");
 		sql = "DELETE FROM " + country
 				+ " WHERE orderID = " + orderID
@@ -449,7 +449,7 @@ public class CoreOperations {
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
-		// delete table for order's offers
+		// Delete table for order's offers
 		c = SQLControl.SQLOperation.getConnect("generalOffer");
 		sql = "DROP TABLE " + orderID;
 		System.out.println(SQLOperation.updateData(c, sql));
@@ -492,10 +492,30 @@ public class CoreOperations {
 	}
 	
 	static String acceptRate (LinkedList ll) throws SQLException {
+		//<sessionID>&<offerObject>
 		writeLog("Accept Rate");
-		// TODO
+		Connection c;
+		String sql, orderID, sellerID;
+		
+		// Verify session
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
+		
+		// Get orderID and sellerID from list
+		Object obj = ll.head.getObject();
+		if (!obj.getClass().equals(new Offer().getClass())) return "NOT AN OFFER";
+		Offer offer = (Offer)obj;
+		orderID = offer.getOrderID();
+		sellerID = offer.getSellerID();
+		
+		// Change acceptance of offer to 1
+		c = SQLControl.SQLOperation.getConnect("generalOffer");
+		sql = "UPDATE " + orderID
+				+ " SET acceptance = 1"
+				+ " WHERE sellerID = " + sellerID
+				+ ";";
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
 		
 		return null;
 	}
