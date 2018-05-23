@@ -3,6 +3,7 @@ package app.anybuy.Activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -28,6 +30,7 @@ import Object.LinkedList;
 import Object.Node;
 import Object.Order;
 import app.anybuy.Clients.SocketClient;
+import app.anybuy.OfferActivity;
 import app.anybuy.R;
 
 
@@ -37,6 +40,7 @@ public class SellActivity extends AppCompatActivity {
     String maxOrder = "";
     String minOrder = "";
 
+    LinearLayout linearLayout;
     private TextView textView;
 
     String sessionID;
@@ -73,22 +77,14 @@ public class SellActivity extends AppCompatActivity {
 
         final Button orderButton = (Button) findViewById(R.id.getOrderButtonID);
 
-/*
+        final int[] id = {0};
 
-        Button newAddress = (Button) findViewById(R.id.NewAddressbuttonID);
-        Button deleteAddress = (Button) findViewById(R.id.deleteButton);
 
-        TableLayout tableLayout = (TableLayout)findViewById(R.id.TableLayout01);
-        tableLayout.setStretchAllColumns(true);
-
- */
-        textView = (TextView) findViewById(R.id.locationTextViewID);
-
+        linearLayout = (LinearLayout) findViewById(R.id.sellpageLinearLayoutID);
 
         //get the location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        //ask the user to allow access to their location
 
         //if no permission to access the location, ask again
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -118,7 +114,6 @@ public class SellActivity extends AppCompatActivity {
 
                     try {
                         addresses = geocoder.getFromLocation(lattitude, longitude, 1);
-
                         //get the info of the user
                         // String address = addresses.get(0).getAddressLine(0);
                         //String area = addresses.get(0).getLocality();
@@ -131,7 +126,7 @@ public class SellActivity extends AppCompatActivity {
 
                        
                     } catch (Exception e) {
-
+                        System.out.println("location error");
                     }
                 }
 
@@ -141,72 +136,6 @@ public class SellActivity extends AppCompatActivity {
 
 
 
-        /*
-
-
-
-        try {
-            Object o = SocketClient.Run(l);
-
-            if (o.getClass().equals("".getClass())) {
-                TableRow tableRow = new TableRow(this);
-                TextView tv = new TextView(this);
-                tv.setText((String) o);
-                tableRow.addView(tv);
-                tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
-                deleteAddress.setEnabled(false);
-            } else if (o.getClass().equals(new LinkedList().getClass())){
-                l = (LinkedList) o;
-                if (l.getLength() == 0) {
-                    TableRow tableRow = new TableRow(this);
-                    TextView tv = new TextView(this);
-                    tv.setText("No address found on profile.");
-                    tableRow.addView(tv);
-                    tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
-                    deleteAddress.setEnabled(false);
-                } else {
-                    Node temp = l.head;
-                    while (temp != null) {
-                        Address a = (Address) temp.getObject();
-
-                        for (int i = 0; i < 7; i++) {
-                            TableRow tableRow = new TableRow(this);
-                                System.out.println("Writing row " + i + ".");
-                                TextView tv = new TextView(this);
-                                if (i == 0){
-                                    tv.setText(a.getFN() + " " + a.getLN());
-                                    tableRow.addView(tv);
-                                } else if (i == 1 && !a.getCom().equals("")){
-                                    tv.setText(a.getCom());
-                                    tableRow.addView(tv);
-                                } else if (i == 2){
-                                    tv.setText(a.getL1());
-                                    tableRow.addView(tv);
-                                } else if (i == 3 && !a.getL2().equals("")){
-                                    tv.setText(a.getL2());
-                                    tableRow.addView(tv);
-                                } else if (i == 4){
-                                    tv.setText(a.getCity() + ", " + a.getState());
-                                    tableRow.addView(tv);
-                                } else if (i == 5){
-                                    tv.setText(a.getZip());
-                                    tableRow.addView(tv);
-                                } else if (i == 6) {
-                                    tv.setText("");
-                                    tableRow.addView(tv);
-                                }
-
-                            tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
-                            System.out.println("Line added.");
-                        }
-                        temp = temp.getNext();
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-         */
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -234,6 +163,9 @@ public class SellActivity extends AppCompatActivity {
                         Node temp = l1.end;
 
                         temp = temp.getPrev().getPrev();
+                        int i = 0;
+
+                        // go through the first 10 orders from the order to newest
                         while (temp != null) {
 
                             Order od = (Order) temp.getObject();
@@ -243,15 +175,44 @@ public class SellActivity extends AppCompatActivity {
                                     " " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
 
 
-                            data += "Product Name: " + od.getProduct() + "\nBrand Name: " + od.getBrand() +
+                            data = "Product Name: " + od.getProduct() + "\nBrand Name: " + od.getBrand() +
                                     "\nQuantity: " + od.getQuantity() + "\nCountry Code: " + od.getCountry() + "\nOrder Number: " + od.getImage() + "\n \n";
 
-                            textView.setText(data);
+                            // to get different ids I created a string that gets the last 3 chards of each order number (getImage()) and converts it into int and set the int to the textveiws id
+                           String getStrID = od.getImage().length() > 3 ? od.getImage().substring(od.getImage().length() - 3) : od.getImage();
+
+                            // create a text view for each order
+                                textView = new TextView(SellActivity.this);
+                            // put the data in the text view
+                                textView.setText(data);
+                                // give it an id
+                                textView.setId(Integer.parseInt(getStrID));
+                                //place it nicely under one another
+                                textView.setPadding(0, 50, 0, 0);
+
+                            // if clicked any of the textviews, open the offer page
+                            textView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(SellActivity.this, OfferActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+                            // add the text view to our layout
+                            linearLayout.addView(textView);
+
+
                             if (temp.getNext().getNext() == null) maxOrder = ((Order)temp.getObject()).getImage();
 
+                            //go to the next linked list or order
                             temp = temp.getPrev();
-                            System.out.println("next order");
+
+                            // just check and see if the ideas are correct
+                            System.out.println("the idea is :" + textView.getId());
+                            i++;
                         }
+
 
                     } else System.out.println("lop function returned sth else.");
                 } catch (Exception e) {
@@ -261,6 +222,7 @@ public class SellActivity extends AppCompatActivity {
                 System.out.println("helllllllll yeaaaaaaaaaaaaaaaaaaaaaaaa");
             }
         });
+
 
 
     }
