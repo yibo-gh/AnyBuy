@@ -13,7 +13,7 @@ public class functionTester {
 		
 		LinkedList l = new LinkedList();
 		l.insert("US");
-		l.insert("10000");
+		l.insert("10");
 		Object o = CoreOperations.loadPartialCountryOrder(l);
 		
 		if (o.getClass().equals("".getClass())) System.out.println((String)o);
@@ -33,6 +33,7 @@ public class functionTester {
 			if (temp.getNext().getNext() == null) maxOrder = ((Order)temp.getObject()).getImage();
 			temp = temp.getNext();
 		}
+		
 		maxOrder = ((Order) temp.getPrev().getObject()).getImage();
 		
 		String minLine = (String)l.end.getObject();
@@ -58,8 +59,10 @@ public class functionTester {
 			Order od = (Order) temp.getObject();
 			System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
 					" " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
+			if (temp.getNext().getNext() == null) maxOrder = ((Order)temp.getObject()).getImage();
 			temp = temp.getNext();
 		}
+		maxOrder = ((Order) temp.getPrev().getObject()).getImage();
 		
 		minLine = (String)l.end.getObject();
 		maxLine = (String)l.end.getPrev().getObject();

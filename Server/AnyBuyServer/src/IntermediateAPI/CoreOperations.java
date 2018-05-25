@@ -13,6 +13,7 @@ import Object.Order;
 import Object.Offer;
 import Object.User;
 import Object.imageRequest;
+import Object.UserOrderHis;
 import ServerManagement.FileRecivier;
 import SQLControl.SQLOperation;
 
@@ -147,7 +148,7 @@ public class CoreOperations {
 			// make string for INSERT orderID into user's account
 			c.close();
 			c = SQLControl.SQLOperation.getConnect(uid);
-			sql = "INSERT INTO `order` (`orderID`) VALUES ('" + orderID + "');";
+			sql = "INSERT INTO `order` (`orderID`, `orderStatus`) VALUES ('" + orderID + "','0');";
 			System.out.println(SQLOperation.updateData(c, sql));
 
 			c.close();
@@ -193,13 +194,47 @@ public class CoreOperations {
 	}
 	
 	static Object loadPersonalOrder (LinkedList ll) throws SQLException {
-		// TODO Write this section.
+		
+		/**
+		 * This LinkedList should includes Nodes. 
+		 * The First Node should contains sessionID.
+		 * This function is different from loadCountryOrder() function in profile page.
+		 */
+		
 		writeLog("Load Order");
 		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
-		return null;
+		Connection c = SQLOperation.getConnect(uid);
+		System.out.println(uid);
+		String sql = "SELECT orderID, orderStatus FROM order";
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		LinkedList tempLinkedList = generateResWithRS(rs, new UserOrderHis());
+		c.close();
+		
+		System.out.println("Load personal order list successed. " + tempLinkedList.getLength());
+		
+		LinkedList realLinkedList = new LinkedList();
+		Node temp = tempLinkedList.head;
+		while (temp != null) {
+			UserOrderHis u = (UserOrderHis) temp.getObject();
+			if (u.getOrderStatus() != 0) {
+				realLinkedList.insert(u);
+			} else {
+				String orderID = u.getOrderID();
+				String country = getCountryCodeWithOrderID(orderID);
+				c = SQLOperation.getConnect("generalOrder");
+				sql = "Select Product, Brand, Quantity, Image, orderTime, orderID from " + country
+						+ " where orderID = " + orderID;
+				rs = SQLOperation.readDatabaseRS(c, sql);
+				LinkedList temp2 = generateResWithRS(rs, new Order());
+				if (temp2.head != null) realLinkedList.insert(temp2.head.getObject());
+				c.close();
+			}
+		}
+		
+		return realLinkedList;
 	}
 
 	static Object loadCountryOrder (LinkedList ll) throws SQLException {
@@ -733,7 +768,17 @@ public class CoreOperations {
 		if (o.getClass().equals(new Address().getClass())) return addressList(rs);
 		if (o.getClass().equals(new Card().getClass())) return cardList(rs);
 		if (o.getClass().equals(new Order().getClass())) return orderList(rs);
+		if (o.getClass().equals(new UserOrderHis().getClass())) return userOrderList(rs);
 		return null;
+	}
+	
+	private static LinkedList userOrderList(ResultSet rs) throws SQLException {
+		LinkedList ll = new LinkedList();
+		while (rs != null && rs.next()) {
+			UserOrderHis u = new UserOrderHis(rs.getString(1), rs.getInt(2));
+			ll.insert(u);
+		}
+		return ll;
 	}
 	
 	private static LinkedList addressList(ResultSet rs) throws SQLException {
