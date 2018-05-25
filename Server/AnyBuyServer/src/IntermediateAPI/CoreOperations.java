@@ -582,7 +582,7 @@ public class CoreOperations {
 		// Delete order from order history
 		c = SQLControl.SQLOperation.getConnect(uid);
 		sql = "UPDATE order"
-				+ " SET orderStatus = 1"
+				+ " SET orderStatus = 5"
 				+ " WHERE orderID = " + orderID
 				+ ";";
 		System.out.println(SQLOperation.updateData(c, sql));

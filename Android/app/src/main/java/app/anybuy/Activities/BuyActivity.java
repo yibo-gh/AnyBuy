@@ -403,7 +403,7 @@ public class BuyActivity extends AppCompatActivity  {
                     l.insert("plo");
                     l.insert(sessionID);
                     Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
-                            countryStr, imageURIStr, new Timestamp(System.currentTimeMillis()));
+                            countryStr, "false", new Timestamp(System.currentTimeMillis()));
                     System.out.println("name: " + od.getProduct());
                     l.insert(od);
                     try {
@@ -436,7 +436,7 @@ public class BuyActivity extends AppCompatActivity  {
             //    System.out.println(res);
             //    System.out.println(sessionID);
 
-                LinkedList l = new LinkedList();
+               /* LinkedList l = new LinkedList();
                 l.insert("plo");
                 l.insert(sessionID);
                 Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
@@ -452,7 +452,7 @@ public class BuyActivity extends AppCompatActivity  {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
+*/
                 //productImage.get
                 //combine the Strings to get it all fixed up for the database api's
                 //combineBuyPagestr = "plo&sessionID&" + countrystr + "?" + productNamestr + "?" + productBrandstr + "?"<Image>?<Quantity>
