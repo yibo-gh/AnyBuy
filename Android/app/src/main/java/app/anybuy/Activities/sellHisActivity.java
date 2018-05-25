@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import Object.*;
-import app.anybuy.Clients.SocketClient;
-import app.anybuy.R;
+
 import Object.LinkedList;
 import Object.Node;
 import Object.UserOrderHis;
+import app.anybuy.Clients.SocketClient;
+import app.anybuy.R;
 
 public class sellHisActivity extends AppCompatActivity {
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;

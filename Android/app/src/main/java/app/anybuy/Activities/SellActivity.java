@@ -131,7 +131,6 @@ public class SellActivity extends AppCompatActivity {
 
         });
 
-
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,7 +146,6 @@ public class SellActivity extends AppCompatActivity {
 
                 //the first time you click the orders button
 
-
                     System.out.println(getUserCountryCode() + " heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 
                     sessionID = MainActivity.getID();
@@ -162,7 +160,6 @@ public class SellActivity extends AppCompatActivity {
                 System.out.println("noooooooooooooooooooooooooooooooooooo");
 
                 try {
-
 
                     if (secondClick == false) {
                         Object o = SocketClient.Run(firstClickLinkedList);
