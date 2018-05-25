@@ -10,12 +10,8 @@ import android.widget.TextView;
 
 import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
-import Object.LinkedList;
-import Object.UserOrderHis;
-import Object.Node;
 
-public class OrderHistoryActivity extends AppCompatActivity {
-
+public class sellHisActivity extends AppCompatActivity {
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
 
@@ -29,13 +25,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_history);
+        setContentView(R.layout.activity_sell_his);
 
-        TableLayout tableLayout = (TableLayout)findViewById(R.id.TableLayout02);
+        TableLayout tableLayout = (TableLayout)findViewById(R.id.TableLayout03);
         tableLayout.setStretchAllColumns(true);
 
-        LinkedList l = new LinkedList();
-        l.insert("ldl");
+        Object.LinkedList l = new Object.LinkedList();
+        l.insert("lds");
         l.insert(MainActivity.getID());
 
         try {
@@ -46,8 +42,8 @@ public class OrderHistoryActivity extends AppCompatActivity {
                 tv.setText((String) o);
                 tableRow.addView(tv);
                 tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
-            } else if (o.getClass().equals(new LinkedList().getClass())){
-                l = (LinkedList) o;
+            } else if (o.getClass().equals(new Object.LinkedList().getClass())){
+                l = (Object.LinkedList) o;
                 if (l.getLength() == 0) {
                     TableRow tableRow = new TableRow(this);
                     TextView tv = new TextView(this);
@@ -55,9 +51,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
                     tableRow.addView(tv);
                     tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
                 } else {
-                    Node temp = l.head;
+                    Object.Node temp = l.head;
                     while (temp != null) {
-                        UserOrderHis uoh = (UserOrderHis) temp.getObject();
+                        Object.UserOrderHis uoh = (Object.UserOrderHis) temp.getObject();
 
                         for (int i = 0; i < 6; i++) {
                             TableRow tableRow = new TableRow(this);

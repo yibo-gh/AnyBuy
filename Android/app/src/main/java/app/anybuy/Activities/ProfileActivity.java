@@ -31,6 +31,8 @@ public class ProfileActivity extends AppCompatActivity {
         Button Address = (Button) findViewById(R.id.AddressButtonID);
 
         Button Payment = (Button) findViewById(R.id.PaymentButtonID);
+        Button sellHis = (Button) findViewById(R.id.sellhistoryID);
+        Button buyHis = (Button) findViewById(R.id.orderButtonID);
 
 
         Address.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +47,22 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProfileActivity.this, PaymentActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        sellHis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, sellHisActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buyHis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, OrderHistoryActivity.class);
                 startActivity(intent);
             }
         });
