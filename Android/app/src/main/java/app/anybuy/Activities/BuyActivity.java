@@ -470,21 +470,6 @@ public static String city;
                             + countryStr + "\nImage url: " + false + "\ntime: " + new Timestamp(System.currentTimeMillis())  );
 
 
-
-
-
-
-
-
-
-
-                    //productImage.get
-
-                    //combine the Strings to get it all fixed up for the database api's
-                    //combineBuyPagestr = "plo&sessionID&" + countrystr + "?" + productNamestr + "?" + productBrandstr + "?"<Image>?<Quantity>
-                    //after giving the data to the back end we want to erase everything on the page so that the user can order another product
-
-
                     productBrand.setText("");
                     productName.setText("");
                     quantity.setText("");
@@ -493,46 +478,6 @@ public static String city;
 
                 }
 
-/*
-                String sessionID = MainActivity.getID();
-            //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
-            //    String res = SocketClient.run(combineBuyPage);
-            //    System.out.println(res);
-            //    System.out.println(sessionID);
-
-                LinkedList l = new LinkedList();
-                l.insert("plo");
-                l.insert(sessionID);
-                Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
-                        countryStr, imageURIStr, new Timestamp(System.currentTimeMillis()));
-                l.insert(od);
-                try {
-                    Object o = SocketClient.Run(l);
-                    if (o.getClass().equals("".getClass())) System.out.println((String)o);
-                    else if (o.getClass().equals(new LinkedList().getClass())){
-                        LinkedList l1 = (LinkedList) o;
-                        System.out.println(l1.getLength() + " image(s) requested.");
-                    } else System.out.println("plo function returned sth else.");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                //productImage.get
-                //combine the Strings to get it all fixed up for the database api's
-                //combineBuyPagestr = "plo&sessionID&" + countrystr + "?" + productNamestr + "?" + productBrandstr + "?"<Image>?<Quantity>
-                //after giving the data to the back end we want to erase everything on the page so that the user can order another product
-                productBrand.setText("");
-                productName.setText("");
-                quantity.setText("");
-
-                productImage.setImageResource(android.R.drawable.ic_input_add);
-
-
-                country.setText("");
-
-
-                productImage.setImageResource(android.R.drawable.ic_input_add);
-*/
             }
         });
 
