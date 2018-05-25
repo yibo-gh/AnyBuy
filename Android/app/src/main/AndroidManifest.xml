@@ -32,6 +32,7 @@
         <activity android:name=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.BuyActivity"
+            android:windowSoftInputMode="adjustPan"
             android:parentActivityName=".Activities.HomeActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
