@@ -572,6 +572,15 @@ public class CoreOperations {
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
+		// Delete order from order history
+		c = SQLControl.SQLOperation.getConnect(uid);
+		sql = "UPDATE order"
+				+ " SET orderStatus = 1"
+				+ " WHERE orderID = " + orderID
+				+ ";";
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
+		
 		return "0x01";
 	}
 	
