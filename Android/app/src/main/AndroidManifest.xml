@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="app.anybuy">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -131,8 +132,30 @@
         </activity>
 
         <activity android:name=".Activities.OfferActivity" />
-        <activity android:name=".Activities.OrderHistoryActivity"></activity>
 
+
+
+        <activity
+            android:name=".Activities.OrderHistoryActivity"
+            android:parentActivityName=".Activities.ProfileActivity"
+            >
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.PaymentActivity" />
+        </activity>
+
+        <activity
+            android:name=".Activities.sellHisActivity"
+            android:parentActivityName=".Activities.ProfileActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.PaymentActivity" />
+        </activity>
+>>>>>>> 9cfc24a4333803de2149d90a686f2759d8da001d
     </application>
 
 </manifest>

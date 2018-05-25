@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import Object.Address;
 import Object.Card;
+import Object.InitialOrder;
 import Object.LinkedList;
 import Object.Node;
 import Object.Order;
@@ -20,6 +21,7 @@ import Object.Offer;
 import Object.User;
 import Object.imageRequest;
 import Object.UserOrderHis;
+import Object.UserShippingInfo;
 import ServerManagement.FileRecivier;
 import SQLControl.SQLOperation;
 
@@ -113,9 +115,9 @@ public class CoreOperations {
 		temp = ll.head;
 		while (temp != null){
 			Object o = temp.getObject();
-			if (!o.getClass().equals(new Order().getClass())) return "0x1002";
-			Order od = (Order)o;
-			orderList.insert(od);
+			if (!o.getClass().equals(new InitialOrder().getClass())) return "0x1002";
+			InitialOrder io = (InitialOrder)o;
+			orderList.insert(io);
 			temp = temp.getNext();
 		}
 		
@@ -124,7 +126,8 @@ public class CoreOperations {
 		
 		temp = orderList.head;
 		while (temp != null) {
-			Order obj = (Order)temp.getObject();
+			InitialOrder io = (InitialOrder)temp.getObject();
+			Order obj = io.getOrder();
 			long time = System.currentTimeMillis();
 			
 			// make string for INSERT buy order into generalOrder
@@ -153,8 +156,12 @@ public class CoreOperations {
 			
 			// make string for INSERT orderID into user's account
 			c.close();
+			
+			UserShippingInfo usi = io.getShippingInfo();
 			c = SQLControl.SQLOperation.getConnect(uid);
-			sql = "INSERT INTO `order` (`orderID`, `orderStatus`) VALUES ('" + orderID + "','0');";
+			sql = "INSERT INTO `order` (`orderID`, `orderStatus`,`line1`,`city`,`state`,`zip`,`card`)"
+					+ " VALUES ('" + orderID + "','0','" + usi.getLine1() + "','" + usi.getCity() + "','" 
+					+ usi.getState() + "','" + usi.getZip() + "','" + usi.getCard() + "');";
 			System.out.println(SQLOperation.updateData(c, sql));
 
 			c.close();
@@ -569,6 +576,15 @@ public class CoreOperations {
 		// Delete table for order's offers
 		c = SQLControl.SQLOperation.getConnect("generalOffer");
 		sql = "DROP TABLE " + orderID;
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
+		
+		// Delete order from order history
+		c = SQLControl.SQLOperation.getConnect(uid);
+		sql = "UPDATE order"
+				+ " SET orderStatus = 5"
+				+ " WHERE orderID = " + orderID
+				+ ";";
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
