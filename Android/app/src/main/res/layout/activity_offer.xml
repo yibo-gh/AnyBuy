@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.anybuy.OfferActivity">
+    tools:context="app.anybuy.Activities.OfferActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -14,5 +14,6 @@
         android:layout_marginTop="80dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="176dp" />
 </android.support.constraint.ConstraintLayout>

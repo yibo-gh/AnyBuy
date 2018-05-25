@@ -39,6 +39,8 @@ public class SellActivity extends AppCompatActivity {
     String maxOrder = "";
     String minOrder = "";
 
+    boolean secondClick = false;
+
     LinearLayout linearLayout;
     private TextView textView;
 
@@ -76,14 +78,10 @@ public class SellActivity extends AppCompatActivity {
 
         final Button orderButton = (Button) findViewById(R.id.getOrderButtonID);
 
-        final int[] id = {0};
-
-
         linearLayout = (LinearLayout) findViewById(R.id.sellpageLinearLayoutID);
 
         //get the location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
 
         //if no permission to access the location, ask again
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -123,7 +121,7 @@ public class SellActivity extends AppCompatActivity {
 
                         //String postalCode = addresses.get(0).getPostalCode();
 
-                       
+
                     } catch (Exception e) {
                         System.out.println("location error");
                     }
@@ -133,98 +131,177 @@ public class SellActivity extends AppCompatActivity {
 
         });
 
-
-
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 orderButton.setText("Next Orders");
-                System.out.println(getUserCountryCode() + " heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-
-
                 String data = "";
                 sessionID = MainActivity.getID();
-                LinkedList l = new LinkedList();
-                l.insert("lop");
-                l.insert(sessionID);
-                l.insert(getUserCountryCode());
-                l.insert(10);
+
+                LinkedList firstClickLinkedList = new LinkedList();
+                firstClickLinkedList.insert("lop");
+                firstClickLinkedList.insert(sessionID);
+                firstClickLinkedList.insert(getUserCountryCode());
+                firstClickLinkedList.insert(10);
+
+                //the first time you click the orders button
+
+                    System.out.println(getUserCountryCode() + " heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+
+                    sessionID = MainActivity.getID();
+
+                String maxOrder = "";
+                String minOrder = "";
+
+                Node nd;
+                String minLine = "";
+                String maxLine = "";
 
                 System.out.println("noooooooooooooooooooooooooooooooooooo");
 
                 try {
 
-                    Object o = SocketClient.Run(l);
-                    if (o.getClass().equals("".getClass())) System.out.println((String) o);
-                    else if (o.getClass().equals(new LinkedList().getClass())) {
-                        LinkedList l1 = (LinkedList) o;
+                    if (secondClick == false) {
+                        Object o = SocketClient.Run(firstClickLinkedList);
+                        if (o.getClass().equals("".getClass())) System.out.println((String) o);
+                        else if (o.getClass().equals(new LinkedList().getClass())) {
+                            LinkedList l1 = (LinkedList) o;
 
-                        Node temp = l1.end;
+                            Node temp = l1.end;
 
-                        temp = temp.getPrev().getPrev();
-                        int i = 0;
+                            temp = temp.getPrev().getPrev();
 
-                        // go through the first 10 orders from the order to newest
-                        while (temp != null) {
+                            // go through the first 10 orders from the order to newest
+                            while (temp != null) {
 
-                            Order od = (Order) temp.getObject();
+                                Order od = (Order) temp.getObject();
 
+                                System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
+                                        " " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
+
+
+                                data = "Product Name: " + od.getProduct() + "\nBrand Name: " + od.getBrand() +
+                                        "\nQuantity: " + od.getQuantity() + "\nCountry Code: " + od.getCountry() + "\nOrder Number: " + od.getImage() + "\n \n";
+
+                                // to get different ids I created a string that gets the last 3 chards of each order number (getImage()) and converts it into int and set the int to the textveiws id
+                                String getStrID = od.getImage().length() > 3 ? od.getImage().substring(od.getImage().length() - 3) : od.getImage();
+
+                                // create a text view for each order
+                                textView = new TextView(SellActivity.this);
+
+                                // put the data in the text view
+                                textView.setText(data);
+
+                                // give it an id
+                                textView.setId(Integer.parseInt(getStrID));
+
+                                //place it nicely under one another
+                                textView.setPadding(0, 50, 0, 0);
+
+                                // if clicked any of the textviews, open the offer page
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent(SellActivity.this, OfferActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                                // add the text view to our layout
+                                linearLayout.addView(textView);
+
+                                if (temp.getNext().getNext() == null)
+                                    maxOrder = ((Order) temp.getObject()).getImage();
+
+                                //go to the next linked list or order
+                                temp = temp.getPrev();
+
+                                // just check and see if the ideas are correct
+                                System.out.println("the idea is :" + textView.getId());
+
+                                secondClick = true;
+                            }
+
+
+                        } else System.out.println("lop function returned sth else.");
+
+                    }
+
+                    else {
+
+                        Object o = SocketClient.Run(firstClickLinkedList);
+                        firstClickLinkedList = (LinkedList) o;
+
+                        nd = firstClickLinkedList.head;
+
+                        // get the maxOrder and the minOrder
+                        while (nd.getNext().getNext() != null) {
+                            if (nd == firstClickLinkedList.head)
+                                minOrder = ((Order) nd.getObject()).getImage();
+
+                            if (nd.getNext().getNext() == null)
+                                maxOrder = ((Order) nd.getObject()).getImage();
+
+                            nd = nd.getNext();
+                        }
+
+                        maxOrder = ((Order) nd.getPrev().getObject()).getImage();
+
+                        System.out.println("hoooooooooooooo " + minOrder + "    " + maxOrder);
+
+
+                         minLine = (String) firstClickLinkedList.end.getObject();
+                         maxLine = (String) firstClickLinkedList.end.getPrev().getObject();
+
+                         System.out.println("MaxLine: " + maxLine + "\nMinLine: " + minLine);
+
+                        System.out.println("helllllllll yeaaaaaaaaaaaaaaaaaaaaaaaa");
+                        firstClickLinkedList = new LinkedList();
+                        firstClickLinkedList.insert("lop");
+                        firstClickLinkedList.insert(sessionID);
+
+                        firstClickLinkedList.insert(maxLine);
+                        firstClickLinkedList.insert(minLine);
+                        firstClickLinkedList.insert(maxOrder);
+                        firstClickLinkedList.insert(minOrder);
+                        firstClickLinkedList.insert("0");
+                        firstClickLinkedList.insert("10");
+
+                        o = SocketClient.Run(firstClickLinkedList);
+
+                        //display the next 10
+                        if (o.getClass().equals("".getClass())) System.out.println((String) o);
+
+                        firstClickLinkedList = (LinkedList) o;
+                        System.out.println(firstClickLinkedList.getLength());
+
+                        nd = firstClickLinkedList.end;
+
+                        nd = nd.getPrev().getPrev();
+                        System.out.println("ayyyyyyyyyyyyy");
+
+                        while (nd != null) {
+                            Order od = (Order) nd.getObject();
 
                             System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
                                     " " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
 
-
-                            data = "Product Name: " + od.getProduct() + "\nBrand Name: " + od.getBrand() +
-                                    "\nQuantity: " + od.getQuantity() + "\nCountry Code: " + od.getCountry() + "\nOrder Number: " + od.getImage() + "\n \n";
-
-                            // to get different ids I created a string that gets the last 3 chards of each order number (getImage()) and converts it into int and set the int to the textveiws id
-                           String getStrID = od.getImage().length() > 3 ? od.getImage().substring(od.getImage().length() - 3) : od.getImage();
-
-                            // create a text view for each order
-                                textView = new TextView(SellActivity.this);
-                            // put the data in the text view
-                                textView.setText(data);
-                                // give it an id
-                                textView.setId(Integer.parseInt(getStrID));
-                                //place it nicely under one another
-                                textView.setPadding(0, 50, 0, 0);
-
-                            // if clicked any of the textviews, open the offer page
-                            textView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent(SellActivity.this, OfferActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
-
-                            // add the text view to our layout
-                            linearLayout.addView(textView);
-
-
-                            if (temp.getNext().getNext() == null) maxOrder = ((Order)temp.getObject()).getImage();
-
-                            //go to the next linked list or order
-                            temp = temp.getPrev();
-
-                            // just check and see if the ideas are correct
-                            System.out.println("the idea is :" + textView.getId());
-                            i++;
+                            nd = nd.getPrev();
                         }
 
 
-                    } else System.out.println("lop function returned sth else.");
+
+                        System.out.println("ayyyyyyyyyyyyy");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                System.out.println("helllllllll yeaaaaaaaaaaaaaaaaaaaaaaaa");
+
+            //<sessionID>&<lastMaxLineNum>&<lastMinLineNum>&<lastMaxOrderNum>&<lastMinOrderNum>&<olderOrNewer>&<howMuch>
+            //if they click for the second time
+
             }
         });
-
-
-
     }
-
-    // tryed to make a function for it but failed, feel free to try
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="app.anybuy">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,15 +17,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.MainActivity">
+
             <intent-filter>
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
+
+
+
         <activity android:name=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.BuyActivity"
+            android:windowSoftInputMode="adjustPan"
             android:parentActivityName=".Activities.HomeActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -124,9 +132,14 @@
                 android:value=".Activities.PaymentActivity" />
         </activity>
 
+        <activity android:name=".Activities.OfferActivity" />
+
+
+
         <activity
             android:name=".Activities.OrderHistoryActivity"
-            android:parentActivityName=".Activities.ProfileActivity">
+            android:parentActivityName=".Activities.ProfileActivity"
+            >
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
@@ -143,6 +156,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
+
     </application>
 
 </manifest>

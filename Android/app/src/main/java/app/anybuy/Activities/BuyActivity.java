@@ -13,22 +13,46 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
 
-import Object.LinkedList;
-import Object.Order;
+import Object.*;
 import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
-import Object.Node;
-import Object.Card;
-import Object.Address;
+
 
 public class BuyActivity extends AppCompatActivity  {
+
+    //getter and setter to get the city and state and zipcode from address class
+public static String city;
+    public String getCity(){
+        return city;
+    }
+    public void setCity(String s){
+        city = s;
+    }
+
+    public static String state;
+
+    public String getState(){
+        return state;
+    }
+
+    public void setState(String s){
+        state = s;
+    }
+
+    public static String zipCode;
+    public String getZipCOde(){
+        return zipCode;
+    }
+
+    public void setZipCode(String s){
+        zipCode = s;
+    }
 
     EditText productBrand;
     EditText productName;
@@ -116,7 +140,7 @@ public class BuyActivity extends AppCompatActivity  {
 
         orderButton = (Button) findViewById(R.id.orderButtonID);
 
-        linearLayout = (LinearLayout) findViewById(R.id.picsLayoutID);
+
         addressspinner = (Spinner) findViewById(R.id.AddressSpinner);
         paymentspinner = (Spinner) findViewById(R.id.PaymentSpinner);
 
@@ -169,6 +193,7 @@ public class BuyActivity extends AppCompatActivity  {
         }
 
 
+        String city ;
         l = new LinkedList();
         l.insert("lda");
         l.insert(MainActivity.getID());
@@ -183,6 +208,11 @@ public class BuyActivity extends AppCompatActivity  {
                     String astr = i + ". ";
                     Address a = (Address) temp.getObject();
                     astr += a.getFN();
+
+                    setCity(a.getCity());
+                    setState(a.getState());
+                    setZipCode(a.getZip());
+
                     astr += " ";
                     astr += a.getLN();
                     astr += ", ";
@@ -378,7 +408,8 @@ public class BuyActivity extends AppCompatActivity  {
                 if (!isNumeric(quantityNum)) {
                     Toast.makeText(BuyActivity.this, "Invalid quantity.", Toast.LENGTH_LONG).show();
                     return;
-                } else {
+                }
+               else {
                     productBrandstr = strPreProcess(productBrandstr);
                     productNamestr = strPreProcess(productNamestr);
 
@@ -390,10 +421,16 @@ public class BuyActivity extends AppCompatActivity  {
                     }
 
                     String sessionID = MainActivity.getID();
+
+                    //get the spinner's values and store them in a string
+                    String addressOfOrder = addressspinner.getSelectedItem().toString();
+                    String paymentMethodStr = paymentspinner.getSelectedItem().toString();
+
                     //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
                     //    String res = SocketClient.run(combineBuyPage);
                     //    System.out.println(res);
                     //    System.out.println(sessionID);
+
 
                     if (countryStr.equals("")) {
                         Toast.makeText(BuyActivity.this, "Invalid Country Selection.", Toast.LENGTH_LONG).show();
@@ -402,10 +439,20 @@ public class BuyActivity extends AppCompatActivity  {
                     LinkedList l = new LinkedList();
                     l.insert("plo");
                     l.insert(sessionID);
+
+
                     Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
-                            countryStr, "false", new Timestamp(System.currentTimeMillis()));
-                    System.out.println("name: " + od.getProduct());
-                    l.insert(od);
+                            countryStr , "false", new Timestamp(System.currentTimeMillis()));
+
+
+
+                    System.out.println("ayayayayyyayayayayayayayayya : city = " + getCity() + "\nState: " + getState() +
+                            "\nZipCode: " + getZipCOde() + "\nPayment Method: " + paymentMethodStr);
+
+                    UserShippingInfo usi = new UserShippingInfo(addressOfOrder, getCity(),getState(),getZipCOde(),paymentMethodStr);
+                   InitialOrder io = new InitialOrder(od,usi);
+                    l.insert(io);
+
                     try {
                         Object o = SocketClient.Run(l);
                         if (o.getClass().equals("".getClass())) System.out.println((String) o);
@@ -417,57 +464,19 @@ public class BuyActivity extends AppCompatActivity  {
                         e.printStackTrace();
                     }
 
-                    //productImage.get
 
-                    //combine the Strings to get it all fixed up for the database api's
-                    //combineBuyPagestr = "plo&sessionID&" + countrystr + "?" + productNamestr + "?" + productBrandstr + "?"<Image>?<Quantity>
-                    //after giving the data to the back end we want to erase everything on the page so that the user can order another product
+                    System.out.println("wowwwwwwwwwwwwwwwwwwwwww : ProductName: " + productBrandstr + "\nProductBrand: "+ productBrandstr +
+                            "\nQuantity: " + Integer.parseInt(quantityNum) + "\ncoutry: "
+                            + countryStr + "\nImage url: " + false + "\ntime: " + new Timestamp(System.currentTimeMillis())  );
+
+
                     productBrand.setText("");
                     productName.setText("");
                     quantity.setText("");
 
                     productImage.setImageResource(android.R.drawable.ic_input_add);
+
                 }
-
-
-                String sessionID = MainActivity.getID();
-            //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
-            //    String res = SocketClient.run(combineBuyPage);
-            //    System.out.println(res);
-            //    System.out.println(sessionID);
-
-               /* LinkedList l = new LinkedList();
-                l.insert("plo");
-                l.insert(sessionID);
-                Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
-                        countryStr, imageURIStr, new Timestamp(System.currentTimeMillis()));
-                l.insert(od);
-                try {
-                    Object o = SocketClient.Run(l);
-                    if (o.getClass().equals("".getClass())) System.out.println((String)o);
-                    else if (o.getClass().equals(new LinkedList().getClass())){
-                        LinkedList l1 = (LinkedList) o;
-                        System.out.println(l1.getLength() + " image(s) requested.");
-                    } else System.out.println("plo function returned sth else.");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-*/
-                //productImage.get
-                //combine the Strings to get it all fixed up for the database api's
-                //combineBuyPagestr = "plo&sessionID&" + countrystr + "?" + productNamestr + "?" + productBrandstr + "?"<Image>?<Quantity>
-                //after giving the data to the back end we want to erase everything on the page so that the user can order another product
-                productBrand.setText("");
-                productName.setText("");
-                quantity.setText("");
-
-                productImage.setImageResource(android.R.drawable.ic_input_add);
-
-
-                country.setText("");
-
-
-                productImage.setImageResource(android.R.drawable.ic_input_add);
 
             }
         });
