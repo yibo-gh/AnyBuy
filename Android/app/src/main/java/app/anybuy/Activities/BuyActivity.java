@@ -26,6 +26,34 @@ import app.anybuy.R;
 
 public class BuyActivity extends AppCompatActivity  {
 
+    //getter and setter to get the city and state and zipcode from address class
+public static String city;
+    public String getCity(){
+        return city;
+    }
+    public void setCity(String s){
+        city = s;
+    }
+
+    public static String state;
+
+    public String getState(){
+        return state;
+    }
+
+    public void setState(String s){
+        state = s;
+    }
+
+    public static String zipCode;
+    public String getZipCOde(){
+        return zipCode;
+    }
+
+    public void setZipCode(String s){
+        zipCode = s;
+    }
+
     EditText productBrand;
     EditText productName;
     EditText quantity;
@@ -165,6 +193,7 @@ public class BuyActivity extends AppCompatActivity  {
         }
 
 
+        String city ;
         l = new LinkedList();
         l.insert("lda");
         l.insert(MainActivity.getID());
@@ -179,6 +208,11 @@ public class BuyActivity extends AppCompatActivity  {
                     String astr = i + ". ";
                     Address a = (Address) temp.getObject();
                     astr += a.getFN();
+
+                    setCity(a.getCity());
+                    setState(a.getState());
+                    setZipCode(a.getZip());
+
                     astr += " ";
                     astr += a.getLN();
                     astr += ", ";
@@ -387,10 +421,16 @@ public class BuyActivity extends AppCompatActivity  {
                     }
 
                     String sessionID = MainActivity.getID();
+
+                    //get the spinner's values and store them in a string
+                    String addressOfOrder = addressspinner.getSelectedItem().toString();
+                    String paymentMethodStr = paymentspinner.getSelectedItem().toString();
+
                     //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
                     //    String res = SocketClient.run(combineBuyPage);
                     //    System.out.println(res);
                     //    System.out.println(sessionID);
+
 
                     if (countryStr.equals("")) {
                         Toast.makeText(BuyActivity.this, "Invalid Country Selection.", Toast.LENGTH_LONG).show();
@@ -402,10 +442,16 @@ public class BuyActivity extends AppCompatActivity  {
 
 
                     Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
-                            countryStr , "false", new Timestamp(System.currentTimeMillis()))
-                            ;
-                    System.out.println("name: " + od.getProduct());
-                    l.insert(od);
+                            countryStr , "false", new Timestamp(System.currentTimeMillis()));
+
+
+
+                    System.out.println("ayayayayyyayayayayayayayayya : city = " + getCity() + "\nState: " + getState() +
+                            "\nZipCode: " + getZipCOde() + "\nPayment Method: " + paymentMethodStr);
+
+                    UserShippingInfo usi = new UserShippingInfo(addressOfOrder, getCity(),getState(),getZipCOde(),paymentMethodStr);
+                   InitialOrder io = new InitialOrder(od,usi);
+                    l.insert(io);
 
                     try {
                         Object o = SocketClient.Run(l);
@@ -422,6 +468,14 @@ public class BuyActivity extends AppCompatActivity  {
                     System.out.println("wowwwwwwwwwwwwwwwwwwwwww : ProductName: " + productBrandstr + "\nProductBrand: "+ productBrandstr +
                             "\nQuantity: " + Integer.parseInt(quantityNum) + "\ncoutry: "
                             + countryStr + "\nImage url: " + false + "\ntime: " + new Timestamp(System.currentTimeMillis())  );
+
+
+
+
+
+
+
+
 
 
                     //productImage.get

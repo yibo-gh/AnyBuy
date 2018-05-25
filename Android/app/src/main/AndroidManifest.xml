@@ -155,7 +155,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
->>>>>>> 9cfc24a4333803de2149d90a686f2759d8da001d
+
     </application>
 
 </manifest>
