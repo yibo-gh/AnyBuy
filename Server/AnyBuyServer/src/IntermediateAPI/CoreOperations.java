@@ -190,7 +190,9 @@ public class CoreOperations {
 				else if (i > 2) temp1 += lastID.charAt(i);
 			}
 			return Integer.parseInt(temp1);
-		} else return 9999;
+		} else if (countryCode.length() == 2) return 9999999;
+		else if (countryCode.length() == 3) return 999999;
+		else return 9999;
 	}
 	
 	public static String acceptImage(String img, String orderID) {
@@ -216,39 +218,37 @@ public class CoreOperations {
 		 * This function is different from loadCountryOrder() function in profile page.
 		 */
 		
-		writeLog("Load Order");
+		writeLog("Load Personal Order");
 		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
 		Connection c = SQLOperation.getConnect(uid);
-		System.out.println(uid);
-		String sql = "SELECT orderID, orderStatus FROM order";
+		String sql = "SELECT orderID, orderStatus FROM `order`";
 		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
 		LinkedList tempLinkedList = generateResWithRS(rs, new UserOrderHis());
 		c.close();
 		
-		System.out.println("Load personal order list successed. " + tempLinkedList.getLength());
 		
 		LinkedList realLinkedList = new LinkedList();
 		Node temp = tempLinkedList.head;
 		while (temp != null) {
 			UserOrderHis u = (UserOrderHis) temp.getObject();
-			if (u.getOrderStatus() != 0) {
+			if (u.getOrderStatus() == 1) {
+				// Assume order cancelled when status = 1.
 				realLinkedList.insert(u);
 			} else {
 				String orderID = u.getOrderID();
 				String country = getCountryCodeWithOrderID(orderID);
 				c = SQLOperation.getConnect("generalOrder");
-				sql = "Select Product, Brand, Quantity, Image, orderTime, orderID from " + country
-						+ " where orderID = " + orderID;
+				sql = "SELECT Product, Brand, Quantity, orderID, orderTime FROM " + country + " where `orderID` = '" + orderID + "';";
 				rs = SQLOperation.readDatabaseRS(c, sql);
 				LinkedList temp2 = generateResWithRS(rs, new Order());
-				if (temp2.head != null) realLinkedList.insert(temp2.head.getObject());
+				realLinkedList.insert(temp2.head.getObject());
 				c.close();
 			}
+			temp = temp.getNext();
 		}
-		
 		return realLinkedList;
 	}
 
