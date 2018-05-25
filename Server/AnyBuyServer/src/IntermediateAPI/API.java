@@ -31,7 +31,8 @@ public class API {
 			case "plo": return CoreOperations.placeOrder(voidHead(ll));
 			case "ldo": return CoreOperations.loadCountryOrder(voidHead(ll));
 			case "cco": return CoreOperations.cancelOrder(voidHead(ll));
-			case "ldl": return CoreOperations.loadPersonalOrder(voidHead(ll));
+			case "ldl": return CoreOperations.loadBuy(voidHead(ll));
+			case "lds": return CoreOperations.loadSold(voidHead(ll));
 			case "gvr": return CoreOperations.giveRate(voidHead(ll));
 			case "art": return CoreOperations.acceptRate(voidHead(ll));
 			case "adc": return CoreOperations.addCard(voidHead(ll));

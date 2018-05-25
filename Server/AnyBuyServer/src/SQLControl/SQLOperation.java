@@ -65,6 +65,11 @@ public class SQLOperation {
 					"  `orderStatus` INT NOT NULL,\r\n" + 
 					"  PRIMARY KEY (`orderID`));\r\n";
 			c.createStatement().executeUpdate(sql);
+			sql = "CREATE TABLE `snok10000`.`offer` (\r\n" + 
+					"  `orderID` VARCHAR(10) NOT NULL,\r\n" + 
+					"  `offerStatus` INT NOT NULL,\r\n" + 
+					"  PRIMARY KEY (`orderID`));\r\n";
+			c.createStatement().executeUpdate(sql);
 			return "0x01";
 		} catch (SQLException e) {
 			return "0x1A05";
