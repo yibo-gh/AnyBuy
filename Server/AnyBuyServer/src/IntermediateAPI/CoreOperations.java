@@ -555,16 +555,6 @@ public class CoreOperations {
 		Object obj = ll.head.getObject();
 		if (!obj.getClass().equals(("".getClass()))) {return "0x1002";}
 		orderID = obj.toString();
-		// Get country from orderID
-		country = getCountryCodeWithOrderID(orderID);
-		
-		// Delete order from generalOrder
-		c = SQLControl.SQLOperation.getConnect("generalOrder");
-		sql = "DELETE FROM " + country
-				+ " WHERE orderID = " + orderID
-				+ ";";
-		System.out.println(SQLOperation.updateData(c, sql));
-		c.close();
 		
 		// Delete table for order's offers
 		c = SQLControl.SQLOperation.getConnect("generalOffer");
