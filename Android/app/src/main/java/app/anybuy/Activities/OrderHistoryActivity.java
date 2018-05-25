@@ -25,7 +25,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         TableLayout tableLayout = (TableLayout)findViewById(R.id.TableLayout02);
         tableLayout.setStretchAllColumns(true);
 
-        LinkedList l = new Object.LinkedList();
+        LinkedList l = new LinkedList();
 
 
 
