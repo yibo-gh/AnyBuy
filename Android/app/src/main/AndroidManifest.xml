@@ -123,8 +123,26 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
-        <activity android:name=".Activities.OrderHistoryActivity" />
-        <activity android:name=".Activities.sellHisActivity"></activity>
+
+        <activity
+            android:name=".Activities.OrderHistoryActivity"
+            android:parentActivityName=".Activities.ProfileActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.PaymentActivity" />
+        </activity>
+
+        <activity
+            android:name=".Activities.sellHisActivity"
+            android:parentActivityName=".Activities.ProfileActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.PaymentActivity" />
+        </activity>
     </application>
 
 </manifest>
