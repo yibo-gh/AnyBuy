@@ -49,7 +49,7 @@ public class Tester {
 		l.insert("plo");
 		l.insert(getSessionID());
 		
-		for (int i = 0; i < 0xFF; i++) {
+		for (int i = 0; i < 1/*0xFF*/; i++) {
 			String p, b, c, img;
 			String l1, ci, s, z, cd;
 			int q;
@@ -59,7 +59,7 @@ public class Tester {
 			b = "Innisfree";
 			q = 1;
 			c = "US";
-			img = "";
+			img = "http://www.complianceteaminc.com/wp-content/uploads/2016/02/Millions-to-Be-Made-on-Generic-Drugs-300x265.jpg";
 			ts = new Timestamp(System.currentTimeMillis());
 			Order u = new Order(p, b, q, c, img, ts);
 			l1 = "Yeongdong-daero 513";

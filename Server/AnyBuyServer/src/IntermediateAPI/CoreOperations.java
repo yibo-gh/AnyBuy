@@ -166,6 +166,10 @@ public class CoreOperations {
 
 			c.close();
 			if (imageExist) {
+				File directory = new File("/Users/yiboguo/Desktop/serverRecieved/");
+				if(!directory.exists()) {
+					directory.mkdir();
+				}
 				BufferedImage image;
 				File file = new File("/Users/yiboguo/Desktop/serverRecieved/" + orderID + ".jpg");
 				try {
@@ -182,7 +186,7 @@ public class CoreOperations {
 			}
 			temp = temp.getNext();
 		}
-		if (hasImg) return imgReq;
+		if (hasImg) return "0x01"/*imgReq*/;
 		
 		return "0x01";
 	}
