@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.OrderHistoryActivity">
+    tools:context=".Activities.sellHisActivity">
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -27,7 +27,7 @@
             android:orientation="vertical">
 
             <TableLayout
-                android:id="@+id/TableLayout03"
+                android:id="@+id/TableLayout02"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:layout_editor_absoluteX="135dp"

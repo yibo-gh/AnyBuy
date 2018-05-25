@@ -123,7 +123,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
-        <activity android:name=".Activities.OrderHistoryActivity"></activity>
+        <activity android:name=".Activities.OrderHistoryActivity" />
+        <activity android:name=".Activities.sellHisActivity"></activity>
     </application>
 
 </manifest>

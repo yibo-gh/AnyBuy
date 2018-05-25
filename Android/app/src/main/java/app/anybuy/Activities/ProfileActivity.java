@@ -54,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
         sellHis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProfileActivity.this, sellActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, sellHisActivity.class);
                 startActivity(intent);
             }
         });
