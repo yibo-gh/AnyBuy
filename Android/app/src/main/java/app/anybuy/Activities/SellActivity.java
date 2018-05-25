@@ -30,7 +30,6 @@ import Object.LinkedList;
 import Object.Node;
 import Object.Order;
 import app.anybuy.Clients.SocketClient;
-import app.anybuy.OfferActivity;
 import app.anybuy.R;
 
 
