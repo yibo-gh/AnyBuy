@@ -17,6 +17,7 @@ public class SQLOperation {
 			ResultSet rst = c.createStatement().executeQuery(sql);
 			if (rst.next()) return rst.getString(1);
 		} catch (SQLException e) {
+			System.out.println("0x1B02");
 			return null;
 		}
 		return null;
@@ -61,6 +62,12 @@ public class SQLOperation {
 			c.createStatement().executeUpdate(sql);
 			sql = "CREATE TABLE `" + userId + "`.`order` (\r\n" + 
 					"  `orderID` CHAR(20) NOT NULL,\r\n" + 
+					"  `orderStatus` INT NOT NULL,\r\n" + 
+					"  PRIMARY KEY (`orderID`));\r\n";
+			c.createStatement().executeUpdate(sql);
+			sql = "CREATE TABLE `snok10000`.`offer` (\r\n" + 
+					"  `orderID` VARCHAR(10) NOT NULL,\r\n" + 
+					"  `offerStatus` INT NOT NULL,\r\n" + 
 					"  PRIMARY KEY (`orderID`));\r\n";
 			c.createStatement().executeUpdate(sql);
 			return "0x01";

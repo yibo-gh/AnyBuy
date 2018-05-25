@@ -4,51 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.anybuy.Activities.OrdersActivity">
+    tools:context=".Activities.AddressActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="478dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.484"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
-            android:id="@+id/verticalLinearLayoutID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginStart="50dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/NewAddressbuttonID"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/horizontalLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"></LinearLayout>
+            <TableLayout
+                android:id="@+id/TableLayout01"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></TableLayout>
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/offerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Offer"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="265dp"
-        tools:layout_editor_absoluteY="423dp" />
-
-    <EditText
-        android:id="@+id/offerEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Offer Price"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="423dp" />
-
-    <TextView
-        android:id="@+id/buyTextView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:text="This will be all the info from the ad listing"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
 
 </android.support.constraint.ConstraintLayout>

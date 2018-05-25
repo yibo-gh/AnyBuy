@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -23,6 +24,9 @@ import Object.LinkedList;
 import Object.Order;
 import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
+import Object.Node;
+import Object.Card;
+import Object.Address;
 
 public class BuyActivity extends AppCompatActivity  {
 
@@ -31,7 +35,11 @@ public class BuyActivity extends AppCompatActivity  {
     EditText quantity;
     EditText country;
     Spinner spinner;
-
+    Spinner addressspinner;
+    Spinner paymentspinner;
+    Object o;
+    private static String[] cards;
+    private static String[] addresses;
 
     Uri imageURI;
 
@@ -46,6 +54,8 @@ public class BuyActivity extends AppCompatActivity  {
 
     String imageURIStr = "";
     String countryStr;
+    String addressStr;
+    String paymentStr;
 
     private static final int REQUEST_CODE = 1;
     LinearLayout  linearLayout;
@@ -107,16 +117,98 @@ public class BuyActivity extends AppCompatActivity  {
         orderButton = (Button) findViewById(R.id.orderButtonID);
 
         linearLayout = (LinearLayout) findViewById(R.id.picsLayoutID);
+        addressspinner = (Spinner) findViewById(R.id.AddressSpinner);
+        paymentspinner = (Spinner) findViewById(R.id.PaymentSpinner);
 
         // When you click the imgae, you get to search through library and post a picture.
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();
-
-
             }
         });
+
+        LinkedList l = new LinkedList();
+        l.insert("ldc");
+        l.insert(MainActivity.getID());
+        LinkedList cList = new LinkedList();
+
+        try {
+            o = SocketClient.Run(l);
+            if (o.getClass().equals(new LinkedList().getClass())){
+                l = (LinkedList) o;
+                Node temp = l.head;
+                int i = 1;
+                while (temp != null){
+                    String cstr = i + ". ";
+                    Card cd = (Card) temp.getObject();
+                    cstr = cstr + cd.getFN() + " " + cd.getLN();
+                    cstr = cstr + "\n" + cd.getIssuser() + " " + cd.getCardNum();
+                    cstr = cstr + "\n" + cd.getExp() + " " + cd.getZip();
+                    cList.insert(cstr);
+                    i++;
+                    temp = temp.getNext();
+                }
+            } else {
+                cList.insert("null");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        cards = new String[cList.getLength()];
+
+        Node temp = cList.head;
+
+        int i = 0;
+        while (temp != null){
+            cards[i] = (String) temp.getObject();
+            temp = temp.getNext();
+            System.out.println(cards[i]);
+            i++;
+        }
+
+
+        l = new LinkedList();
+        l.insert("lda");
+        l.insert(MainActivity.getID());
+        LinkedList aList = new LinkedList();
+        try {
+            o = SocketClient.Run(l);
+            if (o.getClass().equals(new LinkedList().getClass())){
+                l = (LinkedList) o;
+                temp = l.head;
+                 i = 1;
+                while (temp != null){
+                    String astr = i + ". ";
+                    Address a = (Address) temp.getObject();
+                    astr += a.getFN();
+                    astr += " ";
+                    astr += a.getLN();
+                    astr += ", ";
+                    astr = astr + a.getCom() + "\n" + a.getL1() + "\n" + a.getL2();
+                    astr = astr + "\n" + a.getCity() + ", " + a.getState() + " " + a.getZip();
+                    aList.insert(astr);
+                    i++;
+                    temp = temp.getNext();
+                }
+            } else aList.insert("null");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        addresses = new String[aList.getLength()];
+
+        temp = aList.head;
+
+        i = 0;
+        while (temp != null){
+            addresses[i] = (String) temp.getObject();
+            temp = temp.getNext();
+            System.out.println(addresses[i]);
+            i++;
+        }
+
 
         final String[] countryCode = {""
 
@@ -224,11 +316,17 @@ public class BuyActivity extends AppCompatActivity  {
 
         System.out.println("spinner initialized.");
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, options);
+        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cards);
+        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, addresses);
         //设置下拉列表风格
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //将适配器添加到spinner中去
         System.out.println("adapter is null = " + adapter == null);
         spinner.setAdapter(adapter);
+        addressspinner.setAdapter(adapter1);
+        paymentspinner.setAdapter(adapter2);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -236,10 +334,31 @@ public class BuyActivity extends AppCompatActivity  {
                 // TODO Auto-generated method stub
                 String str = adapter.getItem(arg2);
                 System.out.println("Choice is " + str);
+                countryStr = countryCode[arg2];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
 
-                int countryIndex = 0;
-                while (!options[countryIndex].equals(str)) countryIndex++;
-                countryStr = countryCode[countryIndex];
+            }
+        });
+
+            addressspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                // TODO Auto-generated method stub
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+        paymentspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                // TODO Auto-generated method stub
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -346,6 +465,7 @@ public class BuyActivity extends AppCompatActivity  {
 
 
                 country.setText("");
+
 
                 productImage.setImageResource(android.R.drawable.ic_input_add);
 

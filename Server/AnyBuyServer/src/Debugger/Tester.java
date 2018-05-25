@@ -10,18 +10,21 @@ import Object.Node;
 import Object.Order;
 import Object.Offer;
 import Object.User;
+import Object.UserOrderHis;
 
 public class Tester {
 
 	static String sessionID = "";
 	
 	public static void main (String args[]) throws SQLException {
-//		register("yoona", "snsd.or.kr", "loveYOONA!");
+		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
-		placeOrder();
+//		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
+		loadPersonOrder(getSessionID());
+		loadPersonSold(getSessionID());
 //		loadOrder();
 //		addCard();
 //		loadCard();
@@ -54,7 +57,7 @@ public class Tester {
 		l.insert("plo");
 		l.insert(getSessionID());
 		
-		for (int i = 0; i < 0x1; i++) {
+		for (int i = 0; i < 0xA; i++) {
 			String p, b, c, img;
 			int q;
 			Timestamp ts;
@@ -62,7 +65,7 @@ public class Tester {
 			p = "Yoona\\'s Choice";
 			b = "Innisfree";
 			q = 1;
-			c = "US";
+			c = "KR";
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			Order u = new Order(p, b, q, c, img, ts);
@@ -71,7 +74,7 @@ public class Tester {
 			p = "Zero Balance Cleasing";
 			b = "Banila Co.";
 			q = 1;
-			c = "US";
+			c = "KR";
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			u = new Order(p, b, q, c, img, ts);
@@ -132,6 +135,50 @@ public class Tester {
 			Address a = (Address)temp.getObject();
 			System.out.println(a.getFN() + " " + a.getLN() + " "  + a.getCom() + " "+ a.getL1()
 			+ " " + a.getL2() + " "+ a.getCity() + " " + a.getState() + " " + a.getZip());
+			temp = temp.getNext();
+		}
+	}
+	
+	private static void loadPersonSold(String sessionID) throws SQLException {
+		LinkedList l = new LinkedList();
+		l.insert("lds");
+		l.insert(sessionID);
+
+		Object ob = IntermediateAPI.API.getCommand(l);
+		if (!ob.getClass().equals((new LinkedList()).getClass())) {
+			System.out.println(ob);
+			return;
+		}
+		
+		l = (LinkedList) ob;
+		Node temp = l.head;
+		while (temp != null) {
+			UserOrderHis u = (UserOrderHis) temp.getObject();
+			Order o = u.getOrder();
+			System.out.println(o.getImage() + " " + o.getBrand() + " " + o.getProduct() +
+					" " + o.getQuantity() + " " + o.getCountry() + " " + o.getTimestamp() + " " + u.getOrderStatus());
+			temp = temp.getNext();
+		}
+	}
+	
+	private static void loadPersonOrder(String sessionID) throws SQLException {
+		LinkedList l = new LinkedList();
+		l.insert("ldl");
+		l.insert(sessionID);
+
+		Object ob = IntermediateAPI.API.getCommand(l);
+		if (!ob.getClass().equals((new LinkedList()).getClass())) {
+			System.out.println(ob);
+			return;
+		}
+		
+		l = (LinkedList) ob;
+		Node temp = l.head;
+		while (temp != null) {
+			UserOrderHis u = (UserOrderHis) temp.getObject();
+			Order o = u.getOrder();
+			System.out.println(o.getImage() + " " + o.getBrand() + " " + o.getProduct() +
+					" " + o.getQuantity() + " " + o.getCountry() + " " + o.getTimestamp() + " " + u.getOrderStatus());
 			temp = temp.getNext();
 		}
 	}
@@ -230,13 +277,13 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "KR10000";
+		OID = "RKR1000000";
 		SID = "snok10000";
 		RA = 100.00;
 		EC = 10.00;
 		SM = 1;
 		A = false;
-		RM = "PAIN AND SUFFERING";
+		RM = "Rate Example";
 		
 		Offer offer = new Offer(OID, SID, RA, EC, SM, A, RM);
 		ll.insert(offer);

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileLayoutID"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".Activities.ProfileActivity">
+
+
+    <ImageView
+        android:id="@+id/productImageViewID"
+        android:layout_width="0dp"
+        android:layout_height="66dp"
+        android:layout_marginEnd="174dp"
+        android:layout_marginLeft="175dp"
+        android:layout_marginRight="174dp"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="63dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+    <Button
+        android:id="@+id/receiveEmailButtonID"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginLeft="109dp"
+        android:layout_marginRight="110dp"
+        android:layout_marginStart="109dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/button_background"
+        android:text="Receive Emails"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productImageViewID" />
+
+    <Button
+        android:id="@+id/changeEmailButtonID"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginLeft="110dp"
+        android:layout_marginRight="109dp"
+
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_background"
+        android:text="Change Email"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/receiveEmailButtonID" />
+
+    <Button
+        android:id="@+id/changePasswordButtonID"
+
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+
+
+        android:layout_marginEnd="110dp"
+
+        android:layout_marginLeft="109dp"
+
+        android:layout_marginRight="110dp"
+        android:layout_marginStart="109dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_background"
+        android:text="Change Password"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeEmailButtonID" />
+
+    <Button
+        android:id="@+id/numberOfOrdersButtonID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="110dp"
+        android:layout_marginLeft="109dp"
+        android:layout_marginRight="110dp"
+        android:layout_marginStart="109dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_background"
+        android:text="Number Of Orders"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changePasswordButtonID" />
+
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+</android.support.constraint.ConstraintLayout>

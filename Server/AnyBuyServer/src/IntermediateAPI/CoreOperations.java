@@ -5,6 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
+
 import Object.Address;
 import Object.Card;
 import Object.LinkedList;
@@ -13,6 +19,7 @@ import Object.Order;
 import Object.Offer;
 import Object.User;
 import Object.imageRequest;
+import Object.UserOrderHis;
 import ServerManagement.FileRecivier;
 import SQLControl.SQLOperation;
 
@@ -147,11 +154,20 @@ public class CoreOperations {
 			// make string for INSERT orderID into user's account
 			c.close();
 			c = SQLControl.SQLOperation.getConnect(uid);
-			sql = "INSERT INTO `order` (`orderID`) VALUES ('" + orderID + "');";
+			sql = "INSERT INTO `order` (`orderID`, `orderStatus`) VALUES ('" + orderID + "','0');";
 			System.out.println(SQLOperation.updateData(c, sql));
 
 			c.close();
 			if (imageExist) {
+				BufferedImage image;
+				File file = new File("/Users/yiboguo/Desktop/serverRecieved/" + orderID + ".jpg");
+				try {
+					URL url = new URL(obj.getImage());
+					image = ImageIO.read(url);
+					ImageIO.write(image, "jpg", file);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 //				String imageRes = acceptImage(obj.getImage(), orderID);
 //				if(!imageRes.equalsIgnoreCase("0x01")) return imageRes;
 				imgReq.insert(new imageRequest(obj.getImage(), orderID));
@@ -174,7 +190,9 @@ public class CoreOperations {
 				else if (i > 2) temp1 += lastID.charAt(i);
 			}
 			return Integer.parseInt(temp1);
-		} else return 9999;
+		} else if (countryCode.length() == 2) return 9999999;
+		else if (countryCode.length() == 3) return 999999;
+		else return 9999;
 	}
 	
 	public static String acceptImage(String img, String orderID) {
@@ -192,14 +210,113 @@ public class CoreOperations {
 		return "0x01";
 	}
 	
-	static Object loadPersonalOrder (LinkedList ll) throws SQLException {
-		// TODO Write this section.
-		writeLog("Load Order");
+	static Object loadSold (LinkedList ll) throws SQLException{
+
+		/**
+		 * This LinkedList should includes one Node. 
+		 * The First Node should contains sessionID.
+		 * This function is different from loadCountryOrder() function in profile page.
+		 */
+		
+		writeLog("Load Sold Record");
 		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
-		return null;
+		return loadPersonalOrderHistory(uid, "offer");
+	}
+	
+	static Object loadBuy (LinkedList ll) throws SQLException {
+		
+		/**
+		 * This LinkedList should includes one Node. 
+		 * The First Node should contains sessionID.
+		 * This function is different from loadCountryOrder() function in profile page.
+		 */
+		
+		writeLog("Load Personal Order");
+		
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
+		
+		return loadPersonalOrderHistory(uid, "order");
+	}
+	
+	private static LinkedList loadPersonalOrderHistory(String uid, String type) throws SQLException {
+		Connection c = SQLOperation.getConnect(uid);
+		String sql = "SELECT orderID, " + type + "Status FROM `" + type + "`";
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		
+		LinkedList realLinkedList = new LinkedList();
+		while (rs != null && rs.next()) {
+			
+			String orderID = rs.getString(1);
+			String country = getCountryCodeWithOrderID(orderID);
+			int orderStatus = rs.getInt(2);
+			Connection c2 = SQLOperation.getConnect("generalOrder");
+			sql = "SELECT Product, Brand, Quantity, orderID, orderTime FROM " + country + " where `orderID` = '" + orderID + "';";
+			ResultSet rs2 = SQLOperation.readDatabaseRS(c2, sql);
+			LinkedList temp2 = generateResWithRS(rs2, new Order());
+			UserOrderHis uoh = convertOrderToUserOrderHis((Order)(temp2.head.getObject()), orderStatus);
+			realLinkedList.insert(uoh);
+			
+		}
+		c.close();
+		if (realLinkedList.getLength() > 1) realLinkedList = sortOrdersWithUOH(realLinkedList);
+		return realLinkedList;
+	}
+	
+	private static LinkedList sortOrdersWithUOH (LinkedList l) {
+		UserOrderHis[] uohArray = new UserOrderHis[l.getLength()];
+		Node temp = l.head;
+		int i = 0;
+		while (temp != null) {
+			uohArray[i] = (UserOrderHis)temp.getObject();
+			temp = temp.getNext();
+			i++;
+		}
+		UserOrderHis[] res = sortUOHArray(uohArray);
+		LinkedList ll = new LinkedList();
+		for (int j = 0; j < res.length; j++) ll.insert(res[j]);
+		
+		return ll;
+	}
+	
+	private static UserOrderHis[] sortUOHArray(UserOrderHis[] uoh) {
+		if (uoh.length == 1) return uoh;
+		
+		int half = uoh.length/2;
+		UserOrderHis[] uohL = new UserOrderHis[half];
+		UserOrderHis[] uohR = new UserOrderHis[uoh.length - half];
+		
+		for (int i = 0; i < uohL.length; i++) uohL[i] = uoh[i];
+		for (int i = 0; i < uohR.length; i++) uohR[i] = uoh[half + i];
+		
+		UserOrderHis[] sortL = sortUOHArray(uohL);
+		UserOrderHis[] sortR = sortUOHArray(uohR);
+		
+		return merge(sortL, sortR);
+	}
+	
+	private static UserOrderHis[] merge(UserOrderHis[] l, UserOrderHis[] r) {
+		UserOrderHis[] res = new UserOrderHis[l.length + r.length];
+		int lPointer = 0, rPointer = 0;
+		for (int i = 0; i < res.length; i++) {
+			if (lPointer == l.length) {
+				res[i] = r[rPointer];
+				rPointer++;
+			} else if (rPointer == r.length) {
+				res[i] = l[lPointer];
+				lPointer++;
+			} else if (l[lPointer].getOrder().getTimestamp().getTime() <= r[rPointer].getOrder().getTimestamp().getTime()) {
+				res[i] = l[lPointer];
+				lPointer++;
+			} else {
+				res[i] = r[rPointer];
+				rPointer++;
+			}
+		}
+		return res;
 	}
 
 	static Object loadCountryOrder (LinkedList ll) throws SQLException {
@@ -486,8 +603,17 @@ public class CoreOperations {
 		String value = "'" + offer.getSellerID() + "','" + offer.getRate() + "','" + offer.getExpressCost() + "','" + offer.getShippingMethod() + "','" + accept + "','" + offer.getRemark() + "'";
 		String sql = "INSERT INTO " + offer.getOrderID() +" (sellerID, rate, expressCost, shippingMethod, acceptance, remark) VALUES (" + value + ");"; 
 		System.out.println(SQLOperation.updateData(c, sql));
-		
 		c.close();
+		
+		c = SQLOperation.getConnect(uid);
+		orderStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT offerStatus FROM offer where orderID = '" + offer.getOrderID() + "';");
+		System.out.println(orderStatus == null);
+		if (orderStatus == null) {
+			// offer status is 1 when a offer was initialed.
+			sql = "INSERT INTO `offer` (`orderID`, `offerStatus`) VALUES ('" + offer.getOrderID() + "', '1');";
+			System.out.println(SQLOperation.updateData(c, sql));
+		} else return "0x1FB1";
+		
 		return "0x01";
 	}
 	
@@ -766,6 +892,10 @@ public class CoreOperations {
 			ll.insert(o);
 		}
 		return ll;
+	}
+	
+	private static UserOrderHis convertOrderToUserOrderHis (Order o, int orderStatus) {
+		return new UserOrderHis(o, orderStatus);
 	}
 	
 	static String sessionVerify (String sessionID) throws SQLException {
