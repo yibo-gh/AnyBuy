@@ -10,6 +10,9 @@ import android.widget.TextView;
 import Object.*;
 import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
+import Object.LinkedList;
+import Object.Node;
+import Object.UserOrderHis;
 
 public class sellHisActivity extends AppCompatActivity {
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
