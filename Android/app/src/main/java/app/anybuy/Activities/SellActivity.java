@@ -289,8 +289,6 @@ public class SellActivity extends AppCompatActivity {
                             nd = nd.getPrev();
                         }
 
-
-
                         System.out.println("ayyyyyyyyyyyyy");
                     }
                 } catch (Exception e) {
