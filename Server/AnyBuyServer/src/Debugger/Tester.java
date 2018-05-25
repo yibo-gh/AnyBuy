@@ -5,12 +5,14 @@ import java.sql.Timestamp;
 
 import Object.Address;
 import Object.Card;
+import Object.InitialOrder;
 import Object.LinkedList;
 import Object.Node;
 import Object.Order;
 import Object.Offer;
 import Object.User;
 import Object.UserOrderHis;
+import Object.UserShippingInfo;
 
 public class Tester {
 
@@ -19,12 +21,12 @@ public class Tester {
 	public static void main (String args[]) throws SQLException {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
-//		placeOrder();
+		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
-		loadPersonOrder(getSessionID());
-		loadPersonSold(getSessionID());
+//		loadPersonOrder(getSessionID());
+//		loadPersonSold(getSessionID());
 //		loadOrder();
 //		addCard();
 //		loadCard();
@@ -59,6 +61,7 @@ public class Tester {
 		
 		for (int i = 0; i < 0xA; i++) {
 			String p, b, c, img;
+			String l1, ci, s, z, cd;
 			int q;
 			Timestamp ts;
 			
@@ -69,7 +72,14 @@ public class Tester {
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			Order u = new Order(p, b, q, c, img, ts);
-			l.insert(u);
+			l1 = "Yeongdong-daero 513";
+			ci = "Seoul";
+			s = "KR";
+			z = "01234";
+			cd = "379820083712345";
+			UserShippingInfo usi = new UserShippingInfo(l1, ci, s, z, cd);
+			InitialOrder io = new InitialOrder(u, usi);
+			l.insert(io);
 			
 			p = "Zero Balance Cleasing";
 			b = "Banila Co.";
@@ -78,7 +88,14 @@ public class Tester {
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			u = new Order(p, b, q, c, img, ts);
-			l.insert(u);
+			l1 = "Yeongdong-daero 513";
+			ci = "Seoul";
+			s = "KR";
+			z = "01234";
+			cd = "379820083712345";
+			usi = new UserShippingInfo(l1, ci, s, z, cd);
+			io = new InitialOrder(u, usi);
+			l.insert(io);
 			
 		}
 		
