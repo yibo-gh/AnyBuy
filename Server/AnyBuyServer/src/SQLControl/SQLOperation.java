@@ -56,16 +56,22 @@ public class SQLOperation {
 			String sql = "CREATE DATABASE " + userId;
 			c.createStatement().executeUpdate(sql);
 			c = SQLControl.SQLOperation.getConnect(userId);
-			sql = "create table payment ( fn Char(20), ln Char(20), issuer Char(4), cardNumber Char(16), exp Char(4), zip Char(5) );";
+			sql = "create table payment ( fn Char(20), ln Char(20), issuer Char(4), cardNumber Char(19), exp Char(4), zip Char(6) );";
 			c.createStatement().executeUpdate(sql);
-			sql = "create table address ( fn Char(20), ln Char(20), company Char(255), line1 Char(255), line2 Char(255), city Char(255), state Char(2), zip Char(5) );";
+			sql = "create table address ( fn Char(20), ln Char(20), company Char(255), line1 Char(255), line2 Char(255), city Char(255), state Char(2), zip Char(6) );";
 			c.createStatement().executeUpdate(sql);
 			sql = "CREATE TABLE `" + userId + "`.`order` (\r\n" + 
 					"  `orderID` CHAR(20) NOT NULL,\r\n" + 
 					"  `orderStatus` INT NOT NULL,\r\n" + 
-					"  PRIMARY KEY (`orderID`));\r\n";
+					"  `line1` CHAR(255) NOT NULL,\r\n" + 
+					"  `city` CHAR(255) NOT NULL,\r\n" + 
+					"  `state` CHAR(2) NOT NULL,\r\n" + 
+					"  `zip` CHAR(6) NOT NULL,\r\n" + 
+					"  `card` CHAR(19) NOT NULL,\r\n" + 
+					"  PRIMARY KEY (`orderID`));\r\n" + 
+					"";
 			c.createStatement().executeUpdate(sql);
-			sql = "CREATE TABLE `snok10000`.`offer` (\r\n" + 
+			sql = "CREATE TABLE `" + userId + "`.`offer` (\r\n" + 
 					"  `orderID` VARCHAR(10) NOT NULL,\r\n" + 
 					"  `offerStatus` INT NOT NULL,\r\n" + 
 					"  PRIMARY KEY (`orderID`));\r\n";
