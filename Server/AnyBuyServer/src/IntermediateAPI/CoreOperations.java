@@ -552,7 +552,7 @@ public class CoreOperations {
 		//<sessionID>&<orderID>
 		writeLog("Cancel Order");
 		Connection c;
-		String sql, orderID, country;
+		String sql, orderID;
 		
 		// Verify session
 		String uid = checkSession(ll);
