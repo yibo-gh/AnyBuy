@@ -25,23 +25,25 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="431dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp">
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
+            android:id="@+id/sellpageLinearLayoutID"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="50dp"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
+
             android:layout_marginStart="50dp"
+
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/NewAddressbuttonID"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,24 +51,23 @@
 
             <TextView
                 android:id="@+id/locationTextViewID"
-                android:layout_width="match_parent"
+                android:layout_width="268dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="92dp"
+
+                android:layout_marginTop="50dp"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TableLayout
-                android:id="@+id/TableLayout01"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"></TableLayout>
         </LinearLayout>
 
     </ScrollView>
 
+
 </android.support.constraint.ConstraintLayout>
+
