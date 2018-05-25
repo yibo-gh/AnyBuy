@@ -1,13 +1,13 @@
 package app.anybuy.Activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
+import Object.*;
 import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
 
@@ -30,7 +30,7 @@ public class sellHisActivity extends AppCompatActivity {
         TableLayout tableLayout = (TableLayout)findViewById(R.id.TableLayout03);
         tableLayout.setStretchAllColumns(true);
 
-        Object.LinkedList l = new Object.LinkedList();
+        LinkedList l = new LinkedList();
         l.insert("lds");
         l.insert(MainActivity.getID());
 
@@ -42,8 +42,8 @@ public class sellHisActivity extends AppCompatActivity {
                 tv.setText((String) o);
                 tableRow.addView(tv);
                 tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
-            } else if (o.getClass().equals(new Object.LinkedList().getClass())){
-                l = (Object.LinkedList) o;
+            } else if (o.getClass().equals(new LinkedList().getClass())){
+                l = (LinkedList) o;
                 if (l.getLength() == 0) {
                     TableRow tableRow = new TableRow(this);
                     TextView tv = new TextView(this);
@@ -51,9 +51,9 @@ public class sellHisActivity extends AppCompatActivity {
                     tableRow.addView(tv);
                     tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
                 } else {
-                    Object.Node temp = l.head;
+                    Node temp = l.head;
                     while (temp != null) {
-                        Object.UserOrderHis uoh = (Object.UserOrderHis) temp.getObject();
+                        UserOrderHis uoh = (UserOrderHis) temp.getObject();
 
                         for (int i = 0; i < 6; i++) {
                             TableRow tableRow = new TableRow(this);

@@ -16,12 +16,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.MainActivity">
+
             <intent-filter>
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
+
+
+
         <activity android:name=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.BuyActivity"
@@ -123,12 +129,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".Activities.OfferActivity"></activity>
-=======
-        <activity android:name=".OfferActivity" />
+
+        <activity android:name=".Activities.OfferActivity" />
         <activity android:name=".Activities.OrderHistoryActivity"></activity>
->>>>>>> 53e916ae2b12679de9e592113abfd433fbab6320
+
     </application>
 
 </manifest>
