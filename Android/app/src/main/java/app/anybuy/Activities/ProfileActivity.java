@@ -32,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         Button Payment = (Button) findViewById(R.id.PaymentButtonID);
         Button sellHis = (Button) findViewById(R.id.sellhistoryID);
-        Button buyHis = (Button) findViewById(R.id.orderButtonID);
+        Button buyHis = (Button) findViewById(R.id.ordersButtonID);
 
 
         Address.setOnClickListener(new View.OnClickListener() {
