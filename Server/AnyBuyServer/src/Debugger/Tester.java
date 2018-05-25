@@ -3,17 +3,7 @@ package Debugger;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import Object.Address;
-import Object.Card;
-import Object.InitialOrder;
-import Object.LinkedList;
-import Object.Node;
-import Object.Order;
-import Object.Offer;
-import Object.User;
-import Object.UserOrderHis;
-import Object.UserShippingInfo;
-
+import Object.*;
 public class Tester {
 
 	static String sessionID = "";
@@ -59,7 +49,7 @@ public class Tester {
 		l.insert("plo");
 		l.insert(getSessionID());
 		
-		for (int i = 0; i < 0xA; i++) {
+		for (int i = 0; i < 0xFF; i++) {
 			String p, b, c, img;
 			String l1, ci, s, z, cd;
 			int q;
@@ -68,7 +58,7 @@ public class Tester {
 			p = "Yoona\\'s Choice";
 			b = "Innisfree";
 			q = 1;
-			c = "KR";
+			c = "US";
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			Order u = new Order(p, b, q, c, img, ts);
@@ -84,7 +74,7 @@ public class Tester {
 			p = "Zero Balance Cleasing";
 			b = "Banila Co.";
 			q = 1;
-			c = "KR";
+			c = "US";
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			u = new Order(p, b, q, c, img, ts);
