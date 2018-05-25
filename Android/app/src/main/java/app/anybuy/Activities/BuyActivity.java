@@ -31,6 +31,8 @@ public class BuyActivity extends AppCompatActivity  {
     EditText quantity;
     EditText country;
     Spinner spinner;
+    Spinner addressspinner;
+    Spinner paymentspinner;
 
 
     Uri imageURI;
@@ -107,6 +109,8 @@ public class BuyActivity extends AppCompatActivity  {
         orderButton = (Button) findViewById(R.id.orderButtonID);
 
         linearLayout = (LinearLayout) findViewById(R.id.picsLayoutID);
+        addressspinner = (Spinner) findViewById(R.id.AddressSpinner);
+        paymentspinner = (Spinner) findViewById(R.id.PaymentSpinner);
 
         // When you click the imgae, you get to search through library and post a picture.
         productImage.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +233,8 @@ public class BuyActivity extends AppCompatActivity  {
         //将适配器添加到spinner中去
         System.out.println("adapter is null = " + adapter == null);
         spinner.setAdapter(adapter);
+        addressspinner.setAdapter(adapter);
+        paymentspinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
