@@ -7,24 +7,6 @@
     android:layout_height="match_parent"
     tools:context="app.anybuy.Activities.BuyActivity">
 
-    <Button
-        android:id="@+id/orderButtonID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginLeft="161dp"
-        android:layout_marginRight="162dp"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/button_background"
-        android:text="Order"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PaymentSpinner" />
-
     <ScrollView
 
         android:id="@+id/scrollView3"
@@ -41,6 +23,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/spinnerCountry"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:textSize="5sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -82,22 +80,6 @@
 
             </LinearLayout>
 
-            <Spinner
-                android:id="@+id/spinnerCountry"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:gravity="center_horizontal"
-                android:textSize="5sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -124,8 +106,32 @@
 
             </LinearLayout>
 
-            <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <Spinner
+                android:id="@+id/AddressSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/PaymentSpinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
+
+            <Spinner
+                android:id="@+id/PaymentSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="19dp"
+                android:layout_weight="1"
+                app:layout_constraintBottom_toTopOf="@+id/orderButtonID"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AddressSpinner" />
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
 
                 android:layout_height="match_parent"
@@ -134,58 +140,47 @@
                 tools:context="app.anybuy.Activities.BuyActivity">
 
 
-                <LinearLayout
-                    android:id="@+id/picsLayoutID"
-                    android:layout_width="395dp"
-                    android:layout_height="220dp"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center_horizontal"
+                <ImageView
+                    android:id="@+id/productImageViewID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+
+
+                    android:layout_marginStart="8dp"
+                    android:src="@android:drawable/ic_input_add"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintStart_toStartOf="parent" />
 
-
-                    <ImageView
-                        android:id="@+id/productImageViewID"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="96dp"
-                        android:src="@android:drawable/ic_input_add"
-
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-
-
-                        app:layout_constraintEnd_toEndOf="@+id/orderButtonID"
-                        app:layout_constraintHorizontal_bias="0.3"
-                        app:layout_constraintVertical_bias="0.55" />
-                </LinearLayout>
             </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
 
     </ScrollView>
 
-    <Spinner
-        android:id="@+id/AddressSpinner"
-        android:layout_width="fill_parent"
-        android:layout_height="29dp"
-        android:layout_marginBottom="19dp"
-        android:layout_marginTop="41dp"
-        app:layout_constraintBottom_toTopOf="@+id/PaymentSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView3"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <Spinner
-        android:id="@+id/PaymentSpinner"
-        android:layout_width="fill_parent"
-        android:layout_height="32dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="19dp"
-        app:layout_constraintBottom_toTopOf="@+id/orderButtonID"
-        app:layout_constraintTop_toBottomOf="@+id/AddressSpinner"
-        tools:layout_editor_absoluteX="16dp" />
+    <Button
+        android:id="@+id/orderButtonID"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginLeft="161dp"
+        android:layout_marginRight="162dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/button_background"
+        android:text="Order"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PaymentSpinner" />
 
 
 </android.support.constraint.ConstraintLayout>

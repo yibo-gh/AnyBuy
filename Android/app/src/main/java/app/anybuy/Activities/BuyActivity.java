@@ -116,7 +116,7 @@ public class BuyActivity extends AppCompatActivity  {
 
         orderButton = (Button) findViewById(R.id.orderButtonID);
 
-        linearLayout = (LinearLayout) findViewById(R.id.picsLayoutID);
+
         addressspinner = (Spinner) findViewById(R.id.AddressSpinner);
         paymentspinner = (Spinner) findViewById(R.id.PaymentSpinner);
 
