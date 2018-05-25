@@ -5,6 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
+
 import Object.Address;
 import Object.Card;
 import Object.LinkedList;
@@ -153,6 +159,15 @@ public class CoreOperations {
 
 			c.close();
 			if (imageExist) {
+				BufferedImage image;
+				File file = new File("/Users/yiboguo/Desktop/serverRecieved/" + orderID + ".jpg");
+				try {
+					URL url = new URL(obj.getImage());
+					image = ImageIO.read(url);
+					ImageIO.write(image, "jpg", file);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 //				String imageRes = acceptImage(obj.getImage(), orderID);
 //				if(!imageRes.equalsIgnoreCase("0x01")) return imageRes;
 				imgReq.insert(new imageRequest(obj.getImage(), orderID));
