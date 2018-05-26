@@ -12,7 +12,7 @@
         android:id="@+id/scrollView3"
         android:layout_width="0dp"
 
-        android:layout_height="414dp"
+        android:layout_height="446dp"
         android:isScrollContainer="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -137,26 +137,6 @@
                 android:layout_height="match_parent"
                 tools:context="app.anybuy.app.anybuy.BuyActivity">
 
-                tools:context="app.anybuy.Activities.BuyActivity">
-
-
-                <ImageView
-                    android:id="@+id/productImageViewID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-
-
-                    android:layout_marginStart="8dp"
-                    android:src="@android:drawable/ic_input_add"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
 
@@ -181,6 +161,18 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PaymentSpinner" />
+
+    <EditText
+        android:id="@+id/imageURL"
+        android:layout_width="394dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="You can put a image link if you would like to describe your need better."
+        android:inputType="textPersonName"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView3"
+        tools:layout_editor_absoluteX="8dp" />
 
 
 </android.support.constraint.ConstraintLayout>
