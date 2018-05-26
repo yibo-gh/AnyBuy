@@ -21,7 +21,7 @@ public class Tester {
 //		addCard();
 //		loadCard();
 //		deleteCard();
-//		giveRate();
+		giveRate();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -49,7 +49,7 @@ public class Tester {
 		l.insert("plo");
 		l.insert(getSessionID());
 		
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 0x2; i++) {
 			String p, b, c, img;
 			String l1, ci, s, z, cd;
 			int q;
@@ -58,7 +58,7 @@ public class Tester {
 			p = "Yoona\\'s Choice";
 			b = "Innisfree";
 			q = 1;
-			c = "US";
+			c = "RTW";
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			Order u = new Order(p, b, q, c, img, ts);
@@ -74,7 +74,7 @@ public class Tester {
 			p = "Zero Balance Cleasing";
 			b = "Banila Co.";
 			q = 1;
-			c = "US";
+			c = "RTW";
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			u = new Order(p, b, q, c, img, ts);
@@ -284,7 +284,7 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "RKR1000000";
+		OID = "RTW1000000";
 		SID = "snok10000";
 		RA = 100.00;
 		EC = 10.00;

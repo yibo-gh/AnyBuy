@@ -141,14 +141,12 @@ public class CoreOperations {
 			
 			int lastOrderNum = getLastOrderNum(c, obj.getCountry());
 			String orderID = obj.getCountry() + (lastOrderNum + 1);
-			System.out.println(orderID);
 			
 			boolean imageExist = (!obj.getImage().equals("") );
 			
-			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + imageExist + "','" + obj.getQuantity() + "','" + time + "','" + orderID + "'";
-			String sql = "INSERT INTO " + obj.getCountry() +" (Product, Brand, Image, Quantity, orderTime, orderID) VALUES (" + value + ");"; 
+			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + obj.getQuantity() + "','" + imageExist +  "','" + time + "','" + orderID + "','0','" + uid + "'";
+			String sql = "INSERT INTO `generalOrder`.`" + obj.getCountry() + "` (`Product`, `Brand`, `Quantity`, `Image`, `orderTime`, `orderID`, `orderStatus`,`uid`) VALUES (" + value + ");"; 
 //			System.out.println(value);
-			
 			// insert data into table
 			System.out.println(SQLOperation.updateData(c, sql));
 			
@@ -162,9 +160,6 @@ public class CoreOperations {
 			sql = "INSERT INTO `order` (`orderID`, `orderStatus`,`line1`,`city`,`state`,`zip`,`card`)"
 					+ " VALUES ('" + orderID + "','0','" + usi.getLine1() + "','" + usi.getCity() + "','" 
 					+ usi.getState() + "','" + usi.getZip() + "','" + usi.getCard() + "');";
-			
-			System.out.println(sql);
-			
 			System.out.println(SQLOperation.updateData(c, sql));
 
 			c.close();
@@ -190,7 +185,7 @@ public class CoreOperations {
 			}
 			temp = temp.getNext();
 		}
-		if (hasImg) return "0x01"/*imgReq*/;
+		if (hasImg) return "0x01";
 		
 		return "0x01";
 	}
@@ -274,7 +269,7 @@ public class CoreOperations {
 			LinkedList temp2 = generateResWithRS(rs2, new Order());
 			UserOrderHis uoh = convertOrderToUserOrderHis((Order)(temp2.head.getObject()), orderStatus);
 			realLinkedList.insert(uoh);
-			
+			c2.close();
 		}
 		c.close();
 		if (realLinkedList.getLength() > 1) realLinkedList = sortOrdersWithUOH(realLinkedList);
@@ -292,7 +287,7 @@ public class CoreOperations {
 		}
 		UserOrderHis[] res = sortUOHArray(uohArray);
 		LinkedList ll = new LinkedList();
-		for (int j = 0; j < res.length; j++) ll.insert(res[j]);
+		for (int j = res.length -1; j >= 0; j--) ll.insert(res[j]);
 		
 		return ll;
 	}
@@ -627,6 +622,20 @@ public class CoreOperations {
 			sql = "INSERT INTO `offer` (`orderID`, `offerStatus`) VALUES ('" + offer.getOrderID() + "', '1');";
 			System.out.println(SQLOperation.updateData(c, sql));
 		} else return "0x1FB1";
+		c.close();
+		String country = getCountryCodeWithOrderID(offer.getOrderID());
+		
+		sql = "UPDATE `generalOrder`.`" + country + "` SET `orderStatus`='1' WHERE `orderID`='" + offer.getOrderID() + "';";
+		c = SQLOperation.getConnect("generalOrder");
+		SQLOperation.updateData(c, sql);
+		
+		sql = "SELECT uid FROM " + country + " where orderID = '" + offer.getOrderID() + "';";
+		String uid2 = SQLControl.SQLOperation.readDatabase(c, sql);
+		c.close();
+		
+		sql = "UPDATE `" + uid2 + "`.`order` SET `orderStatus` = '1' WHERE `orderID` = '" + offer.getOrderID() + "';";
+		c = SQLOperation.getConnect(uid2);
+		SQLOperation.updateData(c, sql);
 		
 		return "0x01";
 	}

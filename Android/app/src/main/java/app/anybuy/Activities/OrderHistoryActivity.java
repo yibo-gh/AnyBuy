@@ -67,19 +67,19 @@ public class OrderHistoryActivity extends AppCompatActivity {
                                 tv.setText(uoh.getOrder().getImage() + " " + orderStatus(uoh.getOrderStatus()));
                                 tableRow.addView(tv);
                             } else if (i == 1){
-                                tv.setText(uoh.getOrder().getImage());
-                                tableRow.addView(tv);
-                            } else if (i == 2){
                                 tv.setText(uoh.getOrder().getProduct());
                                 tableRow.addView(tv);
-                            } else if (i == 3){
+                            } else if (i == 2){
                                 tv.setText("Made by: " + uoh.getOrder().getBrand());
                                 tableRow.addView(tv);
-                            } else if (i == 4){
+                            } else if (i == 3){
                                 tv.setText(uoh.getOrder().getQuantity() + " item(s) requested from " + uoh.getOrder().getCountry());
                                 tableRow.addView(tv);
-                            } else if (i == 5){
+                            } else if (i == 4){
                                 tv.setText("Ordered at " + uoh.getOrder().getTimestamp());
+                                tableRow.addView(tv);
+                            } else if (i == 5){
+                                tv.setText("\n");
                                 tableRow.addView(tv);
                             }
 

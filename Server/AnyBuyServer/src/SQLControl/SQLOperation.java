@@ -67,7 +67,7 @@ public class SQLOperation {
 					"  `city` CHAR(255) NOT NULL,\r\n" + 
 					"  `state` CHAR(2) NOT NULL,\r\n" + 
 					"  `zip` CHAR(6) NOT NULL,\r\n" + 
-					"  `card` CHAR(19) NOT NULL,\r\n" + 
+					"  `card` CHAR(19) NOT NULL,\r\n" +
 					"  PRIMARY KEY (`orderID`));\r\n" + 
 					"";
 			c.createStatement().executeUpdate(sql);
@@ -87,7 +87,9 @@ public class SQLOperation {
 		String sql = "CREATE TABLE " + country + "(Product VARCHAR(45) NOT NULL,"
 				+ " Brand VARCHAR(45) NOT NULL, Quantity INT(10) NOT NULL, Image VARCHAR(255) NULL,"
 				+ " orderTime VARCHAR(45) NULL,"
-				+ " orderID VARCHAR(10) NOT NULL PRIMARY KEY)";
+				+ " orderID VARCHAR(10) NOT NULL PRIMARY KEY,"
+				+ " orderStatus CHAR(1),"
+				+ " uid CHAR(10))";
 		try {
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
