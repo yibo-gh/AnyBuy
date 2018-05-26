@@ -28,61 +28,28 @@ public class BuyActivity extends AppCompatActivity  {
 
     //getter and setter to get the city and state and zipcode from address class
 public static String city;
-    public String getCity(){
-        return city;
-    }
-    public void setCity(String s){
-        city = s;
-    }
+    private Card selectedCard;
+    private Address selectedAddress;
 
-    public static String state;
-
-    public String getState(){
-        return state;
-    }
-
-    public void setState(String s){
-        state = s;
-    }
-
-    public static String zipCode;
-    public String getZipCOde(){
-        return zipCode;
-    }
-
-    public void setZipCode(String s){
-        zipCode = s;
-    }
+    static Card[] cArray;
+    static Address[] aArray;
 
     EditText productBrand;
     EditText productName;
     EditText quantity;
     EditText country;
+    EditText imageURL;
     Spinner spinner;
-    Spinner addressspinner;
-    Spinner paymentspinner;
+    Spinner addressSpinner;
+    Spinner paymentSpinner;
     Object o;
     private static String[] cards;
     private static String[] addresses;
 
-    Uri imageURI;
-
-    InputStream inputStream;
-
-    String path = "didnt work";
-    String fileNaame = "also didn't work";
-    ImageView productImage;
-
-    File file;
     Button orderButton;
-
-    String imageURIStr = "";
     String countryStr;
-    String addressStr;
-    String paymentStr;
 
     private static final int REQUEST_CODE = 1;
-    LinearLayout  linearLayout;
 
     @Override
     public boolean onKeyDown(int keyCode,KeyEvent event){
@@ -134,109 +101,67 @@ public static String city;
         productName = (EditText) findViewById(R.id.productNameEditTextID);
         quantity = (EditText) findViewById(R.id.quantityEditTextID);
         spinner = (Spinner) findViewById(R.id.spinnerCountry);
-        productImage = (ImageView) findViewById(R.id.productImageViewID);
-
         country = (EditText) findViewById(R.id.countryEditTextID);
+        imageURL = (EditText) findViewById(R.id.imageURL);
 
         orderButton = (Button) findViewById(R.id.orderButtonID);
 
 
-        addressspinner = (Spinner) findViewById(R.id.AddressSpinner);
-        paymentspinner = (Spinner) findViewById(R.id.PaymentSpinner);
+        addressSpinner = (Spinner) findViewById(R.id.AddressSpinner);
+        paymentSpinner = (Spinner) findViewById(R.id.PaymentSpinner);
 
-        // When you click the imgae, you get to search through library and post a picture.
-        productImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseImage();
-            }
-        });
+
 
         LinkedList l = new LinkedList();
         l.insert("ldc");
         l.insert(MainActivity.getID());
-        LinkedList cList = new LinkedList();
 
         try {
             o = SocketClient.Run(l);
             if (o.getClass().equals(new LinkedList().getClass())){
                 l = (LinkedList) o;
+                cArray = new Card[l.getLength()];
+                cards = new String[l.getLength()];
                 Node temp = l.head;
-                int i = 1;
-                while (temp != null){
-                    String cstr = i + ". ";
+                int i = 0;
+                while (temp != null) {
                     Card cd = (Card) temp.getObject();
-                    cstr = cstr + cd.getFN() + " " + cd.getLN();
-                    cstr = cstr + "\n" + cd.getIssuser() + " " + cd.getCardNum();
-                    cstr = cstr + "\n" + cd.getExp() + " " + cd.getZip();
-                    cList.insert(cstr);
+                    cArray[i] = cd;
+                    cards[i] = cd.getIssuser() + " " + cd.getCardNum();
                     i++;
                     temp = temp.getNext();
                 }
             } else {
-                cList.insert("null");
+                cards = new String[]{"null"};
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        cards = new String[cList.getLength()];
-
-        Node temp = cList.head;
-
-        int i = 0;
-        while (temp != null){
-            cards[i] = (String) temp.getObject();
-            temp = temp.getNext();
-            System.out.println(cards[i]);
-            i++;
-        }
 
 
-        String city ;
         l = new LinkedList();
         l.insert("lda");
         l.insert(MainActivity.getID());
-        LinkedList aList = new LinkedList();
         try {
             o = SocketClient.Run(l);
             if (o.getClass().equals(new LinkedList().getClass())){
                 l = (LinkedList) o;
-                temp = l.head;
-                 i = 1;
+                aArray = new Address[l.getLength()];
+                addresses = new String[l.getLength()];
+                Node temp = l.head;
+                int i = 0;
                 while (temp != null){
-                    String astr = i + ". ";
                     Address a = (Address) temp.getObject();
-                    astr += a.getFN();
-
-                    setCity(a.getCity());
-                    setState(a.getState());
-                    setZipCode(a.getZip());
-
-                    astr += " ";
-                    astr += a.getLN();
-                    astr += ", ";
-                    astr = astr + a.getCom() + "\n" + a.getL1() + "\n" + a.getL2();
-                    astr = astr + "\n" + a.getCity() + ", " + a.getState() + " " + a.getZip();
-                    aList.insert(astr);
+                    aArray[i] = a;
+                    addresses[i] = a.getFN() + " " + a.getLN() + ", " + a.getL1()
+                            + " @ " + a.getCity() + ", " + a.getState() + " " + a.getZip();
                     i++;
                     temp = temp.getNext();
                 }
-            } else aList.insert("null");
+            } else addresses = new String[] {"null"};
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        addresses = new String[aList.getLength()];
-
-        temp = aList.head;
-
-        i = 0;
-        while (temp != null){
-            addresses[i] = (String) temp.getObject();
-            temp = temp.getNext();
-            System.out.println(addresses[i]);
-            i++;
         }
 
 
@@ -353,10 +278,10 @@ public static String city;
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //将适配器添加到spinner中去
-        System.out.println("adapter is null = " + adapter == null);
+        System.out.println("adapter is null = " + (adapter == null));
         spinner.setAdapter(adapter);
-        addressspinner.setAdapter(adapter1);
-        paymentspinner.setAdapter(adapter2);
+        paymentSpinner.setAdapter(adapter1);
+        addressSpinner.setAdapter(adapter2);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -373,10 +298,10 @@ public static String city;
             }
         });
 
-            addressspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            addressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                // TODO Auto-generated method stub
+                selectedAddress = aArray[arg2];
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -385,10 +310,10 @@ public static String city;
             }
         });
 
-        paymentspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        paymentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                // TODO Auto-generated method stub
+                selectedCard = cArray[arg2];
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -404,12 +329,14 @@ public static String city;
                 String productBrandstr = productBrand.getText().toString();
                 String productNamestr = productName.getText().toString();
                 String quantityNum = quantity.getText().toString();
+                String imageUrlStr = imageURL.getText().toString();
+
+                System.out.println("Fields filled.");
 
                 if (!isNumeric(quantityNum)) {
                     Toast.makeText(BuyActivity.this, "Invalid quantity.", Toast.LENGTH_LONG).show();
                     return;
-                }
-               else {
+                } else {
                     productBrandstr = strPreProcess(productBrandstr);
                     productNamestr = strPreProcess(productNamestr);
 
@@ -423,8 +350,10 @@ public static String city;
                     String sessionID = MainActivity.getID();
 
                     //get the spinner's values and store them in a string
-                    String addressOfOrder = addressspinner.getSelectedItem().toString();
-                    String paymentMethodStr = paymentspinner.getSelectedItem().toString();
+                    //            String addressOfOrder = addressSpinner.getSelectedItem().toString();
+                    //            String paymentMethodStr = paymentSpinner.getSelectedItem().toString();
+
+                    System.out.println("Spinner value received.");
 
                     //    combineBuyPage = "plo&" + sessionID + "&" + countrystr + "?" + productNamestr + "?" + productBrandstr +"?" + imageURIStr +"?"+ quantityNum;
                     //    String res = SocketClient.run(combineBuyPage);
@@ -441,74 +370,33 @@ public static String city;
                     l.insert(sessionID);
 
 
+                    System.out.println("imageUrlStr = \"\" " + (imageUrlStr.equals("")));
+
                     Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
-                            countryStr , "false", new Timestamp(System.currentTimeMillis()));
+                            countryStr, imageUrlStr, new Timestamp(System.currentTimeMillis()));
 
 
-
-                    System.out.println("ayayayayyyayayayayayayayayya : city = " + getCity() + "\nState: " + getState() +
-                            "\nZipCode: " + getZipCOde() + "\nPayment Method: " + paymentMethodStr);
-
-                    UserShippingInfo usi = new UserShippingInfo(addressOfOrder, getCity(),getState(),getZipCOde(),paymentMethodStr);
-                   InitialOrder io = new InitialOrder(od,usi);
+                    UserShippingInfo usi = new UserShippingInfo(selectedAddress.getL1(), selectedAddress.getCity(),
+                            selectedAddress.getState(), selectedAddress.getZip(), selectedCard.getCardNum());
+                    InitialOrder io = new InitialOrder(od, usi);
                     l.insert(io);
 
                     try {
-                        Object o = SocketClient.Run(l);
-                        if (o.getClass().equals("".getClass())) System.out.println((String) o);
-                        else if (o.getClass().equals(new LinkedList().getClass())) {
-                            LinkedList l1 = (LinkedList) o;
-                            System.out.println(l1.getLength() + " image(s) requested.");
-                        } else System.out.println("plo function returned sth else.");
+                        SocketClient.Run(l);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-
-                    System.out.println("wowwwwwwwwwwwwwwwwwwwwww : ProductName: " + productBrandstr + "\nProductBrand: "+ productBrandstr +
-                            "\nQuantity: " + Integer.parseInt(quantityNum) + "\ncoutry: "
-                            + countryStr + "\nImage url: " + false + "\ntime: " + new Timestamp(System.currentTimeMillis())  );
-
-
-                    productBrand.setText("");
-                    productName.setText("");
-                    quantity.setText("");
-
-                    productImage.setImageResource(android.R.drawable.ic_input_add);
+                    Intent intent = new Intent(BuyActivity.this, BuyActivity.class);
+                    startActivity(intent);
 
                 }
 
             }
+
         });
 
 
-
     }
 
-    //choose from the phone pictures
-    private void chooseImage()
-    {
-
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"),REQUEST_CODE);
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null)
-        {
-
-            imageURI = data.getData();
-            productImage.setImageURI(imageURI);
-
-            imageURIStr = imageURI.toString();
-            System.out.println("Heyyyyyyyyyyyyyyyyy && " + imageURIStr);
-
-        }
-    }
 }

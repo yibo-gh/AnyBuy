@@ -162,10 +162,14 @@ public class CoreOperations {
 			sql = "INSERT INTO `order` (`orderID`, `orderStatus`,`line1`,`city`,`state`,`zip`,`card`)"
 					+ " VALUES ('" + orderID + "','0','" + usi.getLine1() + "','" + usi.getCity() + "','" 
 					+ usi.getState() + "','" + usi.getZip() + "','" + usi.getCard() + "');";
+			
+			System.out.println(sql);
+			
 			System.out.println(SQLOperation.updateData(c, sql));
 
 			c.close();
 			if (imageExist) {
+				System.out.println(imageExist);
 				File directory = new File("/Users/yiboguo/Desktop/serverRecieved/");
 				if(!directory.exists()) {
 					directory.mkdir();
@@ -173,7 +177,7 @@ public class CoreOperations {
 				BufferedImage image;
 				File file = new File("/Users/yiboguo/Desktop/serverRecieved/" + orderID + ".jpg");
 				try {
-					URL url = new URL(obj.getImage());
+					URL url = new URL("https://yg-home.site/anybuy/KR/asiana.jpg");
 					image = ImageIO.read(url);
 					ImageIO.write(image, "jpg", file);
 				} catch (IOException e) {
