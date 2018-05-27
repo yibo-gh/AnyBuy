@@ -17,23 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.MainActivity">
-
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
         </activity>
-
-
-
         <activity android:name=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.BuyActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".Activities.HomeActivity">
+            android:parentActivityName=".Activities.HomeActivity"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
@@ -131,22 +125,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
-
         <activity android:name=".Activities.OfferActivity" />
-
-
-
         <activity
             android:name=".Activities.OrderHistoryActivity"
-            android:parentActivityName=".Activities.ProfileActivity"
-            >
+            android:parentActivityName=".Activities.ProfileActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
-
         <activity
             android:name=".Activities.sellHisActivity"
             android:parentActivityName=".Activities.ProfileActivity">
@@ -156,7 +144,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
-
+        <activity android:name=".Activities.LegalActivity"></activity>
     </application>
 
 </manifest>
