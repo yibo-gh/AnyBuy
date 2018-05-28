@@ -170,13 +170,13 @@ public class CoreOperations {
 					directory.mkdir();
 				}
 				BufferedImage image;
-				File file = new File("/Users/yiboguo/Desktop/serverRecieved/" + orderID + ".jpg");
+				File file = new File("/Users/yiboguo/Desktop/serverRecieved/" + orderID + ".png");
 				try {
-					URL url = new URL("https://yg-home.site/anybuy/KR/asiana.jpg");
+					URL url = new URL(obj.getImage());
 					image = ImageIO.read(url);
-					ImageIO.write(image, "jpg", file);
+					ImageIO.write(image, "png", file);
 				} catch (IOException e) {
-					e.printStackTrace();
+					return "0x1F04";
 				}
 //				String imageRes = acceptImage(obj.getImage(), orderID);
 //				if(!imageRes.equalsIgnoreCase("0x01")) return imageRes;
