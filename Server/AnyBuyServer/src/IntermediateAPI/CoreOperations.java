@@ -555,7 +555,7 @@ public class CoreOperations {
 		//<sessionID>&<orderID>
 		writeLog("Cancel Order");
 		Connection c;
-		String sql, orderID;
+		String sql, orderID, country;
 		
 		// Verify session
 		String uid = checkSession(ll);
@@ -565,19 +565,34 @@ public class CoreOperations {
 		Object obj = ll.head.getObject();
 		if (!obj.getClass().equals(("".getClass()))) {return "0x1002";}
 		orderID = obj.toString();
+		// Get country from orderID
+		country = getCountryCodeWithOrderID(orderID);
 		
 		// Delete table for order's offers
 		c = SQLControl.SQLOperation.getConnect("generalOffer");
-		sql = "DROP TABLE " + orderID;
+		sql = "DROP TABLE " + orderID
+				+ ";";
+		System.out.println(sql);
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
+		
+		// Delete order from order history
+		c = SQLControl.SQLOperation.getConnect("generalOrder");
+		sql = "UPDATE " + country
+				+ " SET orderStatus = '5'"
+				+ " WHERE orderID = '" + orderID
+				+ "';";
+		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
 		// Delete order from order history
 		c = SQLControl.SQLOperation.getConnect(uid);
-		sql = "UPDATE order"
-				+ " SET orderStatus = 5"
-				+ " WHERE orderID = " + orderID
-				+ ";";
+		sql = "UPDATE `order`"
+				+ " SET orderStatus = '5'"
+				+ " WHERE orderID = '" + orderID
+				+ "';";
+		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
