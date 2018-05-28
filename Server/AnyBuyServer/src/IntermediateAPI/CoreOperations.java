@@ -552,7 +552,12 @@ public class CoreOperations {
 	}
 	
 	static Object cancelOrder (LinkedList ll) throws SQLException {
-		//<sessionID>&<orderID>
+		/**
+		 * This LinkedList should includes 2 Nodes. 
+		 * The First Node should contains sessionID.
+		 * The second Node should contains orderID.
+		 * <sessionID>&<orderID>
+		 */
 		writeLog("Cancel Order");
 		Connection c;
 		String sql, orderID, country;
