@@ -265,10 +265,13 @@ public class CoreOperations {
 			int orderStatus = rs.getInt(2);
 			Connection c2 = SQLOperation.getConnect("generalOrder");
 			sql = "SELECT Product, Brand, Quantity, orderID, orderTime FROM " + country + " where `orderID` = '" + orderID + "';";
+			System.out.println(sql);
 			ResultSet rs2 = SQLOperation.readDatabaseRS(c2, sql);
 			LinkedList temp2 = generateResWithRS(rs2, new Order());
-			UserOrderHis uoh = convertOrderToUserOrderHis((Order)(temp2.head.getObject()), orderStatus);
-			realLinkedList.insert(uoh);
+			if (temp2.head != null) {
+				UserOrderHis uoh = convertOrderToUserOrderHis((Order)(temp2.head.getObject()), orderStatus);
+				realLinkedList.insert(uoh);
+			}
 			c2.close();
 		}
 		c.close();
