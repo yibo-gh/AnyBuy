@@ -1,5 +1,6 @@
 package app.anybuy.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -84,6 +85,8 @@ public class OrderHistoryActivity extends AppCompatActivity {
                                         catch (Exception e) {
                                             e.printStackTrace();
                                         }
+                                        Intent intent = new Intent(OrderHistoryActivity.this, OrderHistoryActivity.class);
+                                        startActivity(intent);
                                     }
                                 });
                                 tableRow.addView(bt);
