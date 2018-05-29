@@ -36,6 +36,11 @@ import app.anybuy.R;
 
 public class SellActivity extends AppCompatActivity {
 
+
+
+    String minLine = "";
+    String maxLine = "";
+
     String maxOrder = "";
     String minOrder = "";
 
@@ -156,12 +161,11 @@ public class SellActivity extends AppCompatActivity {
 
                     sessionID = MainActivity.getID();
 
-                String maxOrder = "";
-                String minOrder = "";
+
 
                 Node nd;
-                String minLine = "";
-                String maxLine = "";
+
+
 
                 System.out.println("noooooooooooooooooooooooooooooooooooo");
 
@@ -172,10 +176,32 @@ public class SellActivity extends AppCompatActivity {
                         if (o.getClass().equals("".getClass())) System.out.println((String) o);
                         else if (o.getClass().equals(new LinkedList().getClass())) {
                             LinkedList l1 = (LinkedList) o;
+                            nd = l1.head;
+
+                            // get the maxOrder and the minOrder
+                            while (nd.getNext().getNext() != null) {
+                                if (nd == l1.head)
+                                    minOrder = ((Order) nd.getObject()).getImage();
+
+                                if (nd.getNext().getNext() == null)
+                                    maxOrder = ((Order) nd.getObject()).getImage();
+
+                                nd = nd.getNext();
+                            }
+
+                            maxOrder = ((Order) nd.getPrev().getObject()).getImage();
+
+                            System.out.println("hoooooooooooooo " + minOrder + "    " + maxOrder);
+
+                            // get max and min line
+                            minLine = (String) l1.end.getObject();
+                            maxLine = (String) l1.end.getPrev().getObject();
+
 
                             Node temp = l1.end;
 
                             temp = temp.getPrev().getPrev();
+
 
                             // go through the first 10 orders from the order to newest
                             while (temp != null) {
@@ -225,6 +251,7 @@ public class SellActivity extends AppCompatActivity {
                                 System.out.println("the idea is :" + textView.getId());
 
                                 secondClick = true;
+
                             }
 
 
@@ -234,39 +261,7 @@ public class SellActivity extends AppCompatActivity {
 
                     else {
 
-                        Object o = null;
 
-                        if(bs == false) {
-                            o = SocketClient.Run(firstClickLinkedList);
-                            bs = true;
-                        }
-
-                        else{
-                             o = SocketClient.Run(secondLinkedList);
-                        }
-
-                        secondLinkedList = (LinkedList) o;
-
-                        nd = secondLinkedList.head;
-
-                        // get the maxOrder and the minOrder
-                        while (nd.getNext().getNext() != null) {
-                            if (nd == secondLinkedList.head)
-                                minOrder = ((Order) nd.getObject()).getImage();
-
-                            if (nd.getNext().getNext() == null)
-                                maxOrder = ((Order) nd.getObject()).getImage();
-
-                            nd = nd.getNext();
-                        }
-
-                        maxOrder = ((Order) nd.getPrev().getObject()).getImage();
-
-                        System.out.println("hoooooooooooooo " + minOrder + "    " + maxOrder);
-
-
-                         minLine = (String) secondLinkedList.end.getObject();
-                         maxLine = (String) secondLinkedList.end.getPrev().getObject();
 
                          System.out.println("MaxLine: " + maxLine + "\nMinLine: " + minLine);
 
@@ -282,9 +277,33 @@ public class SellActivity extends AppCompatActivity {
                         secondLinkedList.insert("0");
                         secondLinkedList.insert("10");
 
+                        Object o = SocketClient.Run(secondLinkedList);
+
+                        LinkedList l1 = (LinkedList) o;
+
+                        nd = l1.head;
+
+                        // get the maxOrder and the minOrder
+                        while (nd.getNext().getNext() != null) {
+                            if (nd == l1.head)
+                                minOrder = ((Order) nd.getObject()).getImage();
+
+                            if (nd.getNext().getNext() == null)
+                                maxOrder = ((Order) nd.getObject()).getImage();
+
+                            nd = nd.getNext();
+                        }
+
+                        maxOrder = ((Order) nd.getPrev().getObject()).getImage();
+
+                        System.out.println("hoooooooooooooo " + minOrder + "    " + maxOrder);
 
 
-                        o = SocketClient.Run(secondLinkedList);
+                        minLine = (String) l1.end.getObject();
+                        maxLine = (String) l1.end.getPrev().getObject();
+
+
+
 
                         //display the next 10
                         if (o.getClass().equals("".getClass())) System.out.println((String) o);
@@ -299,11 +318,39 @@ public class SellActivity extends AppCompatActivity {
                         nd = nd.getPrev().getPrev();
                         System.out.println("ayyyyyyyyyyyyy");
 
+
+
                         while (nd != null) {
+
                             Order od = (Order) nd.getObject();
 
-                            System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
-                                    " " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
+                            data = "Product Name: " + od.getProduct() + "\nBrand Name: " + od.getBrand() +
+                                    "\nQuantity: " + od.getQuantity() + "\nCountry Code: " + od.getCountry() + "\nOrder Number: " + od.getImage() + "\n \n";
+
+
+                            String getStrID = od.getImage().length() > 3 ? od.getImage().substring(od.getImage().length() - 3) : od.getImage();
+
+                            textView = new TextView(SellActivity.this);
+
+                                // put the data in the text view
+                                textView.setText(data);
+
+                                // give it an id
+                                textView.setId(Integer.parseInt(getStrID));
+
+                                //place it nicely under one another
+                                textView.setPadding(0, 50, 0, 0);
+
+                                // if clicked any of the textviews, open the offer page
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent(SellActivity.this, OfferActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            linearLayout.addView(textView);
 
                             nd = nd.getPrev();
                         }
