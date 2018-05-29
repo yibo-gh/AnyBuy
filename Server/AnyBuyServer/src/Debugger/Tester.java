@@ -12,7 +12,11 @@ public class Tester {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
 //		placeOrder();
+<<<<<<< HEAD
 //		addAddress();
+=======
+		addAddress();
+>>>>>>> 0bb4a1508cb8f5859d734a940abc5fd68e15567a
 //		loadAddress(getSessionID());
 //		deleteAddress();
 //		loadPersonOrder(getSessionID());
@@ -51,7 +55,7 @@ public class Tester {
 		l.insert("plo");
 		l.insert(getSessionID());
 		
-		for (int i = 0; i < 0xF; i++) {
+		for (int i = 0; i < 0x23; i++) {
 			String p, b, c, img;
 			String l1, ci, s, z, cd;
 			int q;
@@ -107,22 +111,22 @@ public class Tester {
 		f = "Yoona";
 		l = "Lim";
 		co = "SM Ent\\'l";
-		l1 = "Yeongdong-daero 514";
+		l1 = "Yeongdong-daero 513";
 		l2 = "Gangnam-gu";
 		c = "Seoul";
 		s = "KR";
-		z = "00000";
+		z = "06164";
 		Address a = new Address(f,l, co, l1, l2, c, s, z);
 		ll.insert(a);
 		
 		f = "Taeyeon";
 		l = "Kim";
 		co = "SM Ent\\'l";
-		l1 = "COEX Mall 1";
+		l1 = "Yeongdong-daero 513";
 		l2 = "Gangnam-gu";
 		c = "Seoul";
 		s = "KR";
-		z = "00000";
+		z = "06164";
 		a = new Address(f,l, co, l1, l2, c, s, z);
 		ll.insert(a);
 		
@@ -244,8 +248,8 @@ public class Tester {
 		LinkedList ll = new LinkedList();
 		ll.insert("dta");
 		ll.insert(getSessionID());
-		ll.insert("COEX Mall");
-		
+		Address a = new Address("Yoona", "Lim", "SM Ent\\'l", "Yeongdong-daero 514", "Gangnam-gu", "Seoul", "KR", "00001");
+		ll.insert(a);
 		String res = (String)IntermediateAPI.API.getCommand(ll);
 		System.out.println(res);
 	}

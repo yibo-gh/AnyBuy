@@ -89,7 +89,7 @@ public class AddressAddActivity extends AppCompatActivity {
                 LinkedList ll = new LinkedList();
                 ll.insert("ada");
                 ll.insert(MainActivity.getID());
-                System.out.println(f + " " + l + " " + co + " " + l1 + " " + l2 + " " + c + " " + s + " " + z);
+                System.out.println("Address inputted: " + f + " " + l + " " + co + " " + l1 + " " + l2 + " " + c + " " + s + " " + z);
                 Address a = new Address(f, l, co, l1, l2, c, s, z);
                 ll.insert(a);
                 try {
