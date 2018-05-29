@@ -575,6 +575,19 @@ public class CoreOperations {
 		// Get country from orderID
 		country = getCountryCodeWithOrderID(orderID);
 		
+		// Check if order is already cancelled
+		String orderStatus = "";
+		c = SQLControl.SQLOperation.getConnect("generalOrder");
+		sql = "SELECT orderStatus FROM " + country
+				+ " WHERE orderID = '" + orderID
+				+ "';";
+		orderStatus = SQLOperation.readDatabase(c, sql);
+		c.close();
+		System.out.println(orderStatus);
+		if(orderStatus.equals("5")) {
+			return "0x1EA1";
+		}
+		
 		// Delete table for order's offers
 		c = SQLControl.SQLOperation.getConnect("generalOffer");
 		sql = "DROP TABLE " + orderID
