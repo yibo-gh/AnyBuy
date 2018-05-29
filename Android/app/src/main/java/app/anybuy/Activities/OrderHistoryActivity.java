@@ -1,12 +1,15 @@
 package app.anybuy.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Button;
 
 import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
@@ -63,9 +66,31 @@ public class OrderHistoryActivity extends AppCompatActivity {
                             TableRow tableRow = new TableRow(this);
                             System.out.println("Writing row " + i + ".");
                             TextView tv = new TextView(this);
+                            Button bt = new Button(this);
                             if (i == 0){
-                                tv.setText(uoh.getOrder().getImage() + " " + orderStatus(uoh.getOrderStatus()));
+                                final String orderID = uoh.getOrder().getImage();
+                                tv.setText(orderID + " " + orderStatus(uoh.getOrderStatus()));
                                 tableRow.addView(tv);
+                                // Cancel button
+                                bt.setText("Cancel");
+                                bt.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        LinkedList l = new LinkedList();
+                                        l.insert("cco");
+                                        l.insert(MainActivity.getID());
+                                        l.insert(orderID);
+                                        try {
+                                            SocketClient.Run(l);
+                                        }
+                                        catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        Intent intent = new Intent(OrderHistoryActivity.this, OrderHistoryActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                                tableRow.addView(bt);
                             } else if (i == 1){
                                 tv.setText(uoh.getOrder().getProduct());
                                 tableRow.addView(tv);
