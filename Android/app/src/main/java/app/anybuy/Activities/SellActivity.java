@@ -36,10 +36,17 @@ import app.anybuy.R;
 
 public class SellActivity extends AppCompatActivity {
 
+
+
+    String minLine = "";
+    String maxLine = "";
+
     String maxOrder = "";
     String minOrder = "";
 
     boolean secondClick = false;
+
+    boolean bs = false;
 
     LinearLayout linearLayout;
     private TextView textView;
@@ -78,6 +85,8 @@ public class SellActivity extends AppCompatActivity {
 
         final Button orderButton = (Button) findViewById(R.id.getOrderButtonID);
 
+        bs = false;
+        secondClick = false;
         linearLayout = (LinearLayout) findViewById(R.id.sellpageLinearLayoutID);
 
         //get the location
@@ -138,7 +147,9 @@ public class SellActivity extends AppCompatActivity {
                 String data = "";
                 sessionID = MainActivity.getID();
 
+                LinkedList secondLinkedList = new LinkedList();
                 LinkedList firstClickLinkedList = new LinkedList();
+
                 firstClickLinkedList.insert("lop");
                 firstClickLinkedList.insert(sessionID);
                 firstClickLinkedList.insert(getUserCountryCode());
@@ -150,12 +161,11 @@ public class SellActivity extends AppCompatActivity {
 
                     sessionID = MainActivity.getID();
 
-                String maxOrder = "";
-                String minOrder = "";
+
 
                 Node nd;
-                String minLine = "";
-                String maxLine = "";
+
+
 
                 System.out.println("noooooooooooooooooooooooooooooooooooo");
 
@@ -166,14 +176,35 @@ public class SellActivity extends AppCompatActivity {
                         if (o.getClass().equals("".getClass())) System.out.println((String) o);
                         else if (o.getClass().equals(new LinkedList().getClass())) {
                             LinkedList l1 = (LinkedList) o;
+                            nd = l1.head;
+
+                            // get the maxOrder and the minOrder
+                            while (nd.getNext().getNext() != null) {
+                                if (nd == l1.head)
+                                    minOrder = ((Order) nd.getObject()).getImage();
+
+                                if (nd.getNext().getNext() == null)
+                                    maxOrder = ((Order) nd.getObject()).getImage();
+
+                                nd = nd.getNext();
+                            }
+
+                            maxOrder = ((Order) nd.getPrev().getObject()).getImage();
+
+                            System.out.println("hoooooooooooooo " + minOrder + "    " + maxOrder);
+
+                            // get max and min line
+                            minLine = (String) l1.end.getObject();
+                            maxLine = (String) l1.end.getPrev().getObject();
+
 
                             Node temp = l1.end;
 
                             temp = temp.getPrev().getPrev();
 
+
                             // go through the first 10 orders from the order to newest
                             while (temp != null) {
-
                                 Order od = (Order) temp.getObject();
 
                                 System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
@@ -220,6 +251,7 @@ public class SellActivity extends AppCompatActivity {
                                 System.out.println("the idea is :" + textView.getId());
 
                                 secondClick = true;
+
                             }
 
 
@@ -229,14 +261,31 @@ public class SellActivity extends AppCompatActivity {
 
                     else {
 
-                        Object o = SocketClient.Run(firstClickLinkedList);
-                        firstClickLinkedList = (LinkedList) o;
 
-                        nd = firstClickLinkedList.head;
+
+                         System.out.println("MaxLine: " + maxLine + "\nMinLine: " + minLine);
+
+                        System.out.println("helllllllll yeaaaaaaaaaaaaaaaaaaaaaaaa");
+                        secondLinkedList = new LinkedList();
+                        secondLinkedList.insert("lop");
+                        secondLinkedList.insert(sessionID);
+
+                        secondLinkedList.insert(maxLine);
+                        secondLinkedList.insert(minLine);
+                        secondLinkedList.insert(maxOrder);
+                        secondLinkedList.insert(minOrder);
+                        secondLinkedList.insert("0");
+                        secondLinkedList.insert("10");
+
+                        Object o = SocketClient.Run(secondLinkedList);
+
+                        LinkedList l1 = (LinkedList) o;
+
+                        nd = l1.head;
 
                         // get the maxOrder and the minOrder
                         while (nd.getNext().getNext() != null) {
-                            if (nd == firstClickLinkedList.head)
+                            if (nd == l1.head)
                                 minOrder = ((Order) nd.getObject()).getImage();
 
                             if (nd.getNext().getNext() == null)
@@ -250,46 +299,61 @@ public class SellActivity extends AppCompatActivity {
                         System.out.println("hoooooooooooooo " + minOrder + "    " + maxOrder);
 
 
-                         minLine = (String) firstClickLinkedList.end.getObject();
-                         maxLine = (String) firstClickLinkedList.end.getPrev().getObject();
+                        minLine = (String) l1.end.getObject();
+                        maxLine = (String) l1.end.getPrev().getObject();
 
-                         System.out.println("MaxLine: " + maxLine + "\nMinLine: " + minLine);
 
-                        System.out.println("helllllllll yeaaaaaaaaaaaaaaaaaaaaaaaa");
-                        firstClickLinkedList = new LinkedList();
-                        firstClickLinkedList.insert("lop");
-                        firstClickLinkedList.insert(sessionID);
 
-                        firstClickLinkedList.insert(maxLine);
-                        firstClickLinkedList.insert(minLine);
-                        firstClickLinkedList.insert(maxOrder);
-                        firstClickLinkedList.insert(minOrder);
-                        firstClickLinkedList.insert("0");
-                        firstClickLinkedList.insert("10");
-
-                        o = SocketClient.Run(firstClickLinkedList);
 
                         //display the next 10
                         if (o.getClass().equals("".getClass())) System.out.println((String) o);
 
-                        firstClickLinkedList = (LinkedList) o;
-                        System.out.println(firstClickLinkedList.getLength());
+                        secondLinkedList = (LinkedList) o;
 
-                        nd = firstClickLinkedList.end;
+
+                        System.out.println(secondLinkedList.getLength());
+
+                        nd = secondLinkedList.end;
 
                         nd = nd.getPrev().getPrev();
                         System.out.println("ayyyyyyyyyyyyy");
 
+
+
                         while (nd != null) {
+
                             Order od = (Order) nd.getObject();
 
-                            System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
-                                    " " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
+                            data = "Product Name: " + od.getProduct() + "\nBrand Name: " + od.getBrand() +
+                                    "\nQuantity: " + od.getQuantity() + "\nCountry Code: " + od.getCountry() + "\nOrder Number: " + od.getImage() + "\n \n";
+
+
+                            String getStrID = od.getImage().length() > 3 ? od.getImage().substring(od.getImage().length() - 3) : od.getImage();
+
+                            textView = new TextView(SellActivity.this);
+
+                                // put the data in the text view
+                                textView.setText(data);
+
+                                // give it an id
+                                textView.setId(Integer.parseInt(getStrID));
+
+                                //place it nicely under one another
+                                textView.setPadding(0, 50, 0, 0);
+
+                                // if clicked any of the textviews, open the offer page
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent(SellActivity.this, OfferActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            linearLayout.addView(textView);
 
                             nd = nd.getPrev();
                         }
-
-
 
                         System.out.println("ayyyyyyyyyyyyy");
                     }

@@ -61,7 +61,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
                     Node temp = l.head;
                     while (temp != null) {
                         UserOrderHis uoh = (UserOrderHis) temp.getObject();
-
                         for (int i = 0; i < 6; i++) {
                             TableRow tableRow = new TableRow(this);
                             System.out.println("Writing row " + i + ".");

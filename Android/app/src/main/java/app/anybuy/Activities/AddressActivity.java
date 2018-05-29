@@ -1,8 +1,8 @@
 package app.anybuy.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +11,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import Object.LinkedList;
 import Object.Address;
+import Object.LinkedList;
 import Object.Node;
-import app.anybuy.R;
-
 import app.anybuy.Clients.SocketClient;
-
 import app.anybuy.R;
 
 
@@ -51,6 +48,7 @@ public class AddressActivity extends AppCompatActivity {
 
         try {
             Object o = SocketClient.Run(l);
+
             if (o.getClass().equals("".getClass())) {
                 TableRow tableRow = new TableRow(this);
                 TextView tv = new TextView(this);

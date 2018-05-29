@@ -12,7 +12,7 @@ public class Tester {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
 //		placeOrder();
-		addAddress();
+//		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
 //		loadPersonOrder(getSessionID());
@@ -276,6 +276,31 @@ public class Tester {
 		System.out.println(res);
 	}
 	
+	private static void giveRate() throws SQLException {
+		LinkedList ll = new LinkedList();
+		ll.insert("gvr");
+		ll.insert(getSessionID());
+		
+		String OID, SID, RM;
+		double RA, EC;
+		int SM;
+		boolean A;
+		
+		OID = "US10000003";
+		SID = "snok10000";
+		RA = 100.00;
+		EC = 10.00;
+		SM = 1;
+		A = false;
+		RM = "Rate Example";
+		
+		Offer offer = new Offer(OID, SID, RA, EC, SM, A, RM);
+		ll.insert(offer);
+		
+		String res = (String)IntermediateAPI.API.getCommand(ll);
+		System.out.println(res);
+	}
+	
 	private static void acceptRate() throws SQLException {
 		LinkedList ll = new LinkedList();
 		ll.insert("art");
@@ -296,7 +321,7 @@ public class Tester {
 		ll.insert("cco");
 		ll.insert(getSessionID());
 		
-		String orderID = "RTW1000000";
+		String orderID = "US10000003";
 		ll.insert(orderID);
 		
 		String res = (String)IntermediateAPI.API.getCommand(ll);
