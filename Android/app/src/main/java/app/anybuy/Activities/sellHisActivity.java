@@ -37,8 +37,11 @@ public class sellHisActivity extends AppCompatActivity {
         l.insert("lds");
         l.insert(MainActivity.getID());
 
+        System.out.println("LinkedList initialed.");
+
         try {
             Object o = SocketClient.Run(l);
+            System.out.println("Server return received.");
             if (o.getClass().equals("".getClass())) {
                 TableRow tableRow = new TableRow(this);
                 TextView tv = new TextView(this);

@@ -11,7 +11,7 @@ public class Tester {
 	public static void main (String args[]) throws SQLException {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
-		placeOrder();
+//		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
@@ -22,6 +22,7 @@ public class Tester {
 //		loadCard();
 //		deleteCard();
 //		giveRate();
+		acceptRate();
 //		cancelOrder();
 	}
 	
@@ -50,7 +51,7 @@ public class Tester {
 		l.insert("plo");
 		l.insert(getSessionID());
 		
-		for (int i = 0; i < 0x2; i++) {
+		for (int i = 0; i < 0xF; i++) {
 			String p, b, c, img;
 			String l1, ci, s, z, cd;
 			int q;
@@ -59,7 +60,7 @@ public class Tester {
 			p = "Yoona\\'s Choice";
 			b = "Innisfree";
 			q = 1;
-			c = "RTW";
+			c = "US";
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			Order u = new Order(p, b, q, c, img, ts);
@@ -75,7 +76,7 @@ public class Tester {
 			p = "Zero Balance Cleasing";
 			b = "Banila Co.";
 			q = 1;
-			c = "RTW";
+			c = "US";
 			img = "";
 			ts = new Timestamp(System.currentTimeMillis());
 			u = new Order(p, b, q, c, img, ts);
@@ -285,7 +286,7 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "RTW1000000";
+		OID = "US10000003";
 		SID = "snok10000";
 		RA = 100.00;
 		EC = 10.00;
@@ -295,6 +296,21 @@ public class Tester {
 		
 		Offer offer = new Offer(OID, SID, RA, EC, SM, A, RM);
 		ll.insert(offer);
+		
+		String res = (String)IntermediateAPI.API.getCommand(ll);
+		System.out.println(res);
+	}
+	
+	private static void acceptRate() throws SQLException {
+		LinkedList ll = new LinkedList();
+		ll.insert("art");
+		ll.insert(getSessionID());
+		
+		String OID, SID;
+		OID = "US10000003";
+		SID = "snok10000";
+		ll.insert(OID);
+		ll.insert(SID);
 		
 		String res = (String)IntermediateAPI.API.getCommand(ll);
 		System.out.println(res);

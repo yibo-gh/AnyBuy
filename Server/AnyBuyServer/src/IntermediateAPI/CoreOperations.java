@@ -265,10 +265,13 @@ public class CoreOperations {
 			int orderStatus = rs.getInt(2);
 			Connection c2 = SQLOperation.getConnect("generalOrder");
 			sql = "SELECT Product, Brand, Quantity, orderID, orderTime FROM " + country + " where `orderID` = '" + orderID + "';";
+			System.out.println(sql);
 			ResultSet rs2 = SQLOperation.readDatabaseRS(c2, sql);
 			LinkedList temp2 = generateResWithRS(rs2, new Order());
-			UserOrderHis uoh = convertOrderToUserOrderHis((Order)(temp2.head.getObject()), orderStatus);
-			realLinkedList.insert(uoh);
+			if (temp2.head != null) {
+				UserOrderHis uoh = convertOrderToUserOrderHis((Order)(temp2.head.getObject()), orderStatus);
+				realLinkedList.insert(uoh);
+			}
 			c2.close();
 		}
 		c.close();
@@ -552,7 +555,12 @@ public class CoreOperations {
 	}
 	
 	static Object cancelOrder (LinkedList ll) throws SQLException {
-		//<sessionID>&<orderID>
+		/**
+		 * This LinkedList should includes 2 Nodes. 
+		 * The First Node should contains sessionID.
+		 * The second Node should contains orderID.
+		 * <sessionID>&<orderID>
+		 */
 		writeLog("Cancel Order");
 		Connection c;
 		String sql, orderID, country;
@@ -572,27 +580,24 @@ public class CoreOperations {
 		c = SQLControl.SQLOperation.getConnect("generalOffer");
 		sql = "DROP TABLE " + orderID
 				+ ";";
-		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
-		// Delete order from order history
+		// Change orderStatus in generalOrder
 		c = SQLControl.SQLOperation.getConnect("generalOrder");
 		sql = "UPDATE " + country
 				+ " SET orderStatus = '5'"
 				+ " WHERE orderID = '" + orderID
 				+ "';";
-		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
-		// Delete order from order history
+		// Change orderStatus in user orders
 		c = SQLControl.SQLOperation.getConnect(uid);
 		sql = "UPDATE `order`"
 				+ " SET orderStatus = '5'"
 				+ " WHERE orderID = '" + orderID
 				+ "';";
-		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
@@ -656,28 +661,69 @@ public class CoreOperations {
 	}
 	
 	static String acceptRate (LinkedList ll) throws SQLException {
-		//<sessionID>&<offerObject>
+		/**
+		 * This LinkedList should includes 3 Nodes. 
+		 * The First Node should contains sessionID.
+		 * The second Node should contains orderID.
+		 * The third Node should contains sellerID.
+		 * <sessionID>&<orderID>&<sellerID>
+		 */
 		writeLog("Accept Rate");
 		Connection c;
-		String sql, orderID, sellerID;
+		String sql, orderID, country, sellerID;
 		
 		// Verify session
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
-		// Get orderID and sellerID from list
-		Object obj = ll.head.getObject();
-		if (!obj.getClass().equals(new Offer().getClass())) return "NOT AN OFFER";
-		Offer offer = (Offer)obj;
-		orderID = offer.getOrderID();
-		sellerID = offer.getSellerID();
+		// Get orderID, country, and sellerID from list
+		Node temp = ll.head;
+		Object obj;
+		// Getting orderID
+		obj = temp.getObject();
+		if (!obj.getClass().equals(("".getClass()))) {return "0x1002";}
+		orderID = obj.toString();
+		// Getting country from orderID
+		country = getCountryCodeWithOrderID(orderID);
+		// Getting sellerID
+		temp = temp.getNext();
+		obj = temp.getObject();
+		if (!obj.getClass().equals(("".getClass()))) {return "0x1002";}
+		sellerID = obj.toString();
 		
 		// Change acceptance of offer to 1
 		c = SQLControl.SQLOperation.getConnect("generalOffer");
 		sql = "UPDATE " + orderID
-				+ " SET acceptance = 1"
-				+ " WHERE sellerID = " + sellerID
-				+ ";";
+				+ " SET acceptance = '1'"
+				+ " WHERE sellerID = '" + sellerID
+				+ "';";
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
+		
+		// Change orderStatus in generalOrder
+		c = SQLControl.SQLOperation.getConnect("generalOrder");
+		sql = "UPDATE " + country
+				+ " SET orderStatus = '2'"
+				+ " WHERE orderID = '" + orderID
+				+ "';";
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
+		
+		// Change orderStatus in seller's orders
+		c = SQLControl.SQLOperation.getConnect(sellerID);
+		sql = "UPDATE `offer`"
+				+ " SET offerStatus = '2'"
+				+ " WHERE orderID = '" + orderID
+				+ "';";
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
+		
+		// Change orderStatus in buyer's orders
+		c = SQLControl.SQLOperation.getConnect(uid);
+		sql = "UPDATE `order`"
+				+ " SET orderStatus = '2'"
+				+ " WHERE orderID = '" + orderID
+				+ "';";
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
