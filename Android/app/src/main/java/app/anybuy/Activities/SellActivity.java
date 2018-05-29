@@ -41,6 +41,8 @@ public class SellActivity extends AppCompatActivity {
 
     boolean secondClick = false;
 
+    boolean bs = false;
+
     LinearLayout linearLayout;
     private TextView textView;
 
@@ -78,6 +80,8 @@ public class SellActivity extends AppCompatActivity {
 
         final Button orderButton = (Button) findViewById(R.id.getOrderButtonID);
 
+        bs = false;
+        secondClick = false;
         linearLayout = (LinearLayout) findViewById(R.id.sellpageLinearLayoutID);
 
         //get the location
@@ -138,7 +142,9 @@ public class SellActivity extends AppCompatActivity {
                 String data = "";
                 sessionID = MainActivity.getID();
 
+                LinkedList secondLinkedList = new LinkedList();
                 LinkedList firstClickLinkedList = new LinkedList();
+
                 firstClickLinkedList.insert("lop");
                 firstClickLinkedList.insert(sessionID);
                 firstClickLinkedList.insert(getUserCountryCode());
@@ -173,7 +179,6 @@ public class SellActivity extends AppCompatActivity {
 
                             // go through the first 10 orders from the order to newest
                             while (temp != null) {
-
                                 Order od = (Order) temp.getObject();
 
                                 System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
@@ -229,14 +234,24 @@ public class SellActivity extends AppCompatActivity {
 
                     else {
 
-                        Object o = SocketClient.Run(firstClickLinkedList);
-                        firstClickLinkedList = (LinkedList) o;
+                        Object o = null;
 
-                        nd = firstClickLinkedList.head;
+                        if(bs == false) {
+                            o = SocketClient.Run(firstClickLinkedList);
+                            bs = true;
+                        }
+
+                        else{
+                             o = SocketClient.Run(secondLinkedList);
+                        }
+
+                        secondLinkedList = (LinkedList) o;
+
+                        nd = secondLinkedList.head;
 
                         // get the maxOrder and the minOrder
                         while (nd.getNext().getNext() != null) {
-                            if (nd == firstClickLinkedList.head)
+                            if (nd == secondLinkedList.head)
                                 minOrder = ((Order) nd.getObject()).getImage();
 
                             if (nd.getNext().getNext() == null)
@@ -250,32 +265,36 @@ public class SellActivity extends AppCompatActivity {
                         System.out.println("hoooooooooooooo " + minOrder + "    " + maxOrder);
 
 
-                         minLine = (String) firstClickLinkedList.end.getObject();
-                         maxLine = (String) firstClickLinkedList.end.getPrev().getObject();
+                         minLine = (String) secondLinkedList.end.getObject();
+                         maxLine = (String) secondLinkedList.end.getPrev().getObject();
 
                          System.out.println("MaxLine: " + maxLine + "\nMinLine: " + minLine);
 
                         System.out.println("helllllllll yeaaaaaaaaaaaaaaaaaaaaaaaa");
-                        firstClickLinkedList = new LinkedList();
-                        firstClickLinkedList.insert("lop");
-                        firstClickLinkedList.insert(sessionID);
+                        secondLinkedList = new LinkedList();
+                        secondLinkedList.insert("lop");
+                        secondLinkedList.insert(sessionID);
 
-                        firstClickLinkedList.insert(maxLine);
-                        firstClickLinkedList.insert(minLine);
-                        firstClickLinkedList.insert(maxOrder);
-                        firstClickLinkedList.insert(minOrder);
-                        firstClickLinkedList.insert("0");
-                        firstClickLinkedList.insert("10");
+                        secondLinkedList.insert(maxLine);
+                        secondLinkedList.insert(minLine);
+                        secondLinkedList.insert(maxOrder);
+                        secondLinkedList.insert(minOrder);
+                        secondLinkedList.insert("0");
+                        secondLinkedList.insert("10");
 
-                        o = SocketClient.Run(firstClickLinkedList);
+
+
+                        o = SocketClient.Run(secondLinkedList);
 
                         //display the next 10
                         if (o.getClass().equals("".getClass())) System.out.println((String) o);
 
-                        firstClickLinkedList = (LinkedList) o;
-                        System.out.println(firstClickLinkedList.getLength());
+                        secondLinkedList = (LinkedList) o;
 
-                        nd = firstClickLinkedList.end;
+
+                        System.out.println(secondLinkedList.getLength());
+
+                        nd = secondLinkedList.end;
 
                         nd = nd.getPrev().getPrev();
                         System.out.println("ayyyyyyyyyyyyy");

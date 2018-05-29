@@ -21,7 +21,8 @@ public class Tester {
 //		addCard();
 //		loadCard();
 //		deleteCard();
-		giveRate();
+//		giveRate();
+//		cancelOrder();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -294,6 +295,18 @@ public class Tester {
 		
 		Offer offer = new Offer(OID, SID, RA, EC, SM, A, RM);
 		ll.insert(offer);
+		
+		String res = (String)IntermediateAPI.API.getCommand(ll);
+		System.out.println(res);
+	}
+	
+	private static void cancelOrder() throws SQLException{
+		LinkedList ll = new LinkedList();
+		ll.insert("cco");
+		ll.insert(getSessionID());
+		
+		String orderID = "RTW1000000";
+		ll.insert(orderID);
 		
 		String res = (String)IntermediateAPI.API.getCommand(ll);
 		System.out.println(res);

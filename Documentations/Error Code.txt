@@ -29,6 +29,7 @@
 0x1F03: Order Error: List table failed. Table not found.
 0x1F04: Order Error: Cannot upload image.
 0x1F05: Order Error: Cannot rename file.
+0x1F06: Order Error: Invalid URL.
 
 0x1FA1: Order Error: No order found.
 0x1FA2: Order Error: Order not found.

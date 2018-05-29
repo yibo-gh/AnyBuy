@@ -29,11 +29,18 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         Button Address = (Button) findViewById(R.id.AddressButtonID);
-
+        Button Legal = (Button) findViewById(R.id.legalButtonID);
         Button Payment = (Button) findViewById(R.id.PaymentButtonID);
         Button sellHis = (Button) findViewById(R.id.sellhistoryID);
         Button buyHis = (Button) findViewById(R.id.ordersButtonID);
 
+        Legal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, LegalActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Address.setOnClickListener(new View.OnClickListener() {
             @Override
