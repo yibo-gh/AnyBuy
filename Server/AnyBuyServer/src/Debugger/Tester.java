@@ -23,7 +23,7 @@ public class Tester {
 //		deleteCard();
 //		giveRate();
 //		acceptRate();
-//		cancelOrder();
+		cancelOrder();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -286,7 +286,7 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "US10000003";
+		OID = "US10000004";
 		SID = "snok10000";
 		RA = 100.00;
 		EC = 10.00;
@@ -321,7 +321,7 @@ public class Tester {
 		ll.insert("cco");
 		ll.insert(getSessionID());
 		
-		String orderID = "US10000003";
+		String orderID = "US10000004";
 		ll.insert(orderID);
 		
 		String res = (String)IntermediateAPI.API.getCommand(ll);

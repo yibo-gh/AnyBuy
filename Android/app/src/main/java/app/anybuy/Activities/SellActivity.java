@@ -37,12 +37,15 @@ import app.anybuy.R;
 public class SellActivity extends AppCompatActivity {
 
 
+    private static String getStrID;
 
     String minLine = "";
     String maxLine = "";
 
     String maxOrder = "";
     String minOrder = "";
+
+    public static String getGetStrID() {return getStrID;}
 
     boolean secondClick = false;
 
@@ -215,7 +218,7 @@ public class SellActivity extends AppCompatActivity {
                                         "\nQuantity: " + od.getQuantity() + "\nCountry Code: " + od.getCountry() + "\nOrder Number: " + od.getImage() + "\n \n";
 
                                 // to get different ids I created a string that gets the last 3 chards of each order number (getImage()) and converts it into int and set the int to the textveiws id
-                                String getStrID = od.getImage().length() > 3 ? od.getImage().substring(od.getImage().length() - 3) : od.getImage();
+                                getStrID = od.getImage().length() > 3 ? od.getImage().substring(od.getImage().length() - 3) : od.getImage();
 
                                 // create a text view for each order
                                 textView = new TextView(SellActivity.this);
