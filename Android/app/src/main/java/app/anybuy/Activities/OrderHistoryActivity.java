@@ -66,30 +66,32 @@ public class OrderHistoryActivity extends AppCompatActivity {
                             System.out.println("Writing row " + i + ".");
                             TextView tv = new TextView(this);
                             Button bt = new Button(this);
-                            if (i == 0){
+                            if (i == 0) {
                                 final String orderID = uoh.getOrder().getImage();
-                                tv.setText(orderID + " " + orderStatus(uoh.getOrderStatus()));
+                                int ordStatus = uoh.getOrderStatus();
+                                tv.setText(orderID + " " + orderStatus(ordStatus));
                                 tableRow.addView(tv);
                                 // Cancel button
-                                bt.setText("Cancel");
-                                bt.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        LinkedList l = new LinkedList();
-                                        l.insert("cco");
-                                        l.insert(MainActivity.getID());
-                                        l.insert(orderID);
-                                        try {
-                                            SocketClient.Run(l);
+                                if (ordStatus == 0 | ordStatus == 1) {
+                                    bt.setText("Cancel");
+                                    bt.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            LinkedList l = new LinkedList();
+                                            l.insert("cco");
+                                            l.insert(MainActivity.getID());
+                                            l.insert(orderID);
+                                            try {
+                                                SocketClient.Run(l);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                            Intent intent = new Intent(OrderHistoryActivity.this, OrderHistoryActivity.class);
+                                            startActivity(intent);
                                         }
-                                        catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                        Intent intent = new Intent(OrderHistoryActivity.this, OrderHistoryActivity.class);
-                                        startActivity(intent);
-                                    }
-                                });
-                                tableRow.addView(bt);
+                                    });
+                                    tableRow.addView(bt);
+                                }
                             } else if (i == 1){
                                 tv.setText(uoh.getOrder().getProduct());
                                 tableRow.addView(tv);
