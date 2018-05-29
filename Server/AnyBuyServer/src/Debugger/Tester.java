@@ -23,7 +23,8 @@ public class Tester {
 //		deleteCard();
 //		giveRate();
 //		acceptRate();
-		cancelOrder();
+//		cancelOrder();
+		searchOrderByName();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -286,8 +287,8 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "US10000004";
-		SID = "snok10000";
+		OID = "US10000130";
+		SID = "ucex10000";
 		RA = 100.00;
 		EC = 10.00;
 		SM = 1;
@@ -326,6 +327,29 @@ public class Tester {
 		
 		String res = (String)IntermediateAPI.API.getCommand(ll);
 		System.out.println(res);
+	}
+	
+	private static void searchOrderByName() throws SQLException{
+		LinkedList ll = new LinkedList();
+		ll.insert("spn");
+		ll.insert(getSessionID());
+		ll.insert("US");
+		ll.insert(null);
+		ll.insert("%ona\\'s Ch%");
+		Object obj = IntermediateAPI.API.getCommand(ll);
+		if (obj.getClass().equals("".getClass())) {
+			System.out.println((String)obj);
+			return;
+		}
+		ll = (LinkedList) obj;
+		
+		Node temp = ll.head;
+		while (temp != null) {
+			Order o = (Order) temp.getObject();
+			System.out.println(o.getImage() + " " + o.getBrand() + " " + o.getProduct() +
+					" " + o.getQuantity() + " " + o.getCountry() + " " + o.getTimestamp());
+			temp = temp.getNext();
+		}
 	}
 	
 	private static String getSessionID() {
