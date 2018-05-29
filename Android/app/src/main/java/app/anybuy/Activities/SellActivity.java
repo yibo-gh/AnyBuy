@@ -189,6 +189,7 @@ public class SellActivity extends AppCompatActivity {
                     l.insert("%" + searchKeyword + "%");
                     try {
                         Object o = SocketClient.Run(l);
+                        // TODO print Object o.
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
