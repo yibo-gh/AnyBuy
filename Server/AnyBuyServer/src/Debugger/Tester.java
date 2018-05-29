@@ -11,7 +11,7 @@ public class Tester {
 	public static void main (String args[]) throws SQLException {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
-		placeOrder();
+//		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
@@ -22,6 +22,7 @@ public class Tester {
 //		loadCard();
 //		deleteCard();
 //		giveRate();
+		acceptRate();
 //		cancelOrder();
 	}
 	
@@ -285,7 +286,7 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "TW10000000";
+		OID = "US10000003";
 		SID = "snok10000";
 		RA = 100.00;
 		EC = 10.00;
@@ -295,6 +296,21 @@ public class Tester {
 		
 		Offer offer = new Offer(OID, SID, RA, EC, SM, A, RM);
 		ll.insert(offer);
+		
+		String res = (String)IntermediateAPI.API.getCommand(ll);
+		System.out.println(res);
+	}
+	
+	private static void acceptRate() throws SQLException {
+		LinkedList ll = new LinkedList();
+		ll.insert("art");
+		ll.insert(getSessionID());
+		
+		String OID, SID;
+		OID = "US10000003";
+		SID = "snok10000";
+		ll.insert(OID);
+		ll.insert(SID);
 		
 		String res = (String)IntermediateAPI.API.getCommand(ll);
 		System.out.println(res);
