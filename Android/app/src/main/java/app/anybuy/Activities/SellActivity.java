@@ -102,6 +102,7 @@ public class SellActivity extends AppCompatActivity {
             return;
         }
 
+
         //get the address from the location
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
 
@@ -112,7 +113,6 @@ public class SellActivity extends AppCompatActivity {
                 if (location != null) {
                     // Logic to handle location object
                     //textView.setText("altetude: " + location.getLatitude() + " \n Longtitude: " + location.getLongitude());
-
                     lattitude = location.getLatitude();
                     longitude = location.getLongitude();
 
