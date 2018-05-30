@@ -28,6 +28,8 @@ public class DeleteAddress extends Activity {
     Spinner spinner;
     Button button;
     Object o;
+    Address[] addresses;
+    Address deleteAddress;
 
     private static String[] options;
 
@@ -53,11 +55,13 @@ public class DeleteAddress extends Activity {
             o = SocketClient.Run(l);
             if (o.getClass().equals(new LinkedList().getClass())){
                 l = (LinkedList) o;
+                addresses = new Address[l.getLength()];
                 Node temp = l.head;
-                int i = 1;
+                int i = 0;
                 while (temp != null){
                     String str = i + ". ";
                     Address a = (Address) temp.getObject();
+                    addresses[i] = a;
                     str += a.getFN();
                     str += " ";
                     str += a.getLN();
@@ -99,6 +103,7 @@ public class DeleteAddress extends Activity {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 // TODO Auto-generated method stub
                 result.setText(((TextView)arg1).getText());
+                deleteAddress = addresses[arg2];
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -113,13 +118,7 @@ public class DeleteAddress extends Activity {
                 LinkedList l = new LinkedList();
                 l.insert("dta");
                 l.insert(MainActivity.getID());
-                LinkedList obj = (LinkedList) o;
-                Node temp = obj.head;
-                for (int i = 1; i < Integer.parseInt("" + result.getText().charAt(0)); i++) {
-                    temp = temp.getNext();
-                }
-                System.out.println(temp.getObject().getClass());
-                l.insert((String)((Address)temp.getObject()).getL1());
+                l.insert(deleteAddress);
                 try {
                     Object o = SocketClient.Run(l);
                     System.out.println((String)o);

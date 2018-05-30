@@ -42,7 +42,11 @@ public class SQLOperation {
 	}
 	
 	public static String makeTable (Connection c, String str) {
-		String sql = "create table " + str + "( name Char(40),psc Char(50), id int(8));";
+		String sql = "create table `" + str + "` ( "
+				+ "name Char(40) NOT NULL,"
+				+ "psc Char(50) NOT NULL,"
+				+ "id int(8) NOT NULL,"
+				+ "PRIMARY KEY (`name`));";
 		try {
 			c.createStatement().executeUpdate(sql);
 		} catch (SQLException e) {
@@ -56,9 +60,26 @@ public class SQLOperation {
 			String sql = "CREATE DATABASE " + userId;
 			c.createStatement().executeUpdate(sql);
 			c = SQLControl.SQLOperation.getConnect(userId);
-			sql = "create table payment ( fn Char(20), ln Char(20), issuer Char(4), cardNumber Char(19), exp Char(4), zip Char(6) );";
+			sql = "create table `payment` ( "
+					+ "`fn` Char(20) NOT NULL, "
+					+ "`ln` Char(20) NOT NULL, "
+					+ "`issuer` Char(4) NOT NULL, "
+					+ "`cardNumber` Char(19) NOT NULL, "
+					+ "`exp` Char(4) NOT NULL, "
+					+ "`zip` Char(6) NOT NULL,"
+					+ "PRIMARY KEY (`cardNumber`));";
 			c.createStatement().executeUpdate(sql);
-			sql = "create table address ( fn Char(20), ln Char(20), company Char(255), line1 Char(255), line2 Char(255), city Char(255), state Char(2), zip Char(6) );";
+			sql = "create table `address` ( "
+					+ "`index` INT NOT NULL AUTO_INCREMENT,"
+					+ "`fn` Char(20) NOT NULL, "
+					+ "`ln` Char(20) NOT NULL, "
+					+ "`company` Char(255) NOT NULL, "
+					+ "`line1` Char(255) NOT NULL, "
+					+ "`line2` Char(255) NOT NULL, "
+					+ "`city` Char(255) NOT NULL, "
+					+ "`state` Char(2) NOT NULL, "
+					+ "`zip` Char(6) NOT NULL,"
+					+ " PRIMARY KEY (`index`));";
 			c.createStatement().executeUpdate(sql);
 			sql = "CREATE TABLE `" + userId + "`.`order` (\r\n" + 
 					"  `orderID` CHAR(20) NOT NULL,\r\n" + 

@@ -22,8 +22,9 @@ public class Tester {
 //		loadCard();
 //		deleteCard();
 //		giveRate();
-		acceptRate();
+//		acceptRate();
 //		cancelOrder();
+		searchOrderByName();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -51,7 +52,7 @@ public class Tester {
 		l.insert("plo");
 		l.insert(getSessionID());
 		
-		for (int i = 0; i < 0xF; i++) {
+		for (int i = 0; i < 0x23; i++) {
 			String p, b, c, img;
 			String l1, ci, s, z, cd;
 			int q;
@@ -107,22 +108,22 @@ public class Tester {
 		f = "Yoona";
 		l = "Lim";
 		co = "SM Ent\\'l";
-		l1 = "Yeongdong-daero 514";
+		l1 = "Yeongdong-daero 513";
 		l2 = "Gangnam-gu";
 		c = "Seoul";
 		s = "KR";
-		z = "00000";
+		z = "06164";
 		Address a = new Address(f,l, co, l1, l2, c, s, z);
 		ll.insert(a);
 		
 		f = "Taeyeon";
 		l = "Kim";
 		co = "SM Ent\\'l";
-		l1 = "COEX Mall 1";
+		l1 = "Yeongdong-daero 513";
 		l2 = "Gangnam-gu";
 		c = "Seoul";
 		s = "KR";
-		z = "00000";
+		z = "06164";
 		a = new Address(f,l, co, l1, l2, c, s, z);
 		ll.insert(a);
 		
@@ -244,8 +245,8 @@ public class Tester {
 		LinkedList ll = new LinkedList();
 		ll.insert("dta");
 		ll.insert(getSessionID());
-		ll.insert("COEX Mall");
-		
+		Address a = new Address("Yoona", "Lim", "SM Ent\\'l", "Yeongdong-daero 514", "Gangnam-gu", "Seoul", "KR", "00001");
+		ll.insert(a);
 		String res = (String)IntermediateAPI.API.getCommand(ll);
 		System.out.println(res);
 	}
@@ -286,8 +287,8 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "US10000003";
-		SID = "snok10000";
+		OID = "US10000130";
+		SID = "ucex10000";
 		RA = 100.00;
 		EC = 10.00;
 		SM = 1;
@@ -321,11 +322,34 @@ public class Tester {
 		ll.insert("cco");
 		ll.insert(getSessionID());
 		
-		String orderID = "RTW1000000";
+		String orderID = "US10000004";
 		ll.insert(orderID);
 		
 		String res = (String)IntermediateAPI.API.getCommand(ll);
 		System.out.println(res);
+	}
+	
+	private static void searchOrderByName() throws SQLException{
+		LinkedList ll = new LinkedList();
+		ll.insert("spn");
+		ll.insert(getSessionID());
+		ll.insert("US");
+		ll.insert(null);
+		ll.insert("%ona\\'s Ch%");
+		Object obj = IntermediateAPI.API.getCommand(ll);
+		if (obj.getClass().equals("".getClass())) {
+			System.out.println((String)obj);
+			return;
+		}
+		ll = (LinkedList) obj;
+		
+		Node temp = ll.head;
+		while (temp != null) {
+			Order o = (Order) temp.getObject();
+			System.out.println(o.getImage() + " " + o.getBrand() + " " + o.getProduct() +
+					" " + o.getQuantity() + " " + o.getCountry() + " " + o.getTimestamp());
+			temp = temp.getNext();
+		}
 	}
 	
 	private static String getSessionID() {

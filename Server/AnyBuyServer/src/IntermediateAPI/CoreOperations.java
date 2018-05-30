@@ -265,7 +265,6 @@ public class CoreOperations {
 			int orderStatus = rs.getInt(2);
 			Connection c2 = SQLOperation.getConnect("generalOrder");
 			sql = "SELECT Product, Brand, Quantity, orderID, orderTime FROM " + country + " where `orderID` = '" + orderID + "';";
-			System.out.println(sql);
 			ResultSet rs2 = SQLOperation.readDatabaseRS(c2, sql);
 			LinkedList temp2 = generateResWithRS(rs2, new Order());
 			if (temp2.head != null) {
@@ -275,62 +274,11 @@ public class CoreOperations {
 			c2.close();
 		}
 		c.close();
-		if (realLinkedList.getLength() > 1) realLinkedList = sortOrdersWithUOH(realLinkedList);
+		if (realLinkedList.getLength() > 1) realLinkedList = ServerManagement.sort.sortOrdersWithUOH(realLinkedList);
 		return realLinkedList;
 	}
 	
-	private static LinkedList sortOrdersWithUOH (LinkedList l) {
-		UserOrderHis[] uohArray = new UserOrderHis[l.getLength()];
-		Node temp = l.head;
-		int i = 0;
-		while (temp != null) {
-			uohArray[i] = (UserOrderHis)temp.getObject();
-			temp = temp.getNext();
-			i++;
-		}
-		UserOrderHis[] res = sortUOHArray(uohArray);
-		LinkedList ll = new LinkedList();
-		for (int j = res.length -1; j >= 0; j--) ll.insert(res[j]);
-		
-		return ll;
-	}
 	
-	private static UserOrderHis[] sortUOHArray(UserOrderHis[] uoh) {
-		if (uoh.length == 1) return uoh;
-		
-		int half = uoh.length/2;
-		UserOrderHis[] uohL = new UserOrderHis[half];
-		UserOrderHis[] uohR = new UserOrderHis[uoh.length - half];
-		
-		for (int i = 0; i < uohL.length; i++) uohL[i] = uoh[i];
-		for (int i = 0; i < uohR.length; i++) uohR[i] = uoh[half + i];
-		
-		UserOrderHis[] sortL = sortUOHArray(uohL);
-		UserOrderHis[] sortR = sortUOHArray(uohR);
-		
-		return merge(sortL, sortR);
-	}
-	
-	private static UserOrderHis[] merge(UserOrderHis[] l, UserOrderHis[] r) {
-		UserOrderHis[] res = new UserOrderHis[l.length + r.length];
-		int lPointer = 0, rPointer = 0;
-		for (int i = 0; i < res.length; i++) {
-			if (lPointer == l.length) {
-				res[i] = r[rPointer];
-				rPointer++;
-			} else if (rPointer == r.length) {
-				res[i] = l[lPointer];
-				lPointer++;
-			} else if (l[lPointer].getOrder().getTimestamp().getTime() <= r[rPointer].getOrder().getTimestamp().getTime()) {
-				res[i] = l[lPointer];
-				lPointer++;
-			} else {
-				res[i] = r[rPointer];
-				rPointer++;
-			}
-		}
-		return res;
-	}
 
 	static Object loadCountryOrder (LinkedList ll) throws SQLException {
 		
@@ -575,6 +523,19 @@ public class CoreOperations {
 		orderID = obj.toString();
 		// Get country from orderID
 		country = getCountryCodeWithOrderID(orderID);
+		
+		// Check if order is already cancelled
+		String orderStatus = "";
+		c = SQLControl.SQLOperation.getConnect("generalOrder");
+		sql = "SELECT orderStatus FROM " + country
+				+ " WHERE orderID = '" + orderID
+				+ "';";
+		orderStatus = SQLOperation.readDatabase(c, sql);
+		c.close();
+		System.out.println(orderStatus);
+		if(orderStatus.equals("5")) {
+			return "0x1EA1";
+		}
 		
 		// Delete table for order's offers
 		c = SQLControl.SQLOperation.getConnect("generalOffer");
@@ -857,26 +818,27 @@ public class CoreOperations {
 		if (!verifySessionRes(uid, ll)) return uid;
 		Node temp = ll.head;
 		
-		boolean addressExist = false;
-		
 		while (temp != null) {
 			if (!(temp.getObject().getClass().equals(new Address().getClass()))) return "0x1002";
 			Address a = (Address) temp.getObject();
 			Connection c = SQLOperation.getConnect(uid);
-			String addStatus = SQLControl.SQLOperation.readDatabase(c, "select line2 from address where line1='" + a.getL1() + "'");
-			if (addStatus != null) {
-				c.close();
-				addressExist = true;
-			} else {
-				String value = "('" + a.getFN() + "','" + a.getLN() + "','" + a.getCom() + "','" + a.getL1() + "','" + a.getL2() + "','" + a.getCity() + "','" + a.getState() + "','" + a.getZip() + "')";
-				String sql = "INSERT INTO address(fn, ln, company, line1, line2, city, state, zip) VALUES" + value + ";";
-				System.out.println(SQLOperation.updateData(c, sql));
-				c.close();
+			String sql = "SELECT * FROM address where line1='" + a.getL1() + "';";
+			ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+			while (rs != null && rs.next()) {
+				if (rs.getString(2) == a.getFN() && rs.getString(3) == a.getLN() &&
+						rs.getString(4) == a.getCom() && rs.getString(5) == a.getL1()
+						&& rs.getString(6) == a.getL2() && rs.getString(7) == a.getCity()
+						&& rs.getString(8) == a.getState() && rs.getString(9) == a.getZip())
+					return "0x1E06";
 			}
+			String value = "('" + a.getFN() + "','" + a.getLN() + "','" + a.getCom() + "','" + a.getL1() + "','" + a.getL2() + "','" + a.getCity() + "','" + a.getState() + "','" + a.getZip() + "')";
+			sql = "INSERT INTO address(fn, ln, company, line1, line2, city, state, zip) VALUES" + value + ";";
+			System.out.println(sql);
+			System.out.println(SQLOperation.updateData(c, sql));
+			c.close();
 			temp = temp.getNext();
 		}
 		
-		if (addressExist) return "0x1E06";
 		return "0x01";
 	}
 	
@@ -907,8 +869,9 @@ public class CoreOperations {
 		/**
 		 * This LinkedList should includes at least 2 Nodes. 
 		 * The first Node should contains sessionID.
-		 * Starting from the second Node, each Node should include a line1 to be removed.
-		 * dla&<sessionID>&<L1>
+		 * Starting from the second Node, each Node should include a Address object to be removed.
+		 * All node must be sorted with a decreasing order.
+		 * dla&<sessionID>&<addressObject>
 		 */
 		
 		writeLog("Delete Address.");
@@ -917,26 +880,78 @@ public class CoreOperations {
 		if (!verifySessionRes(uid, ll)) return uid;
 		Node temp = ll.head;
 		
-		boolean addressNotExist = false;
-		
 		while (temp != null) {
-			if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
-			String line1 = (String)temp.getObject();
-			Connection c = SQLControl.SQLOperation.getConnect(uid);
-			String cardStatus = SQLControl.SQLOperation.readDatabase(c, "select zip from address where line1='" + line1 + "'");
-			if (cardStatus == null) {
-				c.close();
-				addressNotExist = true;
-			} else {
-				String sql = "delete from address where line1='" + line1 + "';";
-				String res = SQLControl.SQLOperation.updateData(c, sql);
-				c.close();
-				if (res != "UPS") return res;
+			if (temp.getObject().getClass().equals(new Address().getClass())) {
+				Address a = (Address) temp.getObject();
+				String sql = "delete FROM " + uid + ".address where fn = '" + a.getFN() + "' and "
+						+ "ln = '" + a.getLN() + "' and company = '" + strPreProcess(a.getCom()) + "' and "
+								+ "line1 = '" + strPreProcess(a.getL1()) + "' and Line2 = '" + strPreProcess(a.getL2()) + "' and "
+										+ "city = '" + a.getCity() + "' and state = '" + a.getState() + "' and "
+											+ " zip = '" + a.getZip() + "';";
+				Connection c = SQLOperation.getConnect(uid);
+				System.out.println("Delete address: " + SQLOperation.updateData(c, sql));
+				
 			}
 			temp = temp.getNext();
 		}
-		if (addressNotExist) return "0x1E07";
 		return "0x01";
+	}
+	
+	public static Object searchOrderByName(LinkedList ll) throws SQLException {
+		/*
+		 * This LinkedList should includes three Nodes
+		 * The first Node should includes country code user wanna search
+		 * The second Node should includes the state code user wanna search
+		 * if no special state wanted, use null
+		 * Starting from the thrid Node, it should includes keyword used for search.
+		 */
+		writeLog("Search order by name");
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
+		
+		if (ll.getLength() < 3) return "0x1002";
+		Node temp = ll.head;
+		if (!(temp.getObject() != null && temp.getObject().getClass().equals("".getClass()))) return "0x1002";
+		String countryCode = (String) temp.getObject();
+		String stateCode = "";
+		temp = temp.getNext();
+		
+		if (!(temp.getObject() == null || (temp.getObject() != null && temp.getObject().getClass().equals("".getClass()))))
+			return "0x1002";
+		if (temp.getObject() != null) stateCode = (String) temp.getObject().toString();
+		temp = temp.getNext();
+		
+		LinkedList resLl = new LinkedList();
+		while(temp != null) {
+			String sql = "select Product, Brand, Quantity, orderID, orderTime from generalOrder." + countryCode 
+					+ " where Product Like '" + (String) temp.getObject() + "'; ";
+			System.out.println(sql);
+			Connection c = SQLOperation.getConnect("generalOrder");
+			ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+			LinkedList tempL = generateResWithRS(rs, new Order());
+			Node tempN = tempL.head;
+			while (tempN != null) {
+				resLl.insert(tempN.getObject());
+				tempN = tempN.getNext();
+			}
+			
+			if (!stateCode.equals("")) {
+				sql = "select Product, Brand, Quantity, orderID, orderTime from generalOrder." + stateCode 
+						+ " where Product Like '" + (String) temp.getObject() + "'; ";
+				rs = SQLOperation.readDatabaseRS(c, sql);
+				tempL = generateResWithRS(rs, new Order());
+				tempN = tempL.head;
+				while (tempN != null) {
+					resLl.insert(tempN.getObject());
+					tempN = tempN.getNext();
+				}
+			}
+			temp = temp.getNext();
+			c.close();
+		}
+		if (resLl.head.getObject() == null) return resLl;
+		else return ServerManagement.sort.sortOrders(resLl);
+		
 	}
 	
 	private static LinkedList generateResWithRS(ResultSet rs, Object o) throws SQLException {
@@ -949,8 +964,8 @@ public class CoreOperations {
 	private static LinkedList addressList(ResultSet rs) throws SQLException {
 		LinkedList ll = new LinkedList();
 		while (rs!= null && rs.next()) {
-			Address a = new Address(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
-					rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+			Address a = new Address(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+					rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
 			ll.insert(a);
 		}
 		return ll;
@@ -999,6 +1014,31 @@ public class CoreOperations {
 		SQLControl.SQLOperation.updateData(c, sql);
 		c.close();
 		return veri[0];
+	}
+	
+	private static String strPreProcess(String str){
+
+        String res = str;
+
+        if (str.contains("'")){
+            String tempStr[] = str.split("\\'");
+            res = "";
+            for (int i = 0; i < tempStr.length; i++){
+                if (i != tempStr.length - 1) res = res + tempStr[i] + "\\'";
+                else res += tempStr[i];
+            }
+        }
+
+        if (str.contains("\"")){
+            String[] tempStr = str.split("\\\"");
+            res = "";
+            for (int i = 0; i < tempStr.length; i++){
+                if (i != tempStr.length - 1) res = res + tempStr[i] + "\\\"";
+                else res += tempStr[i];
+            }
+        }
+        
+        return res;
 	}
 	
 	static String illegalInput() {

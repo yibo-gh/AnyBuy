@@ -31,8 +31,8 @@ public static String city;
     private Card selectedCard;
     private Address selectedAddress;
 
-    static Card[] cArray;
-    static Address[] aArray;
+    static Card[] cArray = null;
+    static Address[] aArray = null;
 
     EditText productBrand;
     EditText productName;
@@ -132,7 +132,7 @@ public static String city;
                     temp = temp.getNext();
                 }
             } else {
-                cards = new String[]{"null"};
+                cards = new String[]{"Please go to profile and add a new card"};
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -159,7 +159,7 @@ public static String city;
                     i++;
                     temp = temp.getNext();
                 }
-            } else addresses = new String[] {"null"};
+            } else addresses = new String[] {"Please go to profile and add a new address"};
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -301,7 +301,7 @@ public static String city;
             addressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                selectedAddress = aArray[arg2];
+                if (aArray != null) selectedAddress = aArray[arg2];
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -313,7 +313,7 @@ public static String city;
         paymentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                selectedCard = cArray[arg2];
+                if (cArray != null)selectedCard = cArray[arg2];
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
