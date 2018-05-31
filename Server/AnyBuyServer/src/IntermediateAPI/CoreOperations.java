@@ -920,6 +920,12 @@ public class CoreOperations {
 	}
 	
 	private static Object orderSearch(LinkedList ll, String col) throws SQLException {
+		
+		/**
+		 * This LinkedList should includes one Nodes
+		 * The Node should includes orderID user want to search
+		 */
+		
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		

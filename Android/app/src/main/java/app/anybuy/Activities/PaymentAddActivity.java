@@ -61,8 +61,8 @@ public class PaymentAddActivity extends AppCompatActivity {
                 z = ZP.getText().toString();
                 e = EXP.getText().toString();
 
-                if (c.charAt(0) == '4') i = "visa";
-                else if (c.charAt(0) == '5') i = "mstc";
+                if (c.charAt(0) == '4' && c.length() == 16) i = "visa";
+                else if (c.charAt(0) == '5' && c.length() == 16) i = "mstc";
                 else if (c.charAt(0) == '3' && c.length() == 15) i = "amex";
                 else if (c.charAt(0) == '3' && c.length() == 16) i = "jcbx";
                 else if (c.charAt(0) == '6' && c.charAt(1) == '0' && c.charAt(2) == '1' && c.charAt(3) == '1'
