@@ -43,6 +43,8 @@ public class API {
 			case "dta": return CoreOperations.deleteAddress(voidHead(ll));
 			case "lop": return CoreOperations.loadPartialCountryOrder(voidHead(ll));
 			case "spn": return CoreOperations.searchOrderByName(voidHead(ll));
+			case "spm": return CoreOperations.searchOrderByMaker(voidHead(ll));
+			case "spi": return CoreOperations.searchOrderByOrderID(voidHead(ll));
 			default: return CoreOperations.illegalInput();
 		}
 	}

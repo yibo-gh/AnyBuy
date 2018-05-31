@@ -488,6 +488,8 @@ public class CoreOperations {
 	}
 	
 	static String getCountryCodeWithOrderID(String str) {
+		if (str.length() < 3) return "0x1004";
+		if (Character.isDigit(str.charAt(0)) || Character.isDigit(str.charAt(1))) return "0x1004";
 		String res = "";
 		res = res + str.charAt(0) + str.charAt(1);
 		if (!Character.isDigit(str.charAt(2))) res += str.charAt(2);
@@ -898,14 +900,26 @@ public class CoreOperations {
 	}
 	
 	public static Object searchOrderByName(LinkedList ll) throws SQLException {
-		/*
+		/**
 		 * This LinkedList should includes three Nodes
-		 * The first Node should includes country code user wanna search
-		 * The second Node should includes the state code user wanna search
+		 * The first Node should includes country code user want to search
+		 * The second Node should includes the state code user want to search
 		 * if no special state wanted, use null
-		 * Starting from the thrid Node, it should includes keyword used for search.
+		 * Starting from the third Node, it should includes keyword used for search.
 		 */
 		writeLog("Search order by name");
+		return orderSearch(ll, "Product");
+	}
+	
+	public static Object searchOrderByMaker(LinkedList ll) throws SQLException {
+		/**
+		 * See searchOrderByName()
+		 */
+		writeLog("Search order by brand");
+		return orderSearch(ll, "Brand");
+	}
+	
+	private static Object orderSearch(LinkedList ll, String col) throws SQLException {
 		String uid = checkSession(ll);
 		if (!verifySessionRes(uid, ll)) return uid;
 		
@@ -924,7 +938,7 @@ public class CoreOperations {
 		LinkedList resLl = new LinkedList();
 		while(temp != null) {
 			String sql = "select Product, Brand, Quantity, orderID, orderTime from generalOrder." + countryCode 
-					+ " where Product Like '" + (String) temp.getObject() + "'; ";
+					+ " where " + col + " Like '" + (String) temp.getObject() + "'; ";
 			System.out.println(sql);
 			Connection c = SQLOperation.getConnect("generalOrder");
 			ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
@@ -952,6 +966,37 @@ public class CoreOperations {
 		if (resLl.head.getObject() == null) return resLl;
 		else return ServerManagement.sort.sortOrders(resLl);
 		
+	}
+	
+	public static Object searchOrderByOrderID(LinkedList ll) throws SQLException {
+		/**
+		 * The LinkedList should includes two Nodes.
+		 * The first Node should be sessionID
+		 * The second Node should be orderID
+		 */
+		
+		writeLog("Search order by ID");
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
+		
+		Object obj = ll.head.getObject();
+		if (!obj.getClass().equals("".getClass())) return "0x1002";
+		String orderID = obj.toString();
+		String stateCode = getCountryCodeWithOrderID(orderID);
+		
+		String sql = "select Product, Brand, Quantity, orderID, orderTime from generalOrder." + stateCode 
+				+ " where Product Like orderID = '" + orderID + "';";
+		Connection c = SQLOperation.getConnect("generalOrder");
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		if (rs == null) {
+			c.close();
+			return "0x1FB2";
+		}
+		else {
+			Order o = (Order) (generateResWithRS(rs, new Order())).head.getObject();
+			c.close();
+			return o;
+		}
 	}
 	
 	private static LinkedList generateResWithRS(ResultSet rs, Object o) throws SQLException {

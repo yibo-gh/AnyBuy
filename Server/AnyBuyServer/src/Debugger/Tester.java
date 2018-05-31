@@ -24,7 +24,8 @@ public class Tester {
 //		giveRate();
 //		acceptRate();
 //		cancelOrder();
-		searchOrderByName();
+//		searchOrderByName();
+		searchOrderByID();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -287,7 +288,7 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "US10000130";
+		OID = "CA10000001";
 		SID = "ucex10000";
 		RA = 100.00;
 		EC = 10.00;
@@ -349,6 +350,20 @@ public class Tester {
 			System.out.println(o.getImage() + " " + o.getBrand() + " " + o.getProduct() +
 					" " + o.getQuantity() + " " + o.getCountry() + " " + o.getTimestamp());
 			temp = temp.getNext();
+		}
+	}
+	
+	private static void searchOrderByID() throws SQLException{
+		LinkedList ll = new LinkedList();
+		ll.insert("spi");
+		ll.insert(getSessionID());
+		ll.insert("U");
+		Object obj = IntermediateAPI.API.getCommand(ll);
+		if (obj.getClass().equals("".getClass())) System.out.println(obj.toString());
+		else {
+			Order o = (Order) obj;
+			System.out.println(o.getImage() + " " + o.getBrand() + " " + o.getProduct() +
+					" " + o.getQuantity() + " " + o.getCountry() + " " + o.getTimestamp());
 		}
 	}
 	
