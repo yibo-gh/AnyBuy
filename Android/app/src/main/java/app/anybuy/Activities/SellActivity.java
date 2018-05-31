@@ -151,7 +151,10 @@ public class SellActivity extends AppCompatActivity {
 
                     geocoder = new Geocoder(SellActivity.this, Locale.getDefault());
 
+                    System.out.println("helloooooooo");
                     try {
+
+                        System.out.println("goood byyyyyyyyyyee");
                         addresses = geocoder.getFromLocation(lattitude, longitude, 1);
                         //get the info of the user
                         // String address = addresses.get(0).getAddressLine(0);
@@ -163,6 +166,7 @@ public class SellActivity extends AppCompatActivity {
 
                         //String postalCode = addresses.get(0).getPostalCode();
 
+                        System.out.println("goood byyyyyyyyyyee " + getUserCountryCode());
 
                     } catch (Exception e) {
                         System.out.println("location error");
