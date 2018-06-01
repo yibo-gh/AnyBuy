@@ -1068,6 +1068,49 @@ public class CoreOperations {
 		return veri[0];
 	}
 	
+	static String changePasscode (LinkedList ll) throws SQLException {
+		/**
+		 * The LinkedList should includes two Nodes.
+		 * The first Node should be the old password.
+		 * The second Node should be the new password.
+		 */
+
+		writeLog("Change Password");
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
+		
+		Node temp = ll.head;
+		if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
+		String op = temp.getObject().toString();
+		temp = temp.getNext();
+		
+		if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
+		String np = temp.getObject().toString();
+		
+		String emailCode = getEamilCodeFromUid(uid);
+		String sql = "select psc from userInfo." + emailCode + " where id = '" + getIDfromUID(uid) + "';";
+		Connection c = SQLOperation.getConnect("userInfo");
+		if (op.equals(SQLControl.SQLOperation.readDatabase(c, sql))) {
+			sql = "update userInfo." + emailCode + " set psc = '" + np + "' where id = '" + getIDfromUID(uid) + "';" ;
+			String res = SQLControl.SQLOperation.updateData(c, sql);
+			if (res.equals("UPS")) return "0x01";
+			else return res;
+		}
+		else return "0x1EA1";
+	}
+	
+	private static String getEamilCodeFromUid(String str) {
+		String res = "";
+		for (int i = 0; i < 4; i++) res += str.charAt(i);
+		return res;
+	}
+	
+	private static String getIDfromUID(String str) {
+		String res = "";
+		for (int i = 4; i < str.length(); i++) res += str.charAt(i);
+		return res;
+	}
+	
 	private static String strPreProcess(String str){
 
         String res = str;

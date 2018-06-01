@@ -45,6 +45,7 @@ public class API {
 			case "spn": return CoreOperations.searchOrderByName(voidHead(ll));
 			case "spm": return CoreOperations.searchOrderByMaker(voidHead(ll));
 			case "spi": return CoreOperations.searchOrderByOrderID(voidHead(ll));
+			case "cgp": return CoreOperations.changePasscode(voidHead(ll));
 			default: return CoreOperations.illegalInput();
 		}
 	}

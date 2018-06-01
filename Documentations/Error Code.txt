@@ -26,6 +26,8 @@
 0x1E06: Profile Error: Address exists.
 0x1E07: Profile Error: Address not found.
 
+0x1EA1: Profile Change Password Error: Old password not correct.
+
 0x1F01: Order Error: Table not found. Failed to create table for country.
 0x1F03: Order Error: List table failed. Table not found.
 0x1F04: Order Error: Cannot upload image.
