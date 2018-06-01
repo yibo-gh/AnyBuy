@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.graphics.drawable.Drawable;
 import android.widget.Button;
 
 import app.anybuy.Clients.SocketClient;
@@ -72,7 +74,8 @@ public class OrderHistoryActivity extends AppCompatActivity {
                                 tv.setText(orderID + " " + orderStatus(ordStatus));
                                 tableRow.addView(tv);
                                 ImageView img = new ImageView(this);
-                                img.setImageDrawable(MainActivity.loadImageFromOrderID(orderID));
+                                Drawable draw = MainActivity.loadImageFromOrderID(orderID);
+                                img.setImageDrawable(draw);
                                 tableRow.addView(img);
                             } else if (i == 2){
                                 tv.setText("Made by: " + uoh.getOrder().getBrand());
