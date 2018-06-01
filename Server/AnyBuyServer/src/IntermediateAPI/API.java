@@ -46,10 +46,7 @@ public class API {
 			case "spm": return CoreOperations.searchOrderByMaker(voidHead(ll));
 			case "spi": return CoreOperations.searchOrderByOrderID(voidHead(ll));
 			case "cgp": return CoreOperations.changePasscode(voidHead(ll));
-<<<<<<< HEAD
 			case "cke": return CoreOperations.checkImageExtension(voidHead(ll));
-=======
->>>>>>> 2a7a90c96434f99b9805e88cb4d5fce94daeda86
 			default: return CoreOperations.illegalInput();
 		}
 	}

@@ -1103,7 +1103,6 @@ public class CoreOperations {
 		else return "0x1EA1";
 	}
 	
-<<<<<<< HEAD
 	static String checkImageExtension (LinkedList ll) throws SQLException {
 
 		writeLog("Check image extension");
@@ -1121,8 +1120,6 @@ public class CoreOperations {
 		return SQLOperation.readDatabase(c, sql);
 	}
 	
-=======
->>>>>>> 2a7a90c96434f99b9805e88cb4d5fce94daeda86
 	private static String getEamilCodeFromUid(String str) {
 		String res = "";
 		for (int i = 0; i < 4; i++) res += str.charAt(i);
