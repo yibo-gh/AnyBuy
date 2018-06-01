@@ -143,8 +143,13 @@ public class CoreOperations {
 			String orderID = obj.getCountry() + (lastOrderNum + 1);
 			
 			boolean imageExist = (!obj.getImage().equals("") );
+			String imgExt = "false";
+			if (imageExist) {
+				String[] tempArr = obj.getImage().split("\\.");
+				imgExt = tempArr[tempArr.length - 1];
+			}
 			
-			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + obj.getQuantity() + "','" + imageExist +  "','" + time + "','" + orderID + "','0','" + uid + "'";
+			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + obj.getQuantity() + "','" + imgExt +  "','" + time + "','" + orderID + "','0','" + uid + "'";
 			String sql = "INSERT INTO `generalOrder`.`" + obj.getCountry() + "` (`Product`, `Brand`, `Quantity`, `Image`, `orderTime`, `orderID`, `orderStatus`,`uid`) VALUES (" + value + ");"; 
 //			System.out.println(value);
 			// insert data into table
@@ -171,16 +176,15 @@ public class CoreOperations {
 				}
 				String urlString = obj.getImage();
 				BufferedImage image;
-				File file = new File("/Volumes/Common Volume/Sites/anybuy/img/" + orderID + ".png");
+				File file = new File("/Volumes/Common Volume/Sites/anybuy/img/" + orderID + "." + imgExt);
 				try {
 					URL url = new URL(urlString);
 					image = ImageIO.read(url);
-					ImageIO.write(image, "png", file);
+					ImageIO.write(image, imgExt, file);
 				} catch (IOException e) {
 					return "0x1F04";
 				}
-//				String imageRes = acceptImage(obj.getImage(), orderID);
-//				if(!imageRes.equalsIgnoreCase("0x01")) return imageRes;
+				
 				imgReq.insert(new imageRequest(obj.getImage(), orderID));
 				hasImg = true;
 			}
@@ -206,7 +210,7 @@ public class CoreOperations {
 		else return 9999;
 	}
 	
-	public static String acceptImage(String img, String orderID) {
+	static String acceptImage(String img, String orderID) {
 		System.out.println("image process started.");
 		try {
             ServerManagement.Task.setID(orderID);
@@ -316,7 +320,7 @@ public class CoreOperations {
 		return res;
 	}
 	
-	public static Object loadPartialCountryOrder(LinkedList ll) throws SQLException {
+	static Object loadPartialCountryOrder(LinkedList ll) throws SQLException {
 		/**
 		 * In this function, the input LinkedList may have different status.
 		 * For initial inquiry, the LinkedList should includes 3 Nodes.
@@ -900,7 +904,7 @@ public class CoreOperations {
 		return "0x01";
 	}
 	
-	public static Object searchOrderByName(LinkedList ll) throws SQLException {
+	static Object searchOrderByName(LinkedList ll) throws SQLException {
 		/**
 		 * This LinkedList should includes three Nodes
 		 * The first Node should includes country code user want to search
@@ -912,7 +916,7 @@ public class CoreOperations {
 		return orderSearch(ll, "Product");
 	}
 	
-	public static Object searchOrderByMaker(LinkedList ll) throws SQLException {
+	static Object searchOrderByMaker(LinkedList ll) throws SQLException {
 		/**
 		 * See searchOrderByName()
 		 */
@@ -975,7 +979,7 @@ public class CoreOperations {
 		
 	}
 	
-	public static Object searchOrderByOrderID(LinkedList ll) throws SQLException {
+	static Object searchOrderByOrderID(LinkedList ll) throws SQLException {
 		/**
 		 * The LinkedList should includes two Nodes.
 		 * The first Node should be sessionID
@@ -1068,6 +1072,66 @@ public class CoreOperations {
 		return veri[0];
 	}
 	
+	static String changePasscode (LinkedList ll) throws SQLException {
+		/**
+		 * The LinkedList should includes two Nodes.
+		 * The first Node should be the old password.
+		 * The second Node should be the new password.
+		 */
+
+		writeLog("Change Password");
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
+		
+		Node temp = ll.head;
+		if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
+		String op = temp.getObject().toString();
+		temp = temp.getNext();
+		
+		if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
+		String np = temp.getObject().toString();
+		
+		String emailCode = getEamilCodeFromUid(uid);
+		String sql = "select psc from userInfo." + emailCode + " where id = '" + getIDfromUID(uid) + "';";
+		Connection c = SQLOperation.getConnect("userInfo");
+		if (op.equals(SQLControl.SQLOperation.readDatabase(c, sql))) {
+			sql = "update userInfo." + emailCode + " set psc = '" + np + "' where id = '" + getIDfromUID(uid) + "';" ;
+			String res = SQLControl.SQLOperation.updateData(c, sql);
+			if (res.equals("UPS")) return "0x01";
+			else return res;
+		}
+		else return "0x1EA1";
+	}
+	
+	static String checkImageExtension (LinkedList ll) throws SQLException {
+
+		writeLog("Check image extension");
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
+		
+		Node temp = ll.head;
+		if (temp == null) return "0x1002";
+		if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
+		String orderID = (String)temp.getObject();
+		
+		String sql = "select image from generalOrder." + getCountryCodeWithOrderID(orderID) + ""
+				+ " where orderID = '" + orderID + "';";
+		Connection c = SQLOperation.getConnect("generalOrder");
+		return SQLOperation.readDatabase(c, sql);
+	}
+	
+	private static String getEamilCodeFromUid(String str) {
+		String res = "";
+		for (int i = 0; i < 4; i++) res += str.charAt(i);
+		return res;
+	}
+	
+	private static String getIDfromUID(String str) {
+		String res = "";
+		for (int i = 4; i < str.length(); i++) res += str.charAt(i);
+		return res;
+	}
+	
 	private static String strPreProcess(String str){
 
         String res = str;
@@ -1104,13 +1168,13 @@ public class CoreOperations {
 	 * if (!verifySessionRes(uid, ll)) return uid;
 	 */
 	
-	static String checkSession(LinkedList ll) throws SQLException {
+	public static String checkSession(LinkedList ll) throws SQLException {
 		Node temp = ll.head;
 		if (!temp.getObject().getClass().equals("".getClass())) return "0x1003";
 		return sessionVerify((String)temp.getObject());
 	}
 	
-	static boolean verifySessionRes(String uid, LinkedList ll) {
+	public static boolean verifySessionRes(String uid, LinkedList ll) {
 		if (uid.length() == 6 && uid.charAt(0) == '0' && uid.charAt(1) == 'x') return false;
 		API.voidHead(ll);
 		return true;
@@ -1119,5 +1183,5 @@ public class CoreOperations {
 	public static void writeLog (String str) {
 		System.out.println(str);
 	}
-	
+
 }
