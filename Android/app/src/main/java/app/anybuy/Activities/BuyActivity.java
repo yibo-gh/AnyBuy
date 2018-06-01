@@ -369,6 +369,12 @@ public static String city;
                         Toast.makeText(BuyActivity.this, "Invalid Country Selection.", Toast.LENGTH_LONG).show();
                         return;
                     }
+
+                    if (productBrandstr.equals("") || productNamestr.equals("")){
+                        Toast.makeText(BuyActivity.this, "Invalid Product Info.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
                     LinkedList l = new LinkedList();
                     l.insert("plo");
                     l.insert(sessionID);
