@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.InputStream;
+import java.net.URL;
+import android.graphics.drawable.Drawable;
+
 import Object.LinkedList;
 import Object.User;
 import app.anybuy.Clients.SocketClient;
@@ -34,6 +38,19 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setSessionID(String str){
         sessionID = str;
+    }
+
+    // Use by creating ImageView object and
+    // imageViewObject.setImageDrawable(MainActivity.loadImageFromOrderID(orderID));
+    public static Drawable loadImageFromOrderID(String orderID) {
+        try {
+            String url = "http://anybuy.app/img/" + orderID + ".png";
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
