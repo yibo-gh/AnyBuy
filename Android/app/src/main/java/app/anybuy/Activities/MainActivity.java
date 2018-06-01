@@ -44,11 +44,15 @@ public class MainActivity extends AppCompatActivity {
     // imageViewObject.setImageDrawable(MainActivity.loadImageFromOrderID(orderID));
     public static Drawable loadImageFromOrderID(String orderID) {
         try {
-            String url = "http://anybuy.app/img/" + orderID + ".png";
+            //String url = "https://pngimg.com/uploads/bat/bat_PNG47.png";
+            //String url = "https://anybuy.app/img/CA10000028.png";
+            String url = "https://anybuy.app/img/" + orderID + ".png";
+            System.out.println(url);
             InputStream is = (InputStream) new URL(url).getContent();
             Drawable d = Drawable.createFromStream(is, "src name");
             return d;
         } catch (Exception e) {
+            System.out.println(e);
             return null;
         }
     }
