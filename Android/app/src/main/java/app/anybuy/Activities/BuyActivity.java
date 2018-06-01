@@ -132,7 +132,7 @@ public static String city;
                     temp = temp.getNext();
                 }
             } else {
-                cards = new String[]{"Please go to profile and add a new card"};
+                cards = new String[]{""};
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -302,10 +302,12 @@ public static String city;
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 if (aArray != null) selectedAddress = aArray[arg2];
+                else selectedAddress = null;
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
+                if (aArray != null) selectedAddress = aArray[0];
+                else selectedAddress = null;
 
             }
         });
@@ -313,11 +315,13 @@ public static String city;
         paymentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                if (cArray != null)selectedCard = cArray[arg2];
+                if (cArray != null) selectedCard = cArray[arg2];
+                else selectedCard = null;
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
+                if (cArray != null) selectedCard = cArray[0];
+                else selectedCard = null;
 
             }
         });
@@ -371,6 +375,15 @@ public static String city;
 
 
                     System.out.println("imageUrlStr = \"\" " + (imageUrlStr.equals("")));
+
+                    if (selectedAddress == null) {
+                        Toast.makeText(BuyActivity.this, "Invalid Shipping Info Selected.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if (selectedCard == null) {
+                        Toast.makeText(BuyActivity.this, "Invalid Payment Info Selected.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     Order od = new Order(productNamestr, productBrandstr, Integer.parseInt(quantityNum),
                             countryStr, imageUrlStr, new Timestamp(System.currentTimeMillis()));
