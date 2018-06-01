@@ -26,12 +26,9 @@ public class Tester {
 //		cancelOrder();
 //		searchOrderByName();
 //		searchOrderByID();
-<<<<<<< HEAD
 //		changePC();
 		checkExt();
-=======
 		changePC();
->>>>>>> 2a7a90c96434f99b9805e88cb4d5fce94daeda86
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -382,7 +379,6 @@ public class Tester {
 		System.out.println( (String) IntermediateAPI.API.getCommand(ll) );
 	}
 	
-<<<<<<< HEAD
 	private static void checkExt() throws SQLException {
 		LinkedList ll = new LinkedList();
 		ll.insert("cke");
@@ -391,8 +387,6 @@ public class Tester {
 		System.out.println( (String) IntermediateAPI.API.getCommand(ll) );
 	}
 	
-=======
->>>>>>> 2a7a90c96434f99b9805e88cb4d5fce94daeda86
 	private static String getSessionID() {
 		return sessionID;
 	}
