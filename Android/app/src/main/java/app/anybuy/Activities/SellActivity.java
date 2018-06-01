@@ -61,7 +61,7 @@ public class SellActivity extends AppCompatActivity {
     EditText searchKeyword;
 
     String sessionID;
-    String userOrderSearchOption = "";
+    String userOrderSearchOption = "lop";
     protected FusedLocationProviderClient mFusedLocationClient;
 
     double lattitude = -1;
@@ -108,11 +108,12 @@ public class SellActivity extends AppCompatActivity {
         searchOpt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                System.out.println(arg2);
                 switch (arg2){
-                    case 1: userOrderSearchOption = "lda";
-                    case 2: userOrderSearchOption = "spn";
-                    case 3: userOrderSearchOption = "spb";
-                    case 4: userOrderSearchOption = "soi";
+                    case 0: userOrderSearchOption = "lop"; break;
+                    case 1: userOrderSearchOption = "spn"; break;
+                    case 2: userOrderSearchOption = "spb"; break;
+                    case 3: userOrderSearchOption = "soi"; break;
                 }
             }
             @Override
@@ -163,7 +164,7 @@ public class SellActivity extends AppCompatActivity {
 
                         //String postalCode = addresses.get(0).getPostalCode();
 
-
+                        System.out.println("Country found: " + getUserCountryCode());
                     } catch (Exception e) {
                         System.out.println("location error");
                     }
@@ -180,6 +181,8 @@ public class SellActivity extends AppCompatActivity {
                 String data = "";
                 sessionID = MainActivity.getID();
 
+                System.out.println(userOrderSearchOption);
+
                 if (userOrderSearchOption.equals("spn")){
                     LinkedList l = new LinkedList();
                     l.insert("spn");
@@ -195,7 +198,7 @@ public class SellActivity extends AppCompatActivity {
                     }
 
 
-                }else if (userOrderSearchOption.equals("lda")){
+                }else if (userOrderSearchOption.equals("lop")){
                     LinkedList secondLinkedList = new LinkedList();
                     LinkedList firstClickLinkedList = new LinkedList();
 
