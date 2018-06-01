@@ -342,7 +342,7 @@ public class BuyActivity extends AppCompatActivity  {
 
                 System.out.println("Fields filled.");
 
-                if (!isNumeric(quantityNum)) {
+                if (!isNumeric(quantityNum) || quantityNum.equals("")) {
                     Toast.makeText(BuyActivity.this, "Invalid quantity.", Toast.LENGTH_LONG).show();
                     return;
                 } else {
