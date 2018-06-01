@@ -132,7 +132,7 @@ public static String city;
                     temp = temp.getNext();
                 }
             } else {
-                cards = new String[]{""};
+                cards = new String[]{"Please go to profile and add a new card"};
             }
         } catch (Exception e) {
             e.printStackTrace();
