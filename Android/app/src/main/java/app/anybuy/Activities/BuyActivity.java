@@ -27,12 +27,12 @@ import app.anybuy.R;
 public class BuyActivity extends AppCompatActivity  {
 
     //getter and setter to get the city and state and zipcode from address class
-public static String city;
+
     private Card selectedCard;
     private Address selectedAddress;
 
-    static Card[] cArray = null;
-    static Address[] aArray = null;
+    static Card[] cArray;
+    static Address[] aArray;
 
     EditText productBrand;
     EditText productName;
@@ -110,6 +110,11 @@ public static String city;
         addressSpinner = (Spinner) findViewById(R.id.AddressSpinner);
         paymentSpinner = (Spinner) findViewById(R.id.PaymentSpinner);
 
+        selectedCard = null;
+        selectedAddress = null;
+        cArray = null;
+        aArray = null;
+
 
 
         LinkedList l = new LinkedList();
@@ -132,7 +137,7 @@ public static String city;
                     temp = temp.getNext();
                 }
             } else {
-                cards = new String[]{""};
+                cards = new String[]{"Please go to profile and add a new card"};
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -337,7 +342,7 @@ public static String city;
 
                 System.out.println("Fields filled.");
 
-                if (!isNumeric(quantityNum)) {
+                if (!isNumeric(quantityNum) || quantityNum.equals("")) {
                     Toast.makeText(BuyActivity.this, "Invalid quantity.", Toast.LENGTH_LONG).show();
                     return;
                 } else {
