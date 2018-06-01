@@ -27,12 +27,12 @@ import app.anybuy.R;
 public class BuyActivity extends AppCompatActivity  {
 
     //getter and setter to get the city and state and zipcode from address class
-public static String city;
+
     private Card selectedCard;
     private Address selectedAddress;
 
-    static Card[] cArray = null;
-    static Address[] aArray = null;
+    static Card[] cArray;
+    static Address[] aArray;
 
     EditText productBrand;
     EditText productName;
@@ -109,6 +109,11 @@ public static String city;
 
         addressSpinner = (Spinner) findViewById(R.id.AddressSpinner);
         paymentSpinner = (Spinner) findViewById(R.id.PaymentSpinner);
+
+        selectedCard = null;
+        selectedAddress = null;
+        cArray = null;
+        aArray = null;
 
 
 
