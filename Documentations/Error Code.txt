@@ -2,6 +2,7 @@
 0x1001: General Client Error: Illegal Connection.
 0x1002: General Client Error: Illegal Object.
 0x1003: General Client Error: Illegal SessionID Node.
+0x1004: General Client Error: Illegal OrderID.
 
 0x1A04: Registration Error: Domain not found. An error occurred when trying to establish the domain table.
 0x1A05: Registration Error: Failed Insert Table instruction.
@@ -37,3 +38,4 @@
 0x1FA4: Order Error: No older order found.
 
 0x1FB1: Offer Error: Offer given.
+0x1FB2: Offer Error: No qualified order found.
