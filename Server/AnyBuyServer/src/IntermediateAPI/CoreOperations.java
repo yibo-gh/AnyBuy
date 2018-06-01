@@ -165,13 +165,13 @@ public class CoreOperations {
 			c.close();
 			if (imageExist) {
 				System.out.println(imageExist);
-				File directory = new File("/Volumes/Common\\ Volume/Sites/anybuy/img/");
+				File directory = new File("/Volumes/Common Volume/Sites/anybuy/img/");
 				if(!directory.exists()) {
 					directory.mkdir();
 				}
 				String urlString = obj.getImage();
 				BufferedImage image;
-				File file = new File("/Volumes/Common\\ Volume/Sites/anybuy/img/" + orderID + ".png");
+				File file = new File("/Volumes/Common Volume/Sites/anybuy/img/" + orderID + ".png");
 				try {
 					URL url = new URL(urlString);
 					image = ImageIO.read(url);
