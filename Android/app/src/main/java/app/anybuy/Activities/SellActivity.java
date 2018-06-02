@@ -41,6 +41,9 @@ import app.anybuy.R;
 public class SellActivity extends AppCompatActivity {
 
 
+    //set of getter and setter functions to send the data to offer page
+
+
     private static String getStrID;
 
     String minLine = "";
@@ -61,7 +64,7 @@ public class SellActivity extends AppCompatActivity {
     EditText searchKeyword;
 
     String sessionID;
-    String userOrderSearchOption = "";
+    String userOrderSearchOption = "lop";
     protected FusedLocationProviderClient mFusedLocationClient;
 
     double lattitude = -1;
@@ -108,11 +111,12 @@ public class SellActivity extends AppCompatActivity {
         searchOpt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                System.out.println(arg2);
                 switch (arg2){
-                    case 1: userOrderSearchOption = "lda";
-                    case 2: userOrderSearchOption = "spn";
-                    case 3: userOrderSearchOption = "spb";
-                    case 4: userOrderSearchOption = "soi";
+                    case 0: userOrderSearchOption = "lop"; break;
+                    case 1: userOrderSearchOption = "spn"; break;
+                    case 2: userOrderSearchOption = "spb"; break;
+                    case 3: userOrderSearchOption = "soi"; break;
                 }
             }
             @Override
@@ -166,7 +170,7 @@ public class SellActivity extends AppCompatActivity {
 
                         //String postalCode = addresses.get(0).getPostalCode();
 
-                        System.out.println("goood byyyyyyyyyyee " + getUserCountryCode());
+                        System.out.println("Country found: " + getUserCountryCode());
 
                     } catch (Exception e) {
                         System.out.println("location error");
@@ -183,6 +187,8 @@ public class SellActivity extends AppCompatActivity {
                 orderButton.setText("Load More");
                 String data = "";
                 sessionID = MainActivity.getID();
+
+                System.out.println(userOrderSearchOption);
 
 
                 if (userOrderSearchOption.equals("spn")){
@@ -202,7 +208,7 @@ public class SellActivity extends AppCompatActivity {
                     }
 
 
-                }else if (userOrderSearchOption.equals("lda")){
+                }else if (userOrderSearchOption.equals("lop")){
                     LinkedList secondLinkedList = new LinkedList();
                     LinkedList firstClickLinkedList = new LinkedList();
 
@@ -266,7 +272,6 @@ public class SellActivity extends AppCompatActivity {
                                     System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
                                             " " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
 
-
                                     data = "Product Name: " + od.getProduct() + "\nBrand Name: " + od.getBrand() +
                                             "\nQuantity: " + od.getQuantity() + "\nCountry Code: " + od.getCountry() + "\nOrder Number: " + od.getImage() + "\n \n";
 
@@ -274,11 +279,11 @@ public class SellActivity extends AppCompatActivity {
                                     getStrID = od.getImage().length() > 3 ? od.getImage().substring(od.getImage().length() - 3) : od.getImage();
 
                                     // create a text view for each order
-                                    textView = new TextView(SellActivity.this);
+                                    final TextView textView = new TextView(SellActivity.this);
 
                                     // put the data in the text view
                                     textView.setText(data);
-
+                                    textView.setBackgroundColor(0);
                                     // give it an id
                                     textView.setId(Integer.parseInt(getStrID));
 
@@ -289,7 +294,12 @@ public class SellActivity extends AppCompatActivity {
                                     textView.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
+                                            //also send the data to the next page
                                             Intent intent = new Intent(SellActivity.this, OfferActivity.class);
+                                            System.out.println("check the text views" + textView.getText().toString());
+                                            intent.putExtra("myData", textView.getText());
+
+
                                             startActivity(intent);
                                         }
                                     });
