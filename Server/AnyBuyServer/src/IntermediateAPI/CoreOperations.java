@@ -147,6 +147,7 @@ public class CoreOperations {
 			if (imageExist) {
 				String[] tempArr = obj.getImage().split("\\.");
 				imgExt = tempArr[tempArr.length - 1];
+				if (imgExt.length() > 4) imgExt = "jpg";
 			}
 			
 			String value = "'" + obj.getProduct() + "','" + obj.getBrand() + "','" + obj.getQuantity() + "','" + imgExt +  "','" + time + "','" + orderID + "','0','" + uid + "'";
