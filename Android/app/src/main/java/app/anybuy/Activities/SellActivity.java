@@ -40,10 +40,6 @@ import app.anybuy.R;
 
 public class SellActivity extends AppCompatActivity {
 
-
-    //set of getter and setter functions to send the data to offer page
-
-
     private static String getStrID;
 
     String minLine = "";
@@ -55,6 +51,7 @@ public class SellActivity extends AppCompatActivity {
     public static String getGetStrID() {return getStrID;}
 
     boolean secondClick = false;
+
 
     boolean bs = false;
 
@@ -267,7 +264,10 @@ public class SellActivity extends AppCompatActivity {
 
                                 // go through the first 10 orders from the order to newest
                                 while (temp != null) {
+
                                     Order od = (Order) temp.getObject();
+
+
 
                                     System.out.println(od.getImage() + " " + od.getBrand() + " " + od.getProduct() +
                                             " " + od.getQuantity() + " " + od.getCountry() + " " + od.getTimestamp());
@@ -283,7 +283,8 @@ public class SellActivity extends AppCompatActivity {
 
                                     // put the data in the text view
                                     textView.setText(data);
-                                    textView.setBackgroundColor(0);
+                                    textView.setTextSize(18);
+
                                     // give it an id
                                     textView.setId(Integer.parseInt(getStrID));
 
@@ -299,10 +300,10 @@ public class SellActivity extends AppCompatActivity {
                                             System.out.println("check the text views" + textView.getText().toString());
                                             intent.putExtra("myData", textView.getText());
 
-
                                             startActivity(intent);
                                         }
                                     });
+
 
                                     // add the text view to our layout
                                     linearLayout.addView(textView);
@@ -396,7 +397,7 @@ public class SellActivity extends AppCompatActivity {
 
                                 String getStrID = od.getImage().length() > 3 ? od.getImage().substring(od.getImage().length() - 3) : od.getImage();
 
-                                textView = new TextView(SellActivity.this);
+                                final TextView textView = new TextView(SellActivity.this);
 
                                 // put the data in the text view
                                 textView.setText(data);
@@ -407,11 +408,14 @@ public class SellActivity extends AppCompatActivity {
                                 //place it nicely under one another
                                 textView.setPadding(0, 50, 0, 0);
 
+                                //change the size of the text
+                                textView.setTextSize(18);
                                 // if clicked any of the textviews, open the offer page
                                 textView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         Intent intent = new Intent(SellActivity.this, OfferActivity.class);
+                                        intent.putExtra("myData", textView.getText());
                                         startActivity(intent);
                                     }
                                 });
