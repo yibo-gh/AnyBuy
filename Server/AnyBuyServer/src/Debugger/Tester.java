@@ -10,8 +10,8 @@ public class Tester {
 	
 	public static void main (String args[]) throws SQLException {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
-		login("yguo25", "ucsc.edu", "loveYOONA!");
-//		placeOrder();
+		login("yoona", "snsd.or.kr", "loveYOONA!");
+		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
@@ -27,8 +27,8 @@ public class Tester {
 //		searchOrderByName();
 //		searchOrderByID();
 //		changePC();
-		checkExt();
-		changePC();
+//		checkExt();
+//		changePC();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -66,7 +66,7 @@ public class Tester {
 			b = "Innisfree";
 			q = 1;
 			c = "KR";
-			img = "https://images.innisfree.co.kr/upload/product/18147_l.png";
+			img = "http://imgstore04.cdn.sogou.com/app/a/100520024/877e990117d6a7ebc68f46c5e76fc47a";
 			ts = new Timestamp(System.currentTimeMillis());
 			Order u = new Order(p, b, q, c, img, ts);
 			l1 = "Yeongdong-daero 513";
