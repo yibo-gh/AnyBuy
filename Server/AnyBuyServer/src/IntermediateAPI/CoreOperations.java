@@ -321,7 +321,7 @@ public class CoreOperations {
 		return res;
 	}
 	
-	static Object loadPartialCountryOrder(LinkedList ll) throws SQLException {
+	public static Object loadPartialCountryOrder(LinkedList ll) throws SQLException {
 		/**
 		 * In this function, the input LinkedList may have different status.
 		 * For initial inquiry, the LinkedList should includes 3 Nodes.
@@ -994,6 +994,10 @@ public class CoreOperations {
 		Object obj = ll.head.getObject();
 		if (!obj.getClass().equals("".getClass())) return "0x1002";
 		String orderID = obj.toString();
+		return searchByID(orderID);
+	}
+	
+	private static Object searchByID(String orderID) throws SQLException {
 		String stateCode = getCountryCodeWithOrderID(orderID);
 		
 		String sql = "select Product, Brand, Quantity, orderID, orderTime from generalOrder." + stateCode 
@@ -1009,6 +1013,29 @@ public class CoreOperations {
 			c.close();
 			return o;
 		}
+	}
+	
+	static Object loadOrderDetail (LinkedList ll) throws SQLException{
+		/**
+		 * This LinkedList should includes at 1 node.
+		 * The Node should be the order number client want to see
+		 */
+		
+		Node temp = ll.head;
+		if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
+		String orderID = (String) temp.getObject();
+		Object obj = searchByID(orderID);
+		
+		if (obj.getClass().equals("".getClass())) return obj;
+		Order o = (Order) obj;
+		String stateCode = getCountryCodeWithOrderID(orderID);
+		
+		String sql = "select orderStatus from generalOrder." + stateCode 
+				+ " where orderID = '" + orderID + "'; ";
+		Connection c = SQLOperation.getConnect("generalOrder");
+		String orderStatus = SQLOperation.readDatabase(c, sql);
+		UserOrderHis uoh = new UserOrderHis(o, Integer.parseInt(orderStatus));
+		return uoh;
 	}
 	
 	private static LinkedList generateResWithRS(ResultSet rs, Object o) throws SQLException {

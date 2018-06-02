@@ -125,9 +125,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
-
         <activity android:name=".Activities.OfferActivity" />
-
         <activity
             android:name=".Activities.OrderHistoryActivity"
             android:parentActivityName=".Activities.ProfileActivity">
@@ -137,7 +135,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
-
         <activity
             android:name=".Activities.sellHisActivity"
             android:parentActivityName=".Activities.ProfileActivity">
@@ -147,7 +144,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
-
         <activity
             android:name=".Activities.LegalActivity"
             android:parentActivityName=".Activities.ProfileActivity">
@@ -157,7 +153,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.LegalActivity" />
         </activity>
-
+        <activity android:name=".Activities.OrderDetailActivity"></activity>
     </application>
 
 </manifest>
