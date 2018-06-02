@@ -1,0 +1,13 @@
+# Yang Chen
+# ychen165@ucsc.edu
+# Lab5
+# Section: 01H TA: Carlos
+
+Late hours use for this lab: 24 hours
+In this lab, I learned the relationship between the hex, binary(2SC) and decimal, and how the mips store and transfer them between registers. Furthermore, I have a deep understand of the how register works and how to code in mips. The largest problem I met in this lab is cunfusing about the addresses and load the content and address from one register to another one. That is also the main reason why I submit this lab late for 24 hours.
+Answers:
+1. Because we use hex number as input and want to convert it into 2SC in the lab, so the representations of 0 will be 0x00000000, which it the only way in the lab.
+2. In this lab, the largest hex input should be 7FFFFFFF wich is the 2147483647 in decimal.
+3. The smallest number in this lab when the input is FFFFFFFF which is the -4294967295 in decimal
+4. I use unsigned arthmetic in my lab. For signed arithmetic, we could use it to represent the negative numbers. For unsigned arthmetic, we can only use it as positive numbers. However, unsigned could represent larger numbers than signed arthmetic.
+5. If the inputs are 1s and 0s, we can use mask to determine what it is of every number in the binary input and use math way to calculate what the number should be in decimal. We can use 2^space number to find out the number in decimal of each binary number and add them together and print them out.
