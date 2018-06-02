@@ -8,6 +8,21 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
+    <Button
+        android:id="@+id/getOrderButtonID"
+        android:layout_width="88dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="264dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="216dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="216dp"
+        android:text="Get Orders"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <EditText
         android:id="@+id/searchKeywordInput"
         android:layout_width="0dp"
@@ -21,21 +36,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="0dp" />
-
-    <Button
-        android:id="@+id/getOrderButtonID"
-        android:layout_width="88dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="332dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="216dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="216dp"
-        android:text="Get Orders"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
         android:id="@+id/searchOption"
@@ -54,7 +54,6 @@
         android:id="@+id/scrollView4"
         android:layout_width="match_parent"
         android:layout_height="431dp"
-        app:layout_constraintBottom_toTopOf="@+id/getOrderButtonID"
         app:layout_constraintTop_toBottomOf="@+id/searchOption"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="16dp">

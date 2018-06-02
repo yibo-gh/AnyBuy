@@ -184,6 +184,7 @@ public class SellActivity extends AppCompatActivity {
                 String data = "";
                 sessionID = MainActivity.getID();
 
+
                 if (userOrderSearchOption.equals("spn")){
                     LinkedList l = new LinkedList();
                     l.insert("spn");
@@ -191,7 +192,9 @@ public class SellActivity extends AppCompatActivity {
                     l.insert(getUserCountryCode());
                     l.insert(null); // should be state code
                     l.insert("%" + searchKeyword + "%");
+
                     try {
+
                         Object o = SocketClient.Run(l);
                         // TODO print Object o.
                     } catch (Exception e) {
