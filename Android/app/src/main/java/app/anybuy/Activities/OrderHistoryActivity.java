@@ -64,7 +64,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
                     Node temp = l.head;
                     while (temp != null) {
                         UserOrderHis uoh = (UserOrderHis) temp.getObject();
-                        for (int i = 0; i < 6; i++) {
+                        for (int i = 0; i < 7; i++) {
                             TableRow tableRow = new TableRow(this);
                             System.out.println("Writing row " + i + ".");
                             TextView tv = new TextView(this);
@@ -81,6 +81,16 @@ public class OrderHistoryActivity extends AppCompatActivity {
                                 tv.setText("Made by: " + uoh.getOrder().getBrand());
                                 tableRow.addView(tv);
                                 // Cancel button
+                            } else if (i == 3){
+                                tv.setText(uoh.getOrder().getQuantity() + " item(s) requested from " + uoh.getOrder().getCountry());
+                                tableRow.addView(tv);
+                            } else if (i == 4){
+                                tv.setText("Ordered at " + uoh.getOrder().getTimestamp());
+                                tableRow.addView(tv);
+                            } else if (i == 5){
+                                tv.setText("\n");
+                                tableRow.addView(tv);
+                            } else if (i == 6){
                                 Button bt = new Button(this);
                                 if (ordStatus == 0 | ordStatus == 1) {
                                     bt.setText("Cancel");
@@ -102,15 +112,18 @@ public class OrderHistoryActivity extends AppCompatActivity {
                                     });
                                     tableRow.addView(bt);
                                 }
-                            } else if (i == 3){
-                                tv.setText(uoh.getOrder().getQuantity() + " item(s) requested from " + uoh.getOrder().getCountry());
-                                tableRow.addView(tv);
-                            } else if (i == 4){
-                                tv.setText("Ordered at " + uoh.getOrder().getTimestamp());
-                                tableRow.addView(tv);
-                            } else if (i == 5){
-                                tv.setText("\n");
-                                tableRow.addView(tv);
+                                System.out.println("Current orderID is " + orderID);
+                                Button bt2 = new Button(this);
+                                bt2.setText("View detail");
+                                bt2.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                       OrderDetailActivity.setOrderID(orderID);
+                                        Intent intent = new Intent(OrderHistoryActivity.this, OrderDetailActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                                tableRow.addView(bt2);
                             }
 
                             tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
