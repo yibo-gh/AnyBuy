@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.ImageView;
+import android.graphics.drawable.Drawable;
 import android.widget.Button;
 
 import app.anybuy.Clients.SocketClient;
@@ -65,13 +68,20 @@ public class OrderHistoryActivity extends AppCompatActivity {
                             TableRow tableRow = new TableRow(this);
                             System.out.println("Writing row " + i + ".");
                             TextView tv = new TextView(this);
-                            Button bt = new Button(this);
+                            final String orderID = uoh.getOrder().getImage();
+                            int ordStatus = uoh.getOrderStatus();
                             if (i == 0) {
-                                final String orderID = uoh.getOrder().getImage();
-                                int ordStatus = uoh.getOrderStatus();
                                 tv.setText(orderID + " " + orderStatus(ordStatus));
                                 tableRow.addView(tv);
+                                ImageView img = new ImageView(this);
+                                Drawable draw = MainActivity.loadImageFromOrderID(orderID);
+                                img.setImageDrawable(draw);
+                                tableRow.addView(img);
+                            } else if (i == 2){
+                                tv.setText("Made by: " + uoh.getOrder().getBrand());
+                                tableRow.addView(tv);
                                 // Cancel button
+                                Button bt = new Button(this);
                                 if (ordStatus == 0 | ordStatus == 1) {
                                     bt.setText("Cancel");
                                     bt.setOnClickListener(new View.OnClickListener() {
@@ -92,12 +102,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
                                     });
                                     tableRow.addView(bt);
                                 }
-                            } else if (i == 1){
-                                tv.setText(uoh.getOrder().getProduct());
-                                tableRow.addView(tv);
-                            } else if (i == 2){
-                                tv.setText("Made by: " + uoh.getOrder().getBrand());
-                                tableRow.addView(tv);
                             } else if (i == 3){
                                 tv.setText(uoh.getOrder().getQuantity() + " item(s) requested from " + uoh.getOrder().getCountry());
                                 tableRow.addView(tv);

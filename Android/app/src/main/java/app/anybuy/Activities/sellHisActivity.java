@@ -53,10 +53,10 @@ public class sellHisActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 switch (arg2){
-                    case 1: userOrderSearchOption = "lda";
-                    case 2: userOrderSearchOption = "spn";
-                    case 3: userOrderSearchOption = "spb";
-                    case 4: userOrderSearchOption = "soi";
+                    case 0: userOrderSearchOption = "lda";
+                    case 1: userOrderSearchOption = "spn";
+                    case 2: userOrderSearchOption = "spb";
+                    case 3: userOrderSearchOption = "soi";
                 }
             }
             @Override

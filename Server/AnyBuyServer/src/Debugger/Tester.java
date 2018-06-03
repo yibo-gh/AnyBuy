@@ -11,7 +11,7 @@ public class Tester {
 	public static void main (String args[]) throws SQLException {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
-//		placeOrder();
+		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
@@ -25,7 +25,10 @@ public class Tester {
 //		acceptRate();
 //		cancelOrder();
 //		searchOrderByName();
-		searchOrderByID();
+//		searchOrderByID();
+//		changePC();
+//		checkExt();
+//		changePC();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -53,7 +56,7 @@ public class Tester {
 		l.insert("plo");
 		l.insert(getSessionID());
 		
-		for (int i = 0; i < 0x23; i++) {
+		for (int i = 0; i < 1; i++) {
 			String p, b, c, img;
 			String l1, ci, s, z, cd;
 			int q;
@@ -62,8 +65,8 @@ public class Tester {
 			p = "Yoona\\'s Choice";
 			b = "Innisfree";
 			q = 1;
-			c = "US";
-			img = "";
+			c = "KR";
+			img = "http://imgstore04.cdn.sogou.com/app/a/100520024/877e990117d6a7ebc68f46c5e76fc47a";
 			ts = new Timestamp(System.currentTimeMillis());
 			Order u = new Order(p, b, q, c, img, ts);
 			l1 = "Yeongdong-daero 513";
@@ -78,8 +81,8 @@ public class Tester {
 			p = "Zero Balance Cleasing";
 			b = "Banila Co.";
 			q = 1;
-			c = "US";
-			img = "";
+			c = "KR";
+			img = "https://images-na.ssl-images-amazon.com/images/I/51bwEB1zwTL._SX522_.jpg";
 			ts = new Timestamp(System.currentTimeMillis());
 			u = new Order(p, b, q, c, img, ts);
 			l1 = "Yeongdong-daero 513";
@@ -365,6 +368,23 @@ public class Tester {
 			System.out.println(o.getImage() + " " + o.getBrand() + " " + o.getProduct() +
 					" " + o.getQuantity() + " " + o.getCountry() + " " + o.getTimestamp());
 		}
+	}
+	
+	private static void changePC() throws SQLException {
+		LinkedList ll = new LinkedList();
+		ll.insert("cgp");
+		ll.insert(getSessionID());
+		ll.insert("loveYOONA!");
+		ll.insert("test12");
+		System.out.println( (String) IntermediateAPI.API.getCommand(ll) );
+	}
+	
+	private static void checkExt() throws SQLException {
+		LinkedList ll = new LinkedList();
+		ll.insert("cke");
+		ll.insert(getSessionID());
+		ll.insert("CAB100000");
+		System.out.println( (String) IntermediateAPI.API.getCommand(ll) );
 	}
 	
 	private static String getSessionID() {
