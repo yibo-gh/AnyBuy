@@ -187,12 +187,6 @@ public class BuyActivity extends AppCompatActivity  {
 
                 ,""
 
-                , "TW"
-                , "RHK", "RMO"
-                , "RML", "RTW"
-
-                ,""
-
                 , "KR"
                 , "RKR", "RKP"
 
@@ -237,12 +231,6 @@ public class BuyActivity extends AppCompatActivity  {
                 , "Islamic Republic of Iran جمهوری اسلامی ایران"
 
                 ,"------ (๑•̀ㅂ•́) ✧ ------"
-
-                , "Republic of China 中華民國"
-                , "Republic of China - Hong Kong 中華民國 香港", "Republic of China - Macau中華民國 澳門"
-                , "Republic of China - Mainland 中華民國 大陸", "Republic of China - Taiwan 中華民國 台灣"
-
-                ,"------ ლ(╹◡╹ლ) ------"
 
                 , "Republic of Korea 대한민국"
                 , "Republic of Korea - South 대한민국 남부", "Republic of Korea - North 대한민국 북부"
