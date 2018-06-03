@@ -1020,6 +1020,9 @@ public class CoreOperations {
 		 * This LinkedList should includes at 1 node.
 		 * The Node should be the order number client want to see
 		 */
+		writeLog("Load order detail");
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
 		
 		Node temp = ll.head;
 		if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
@@ -1030,10 +1033,12 @@ public class CoreOperations {
 		Order o = (Order) obj;
 		String stateCode = getCountryCodeWithOrderID(orderID);
 		
+		
 		String sql = "select orderStatus from generalOrder." + stateCode 
 				+ " where orderID = '" + orderID + "'; ";
 		Connection c = SQLOperation.getConnect("generalOrder");
 		String orderStatus = SQLOperation.readDatabase(c, sql);
+		System.out.println(orderStatus);
 		UserOrderHis uoh = new UserOrderHis(o, Integer.parseInt(orderStatus));
 		return uoh;
 	}

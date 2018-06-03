@@ -25,7 +25,7 @@ import Object.UserOrderHis;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
-    private static String orderID = "KR10000005";
+    private static String orderID = "";
 
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
@@ -41,6 +41,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("orderID received: " + orderID);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
 
@@ -72,16 +73,10 @@ public class OrderDetailActivity extends AppCompatActivity {
 
                 TableRow tableRow = new TableRow(this);
                 TextView tv = new TextView(this);
-                final String orderID = o.getImage();
-                tv.setText(orderID + " " + uoh.getOrderStatus());
-                tableRow.addView(tv);
-                tv.setText("Made by: " + uoh.getOrder().getBrand());
-                tableRow.addView(tv);
-                tv.setText(uoh.getOrder().getQuantity() + " item(s) requested from " + uoh.getOrder().getCountry());
-                tableRow.addView(tv);
-                tv.setText("Ordered at " + uoh.getOrder().getTimestamp());
-                tableRow.addView(tv);
-                tv.setText("\n");
+                String text = orderID + " " + orderStatus(uoh.getOrderStatus()) + "\n" + "Made by: " + uoh.getOrder().getBrand() +
+                       "\n" + uoh.getOrder().getQuantity() + " item(s) requested from " + uoh.getOrder().getCountry()
+                        + "\n"  + "Ordered at " + uoh.getOrder().getTimestamp() + "\n";
+                tv.setText(text);
                 tableRow.addView(tv);
 
                 tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
@@ -99,31 +94,43 @@ public class OrderDetailActivity extends AppCompatActivity {
         try {
             String img = (String) SocketClient.Run(ll);
             if (img.equals("0x1002")) Toast.makeText(OrderDetailActivity.this, "Internal Error!", Toast.LENGTH_LONG).show();
-            if (img != null) imgURL = "https://anybuy.app/img/" + orderID + "." + imgURL;
+            if (img != null && !img.equals("false")) imgURL = "http://anybuy.app/img/" + orderID + "." + img;
+            System.out.println("Try to set image " + imgURL);
             imView.setImageBitmap(returnBitMap(imgURL));
+            System.out.println("Image success");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public Bitmap returnBitMap(String url) {
-        URL myFileUrl = null;
-        Bitmap bitmap = null;
+        Bitmap bmp = null;
         try {
-            myFileUrl = new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try {
-            HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
+            URL myurl = new URL(url);
+            // 获得连接
+            HttpURLConnection conn = (HttpURLConnection) myurl.openConnection();
+            conn.setConnectTimeout(6000);//设置超时
             conn.setDoInput(true);
+            conn.setUseCaches(false);//不缓存
             conn.connect();
-            InputStream is = conn.getInputStream();
-            bitmap = BitmapFactory.decodeStream(is);
+            InputStream is = conn.getInputStream();//获得图片的数据流
+            bmp = BitmapFactory.decodeStream(is);
             is.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return bitmap;
+        return bmp;
+    }
+
+    private static String orderStatus(int status){
+        switch (status){
+            case 0: return "Placed";
+            case 1: return "Rate provided";
+            case 2: return "Rate accepted";
+            case 3: return "Shipped";
+            case 4: return "Delivered";
+            case 5: return "Cancelled";
+        }
+        return "";
     }
 }

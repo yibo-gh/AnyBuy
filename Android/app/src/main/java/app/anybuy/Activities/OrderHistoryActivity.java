@@ -112,7 +112,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
                                     });
                                     tableRow.addView(bt);
                                 }
-
+                                System.out.println("Current orderID is " + orderID);
                                 Button bt2 = new Button(this);
                                 bt2.setText("View detail");
                                 bt2.setOnClickListener(new View.OnClickListener() {

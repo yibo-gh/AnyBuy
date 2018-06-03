@@ -11,7 +11,7 @@ public class Tester {
 	public static void main (String args[]) throws SQLException {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
-		placeOrder();
+//		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
@@ -29,6 +29,7 @@ public class Tester {
 //		changePC();
 //		checkExt();
 //		changePC();
+		loadOrderDetail();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -385,6 +386,14 @@ public class Tester {
 		ll.insert(getSessionID());
 		ll.insert("CAB100000");
 		System.out.println( (String) IntermediateAPI.API.getCommand(ll) );
+	}
+	
+	private static void loadOrderDetail() throws SQLException {
+		LinkedList ll = new LinkedList();
+		ll.insert("lod");
+		ll.insert(getSessionID());
+		ll.insert("KR10000005");
+		System.out.println(IntermediateAPI.API.getCommand(ll).getClass());
 	}
 	
 	private static String getSessionID() {
