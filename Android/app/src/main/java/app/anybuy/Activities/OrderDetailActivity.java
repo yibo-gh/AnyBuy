@@ -26,11 +26,12 @@ import app.anybuy.R;
 public class OrderDetailActivity extends AppCompatActivity {
 
     private static String orderID = "";
-
+    private static String acceptanceget;
     Button acceptButton;
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
 
+    private static String[] sID;
     private static String imgURL = "";
 
     private Bitmap bmImg;
@@ -105,10 +106,29 @@ public class OrderDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        sID = MainActivity.getID().split("\\?");
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                LinkedList linkedList = new LinkedList();
+                linkedList.insert("art");
+                linkedList.insert(MainActivity.getID());
+                linkedList.insert(orderID);
+                linkedList.insert("snok10000");
+
+                try{
+                //    acceptanceget = (String) SocketClient.Run(linkedList);
+                    Object o = SocketClient.Run(linkedList);
+                    if (o != null) acceptanceget = (String) o;
+                }catch (Exception e){
+                    System.out.println("the accept button didn't give data to backend");
+                }
+                System.out.println("order ID is " + orderID);
+
+                //System.out.println("-=-=-=-=-=-=- " + acceptanceget);
+
 
             }
         });
