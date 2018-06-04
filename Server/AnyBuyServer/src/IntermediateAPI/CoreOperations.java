@@ -605,6 +605,7 @@ public class CoreOperations {
 		else {accept = "0";}
 		String value = "'" + offer.getSellerID() + "','" + offer.getRate() + "','" + offer.getExpressCost() + "','" + offer.getShippingMethod() + "','" + accept + "','" + offer.getRemark() + "'";
 		sql = "INSERT INTO " + offer.getOrderID() +" (sellerID, rate, expressCost, shippingMethod, acceptance, remark) VALUES (" + value + ");"; 
+		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
@@ -615,12 +616,21 @@ public class CoreOperations {
 		SQLOperation.updateData(c, sql);
 		
 		sql = "SELECT uid FROM " + country + " where orderID = '" + offer.getOrderID() + "';";
+		System.out.println(sql);
 		String uid2 = SQLControl.SQLOperation.readDatabase(c, sql);
 		c.close();
 		
+		c = SQLOperation.getConnect(uid);
+		value = "'" + offer.getOrderID() + "','1'";
+		sql = "INSERT INTO " + uid +".offer (orderID, offerStatus) VALUES (" + value + ");"; 
+		System.out.println(sql);
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
+		
 		sql = "UPDATE `" + uid2 + "`.`order` SET `orderStatus` = '1' WHERE `orderID` = '" + offer.getOrderID() + "';";
+		System.out.println(sql);
 		c = SQLOperation.getConnect(uid2);
-		SQLOperation.updateData(c, sql);
+		System.out.println(SQLOperation.updateData(c, sql));
 		
 		return "0x01";
 	}
@@ -661,7 +671,7 @@ public class CoreOperations {
 		System.out.println(sql);
 		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
 		while (rs != null && rs.next()) {
-			if (rs.getString(1).equals("1")) return "0x1FC1";
+			if (rs.getString(1).equals("1")) return "0x1FC1-1";
 		}
 		c.close();
 
@@ -669,14 +679,14 @@ public class CoreOperations {
 		sql = "SELECT orderStatus from generalOrder." + getCountryCodeWithOrderID(orderID) + " WHERE orderID = '" + orderID + "';";
 		System.out.println(sql);
 		String res = SQLOperation.readDatabase(c, sql);
-		if ( !res.equals("1") ) return "0x1FC1";
+		if ( !res.equals("1") ) return "0x1FC1-2";
 		c.close();
 		
 		c = SQLControl.SQLOperation.getConnect(sellerID);
 		sql = "SELECT offerStatus from " + sellerID + ".offer where orderID = '" + orderID + "';";
 		System.out.println(sql);
 		res = SQLOperation.readDatabase(c, sql);
-		if ( res == null || !res.equals("1") ) return "0x1FC1";
+		if ( res == null || !res.equals("1") ) return "0x1FC1-3";
 		c.close();
 		
 		c = SQLControl.SQLOperation.getConnect(uid);

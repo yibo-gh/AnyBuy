@@ -21,8 +21,8 @@ public class Tester {
 //		addCard();
 //		loadCard();
 //		deleteCard();
-//		giveRate();
-		acceptRate();
+		giveRate();
+//		acceptRate();
 //		cancelOrder();
 //		searchOrderByName();
 //		searchOrderByID();
@@ -293,7 +293,7 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "US10000200";
+		OID = "KR10000002";
 		SID = "ucex10000";
 		RA = 100.00;
 		EC = 10.00;
