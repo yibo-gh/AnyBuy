@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".Activities.OrderDetailActivity">
 
     <ScrollView
@@ -50,5 +51,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/OrderDetailScroll"
         app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
+
+    <Button
+        android:id="@+id/accpetOfferButtonID"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/button_background"
+        android:layout_marginRight="8dp"
+        android:text="Accept "
+        app:layout_constraintBottom_toBottomOf="@+id/OrderDetailScroll"
+        app:layout_constraintEnd_toEndOf="@+id/OrderDetailScroll" />
 
 </android.support.constraint.ConstraintLayout>

@@ -125,15 +125,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.PaymentActivity" />
         </activity>
-        <activity android:name=".Activities.OfferActivity" />
+        <activity android:name=".Activities.OfferActivity"
+            android:parentActivityName=".Activities.SellActivity"/>
+        <!-- The meta-data tag is required if you support API level 15 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Activities.PaymentActivity" />
+
         <activity
             android:name=".Activities.OrderHistoryActivity"
             android:parentActivityName=".Activities.ProfileActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.PaymentActivity" />
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Activities.PaymentActivity" />
         </activity>
         <activity
             android:name=".Activities.sellHisActivity"
@@ -153,7 +159,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.LegalActivity" />
         </activity>
-        <activity android:name=".Activities.OrderDetailActivity"></activity>
+        <activity android:name=".Activities.OrderDetailActivity"
+            android:parentActivityName=".Activities.OrderHistoryActivity">
+
+        </activity>
     </application>
 
 </manifest>

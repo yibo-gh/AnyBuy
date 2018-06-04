@@ -2,31 +2,32 @@ package app.anybuy.Activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import app.anybuy.Clients.SocketClient;
-import app.anybuy.R;
 import Object.LinkedList;
 import Object.Order;
 import Object.UserOrderHis;
+import app.anybuy.Clients.SocketClient;
+import app.anybuy.R;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
     private static String orderID = "";
 
+    Button acceptButton;
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
 
@@ -49,6 +50,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         tableLayout.setStretchAllColumns(true);
 
         imView = (ImageView) findViewById(R.id.detailImage);
+
+        acceptButton = (Button) findViewById(R.id.accpetOfferButtonID);
 
         LinkedList ll = new LinkedList();
         ll.insert("lod");
@@ -101,6 +104,14 @@ public class OrderDetailActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     public Bitmap returnBitMap(String url) {
