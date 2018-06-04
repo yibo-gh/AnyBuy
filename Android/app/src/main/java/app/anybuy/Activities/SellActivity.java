@@ -66,7 +66,7 @@ public class SellActivity extends AppCompatActivity {
     String userOrderSearchOption = null;
     protected FusedLocationProviderClient mFusedLocationClient;
 
-    double lattitude = -1;
+    double latitude = -1;
     double longitude = -1;
 
     //use to get the address from the location
@@ -79,7 +79,13 @@ public class SellActivity extends AppCompatActivity {
     //setter and getter to store the country code
     public static void setUserCountryCode(String str) {userCountryCode = str;}
     public static void setUserStateCode(String str) {userStateCode = str;}
-    public static String getUserCountryCode() {return userCountryCode;}
+    public static String getUserCountryCode() {
+        return userCountryCode;
+        //switch (userCountryCode){
+        //    default: return null;
+        //    case "US": return "US";
+        //}
+    }
     public static String getUserStateCode() {return userStateCode;}
 
     @Override
@@ -181,15 +187,17 @@ public class SellActivity extends AppCompatActivity {
                 if (location != null) {
                     // Logic to handle location object
                     //textView.setText("altetude: " + location.getLatitude() + " \n Longtitude: " + location.getLongitude());
-                    lattitude = location.getLatitude();
+                    latitude = location.getLatitude();
                     longitude = location.getLongitude();
+                    System.out.println("latitude: " + latitude);
+                    System.out.println("longitude: " + longitude);
 
                     geocoder = new Geocoder(SellActivity.this, Locale.getDefault());
 
                     System.out.println("helloooooooo");
                     try {
                         System.out.println("goood byyyyyyyyyyee");
-                        addresses = geocoder.getFromLocation(lattitude, longitude, 1);
+                        addresses = geocoder.getFromLocation(latitude, longitude, 1);
                         //get the info of the user
                         // String address = addresses.get(0).getAddressLine(0);
                         //String area = addresses.get(0).getLocality();
