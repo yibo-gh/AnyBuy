@@ -21,14 +21,21 @@
         android:id="@+id/makeOfferEditTextID"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="276dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="152dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Make Offer"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/offerPageTextView"
+        app:layout_constraintVertical_bias="0.232" />
 
     <Button
         android:id="@+id/sendOfferButtonID"
@@ -40,5 +47,32 @@
         android:text="Send Offer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/expressCostEditViewID"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="132dp"
+        android:ems="10"
+        android:hint="Express Cost"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/offerPageTextView" />
+
+    <EditText
+        android:id="@+id/remarkEditTextID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Remark"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="314dp" />
 
 </android.support.constraint.ConstraintLayout>
