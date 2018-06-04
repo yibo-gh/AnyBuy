@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import  Object.*;
+import android.widget.Toast;
 
+import Object.LinkedList;
+import Object.Offer;
 import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
 public class OfferActivity extends AppCompatActivity {
@@ -20,7 +22,7 @@ public class OfferActivity extends AppCompatActivity {
         return remarkstr;
     }
 
-    public static void setRemark(String remark) {
+    public static void setRemarkstr(String remark) {
         OfferActivity.remarkstr = remark;
     }
 
@@ -96,36 +98,43 @@ public class OfferActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
                 setOffer(makeOffer.getText().toString());
                 setExpress(expressCost.getText().toString());
-                setRemark(remark.getText().toString());
-                //get the offer seller wants to make
+                setRemarkstr(remark.getText().toString());
 
-               int offerMadeInt = Integer.parseInt(getOffer());
+                //make sure none of the edit texts are empty.
+                if (getOffer() == "") {
+                    Toast.makeText(OfferActivity.this, "You did not enter a rate!", Toast.LENGTH_SHORT).show();
+                } else if (getExpress() == "") {
+                    Toast.makeText(OfferActivity.this, "You did not enter a express cost!", Toast.LENGTH_SHORT).show();
+                } else if (getRemarkstr() == "") {
+                    Toast.makeText(OfferActivity.this, "You did not enter a remark!", Toast.LENGTH_SHORT).show();
+                } else {
+                    //get the offer seller wants to make
+                    int offerMadeInt = Integer.parseInt(getOffer());
 
-               int expressC = Integer.parseInt(getExpress());
+                    int expressC = Integer.parseInt(getExpress());
 
-                System.out.println(imageID + "\n id: " + MainActivity.getID() + "\n rate: " + offerMadeInt + "\n express cost: " + expressC + "\nremark: " + getRemarkstr() );
-                Offer makeOffer = new Offer(imageID,sID[0], offerMadeInt, expressC, 1 ,offerBool, getRemarkstr() );
+                    System.out.println(imageID + "\n id: " + MainActivity.getID() + "\n rate: " + offerMadeInt + "\n express cost: " + expressC + "\nremark: " + getRemarkstr());
+                    Offer makeOffer = new Offer(imageID, sID[0], offerMadeInt, expressC, 1, offerBool, getRemarkstr());
 
-                LinkedList linkedList= new LinkedList();
-                linkedList.insert("gvr");
-                linkedList.insert(MainActivity.getID());
-                linkedList.insert(makeOffer);
+                    LinkedList linkedList = new LinkedList();
+                    linkedList.insert("gvr");
+                    linkedList.insert(MainActivity.getID());
+                    linkedList.insert(makeOffer);
 
-                try{
-                    String o = (String) SocketClient.Run(linkedList);
+                    try {
+                        String o = (String) SocketClient.Run(linkedList);
+                    } catch (Exception e) {
+                        System.out.println("didnt work");
+                    }
+
+
+                    Intent intent = new Intent(OfferActivity.this, SellActivity.class);
+                    startActivity(intent);
+
                 }
-                catch (Exception e)
-                {
-                    System.out.println("didnt work");
-                }
-
-
-
-                Intent intent = new Intent(OfferActivity.this, SellActivity.class);
-                startActivity(intent);
-
             }
         });
 
