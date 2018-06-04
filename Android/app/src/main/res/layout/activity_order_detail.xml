@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.sellHisActivity">
+    tools:context=".Activities.OrderDetailActivity">
 
     <ScrollView
-        android:id="@+id/scrollView3"
+        android:id="@+id/OrderDetailScroll"
         android:layout_width="0dp"
-        android:layout_height="576dp"
+        android:layout_height="247dp"
         android:layout_marginEnd="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -27,7 +27,7 @@
             android:orientation="vertical">
 
             <TableLayout
-                android:id="@+id/TableLayout03"
+                android:id="@+id/OrderDetailTable"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:layout_editor_absoluteX="135dp"
@@ -36,5 +36,19 @@
             </TableLayout>
         </LinearLayout>
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/detailImage"
+        android:layout_width="0dp"
+        android:layout_height="251dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/OrderDetailScroll"
+        app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
 </android.support.constraint.ConstraintLayout>

@@ -47,6 +47,7 @@ public class API {
 			case "spi": return CoreOperations.searchOrderByOrderID(voidHead(ll));
 			case "cgp": return CoreOperations.changePasscode(voidHead(ll));
 			case "cke": return CoreOperations.checkImageExtension(voidHead(ll));
+			case "lod": return CoreOperations.loadOrderDetail(voidHead(ll));
 			default: return CoreOperations.illegalInput();
 		}
 	}

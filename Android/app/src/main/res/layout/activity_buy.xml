@@ -168,9 +168,9 @@
         android:layout_height="49dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint="You can put a image link if you would like to describe your need better."
+        android:hint="Image Link (Optional)."
         android:inputType="textPersonName"
-        android:textSize="10dp"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/scrollView3"
         tools:layout_editor_absoluteX="8dp" />
 

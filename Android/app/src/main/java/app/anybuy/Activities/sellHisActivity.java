@@ -3,7 +3,12 @@ package app.anybuy.Activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -17,6 +22,11 @@ import app.anybuy.R;
 public class sellHisActivity extends AppCompatActivity {
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
+    String userOrderSearchOption = "";
+
+    Spinner searchOpt;
+    EditText searchKeyword;
+
 
     @Override
     public boolean onKeyDown(int keyCode,KeyEvent event){

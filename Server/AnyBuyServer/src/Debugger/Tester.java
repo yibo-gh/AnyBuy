@@ -10,8 +10,8 @@ public class Tester {
 	
 	public static void main (String args[]) throws SQLException {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
-		login("yoona", "snsd.or.kr", "loveYOONA!");
-		placeOrder();
+		login("ychen165", "ucsc.edu", "chenyang");
+//		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
 //		deleteAddress();
@@ -21,7 +21,7 @@ public class Tester {
 //		addCard();
 //		loadCard();
 //		deleteCard();
-//		giveRate();
+		giveRate();
 //		acceptRate();
 //		cancelOrder();
 //		searchOrderByName();
@@ -29,6 +29,8 @@ public class Tester {
 //		changePC();
 //		checkExt();
 //		changePC();
+//		loadOrderDetail();
+//		loadPartialOrder();
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -291,7 +293,7 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "CA10000001";
+		OID = "US10000010";
 		SID = "ucex10000";
 		RA = 100.00;
 		EC = 10.00;
@@ -360,7 +362,7 @@ public class Tester {
 		LinkedList ll = new LinkedList();
 		ll.insert("spi");
 		ll.insert(getSessionID());
-		ll.insert("U");
+		ll.insert("KR10000004");
 		Object obj = IntermediateAPI.API.getCommand(ll);
 		if (obj.getClass().equals("".getClass())) System.out.println(obj.toString());
 		else {
@@ -385,6 +387,18 @@ public class Tester {
 		ll.insert(getSessionID());
 		ll.insert("CAB100000");
 		System.out.println( (String) IntermediateAPI.API.getCommand(ll) );
+	}
+	
+	private static void loadOrderDetail() throws SQLException {
+		LinkedList ll = new LinkedList();
+		ll.insert("lod");
+		ll.insert(getSessionID());
+		ll.insert("KR10000005");
+		System.out.println(IntermediateAPI.API.getCommand(ll).getClass());
+	}
+	
+	private static void loadPartialOrder() throws SQLException{
+		functionTester.run(getSessionID());
 	}
 	
 	private static String getSessionID() {

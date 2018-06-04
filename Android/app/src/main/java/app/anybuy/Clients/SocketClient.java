@@ -17,8 +17,6 @@ public class SocketClient {
 
        Socket socket = new Socket("anybuy.app", 18416);
 
-        //Socket socket = new Socket("67.180.244.170", 18416);
-
         ObjectOutputStream os = null;
         ObjectInputStream is = null;
 
