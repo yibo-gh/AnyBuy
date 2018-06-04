@@ -582,7 +582,7 @@ public class CoreOperations {
 		
 		// Check that Offer object was given
 		Object obj = ll.head.getObject();
-		if (!obj.getClass().equals(new Offer().getClass())) return "NOT AN OFFER";
+		if (!obj.getClass().equals(new Offer().getClass())) return "0x1002";
 		Offer offer = (Offer)obj;
 		
 		// Connect to generalOffer
