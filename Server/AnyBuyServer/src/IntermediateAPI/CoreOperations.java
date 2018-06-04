@@ -355,7 +355,7 @@ public class CoreOperations {
 		//<countryCode>&<amount>
 		writeLog("Initialed partial order.");
 		if (ll.getLength() !=  2 || !ll.head.getObject().getClass().equals(("".getClass()))
-				|| !ll.head.getObject().getClass().equals(("".getClass())))
+				|| !ll.head.getNext().getObject().getClass().equals(("".getClass())))
 			return "0x1002";
 		String country = ll.head.getObject().toString();
 		int orderQuaRequested = Integer.parseInt(ll.head.getNext().getObject().toString());
@@ -1001,7 +1001,8 @@ public class CoreOperations {
 		String stateCode = getCountryCodeWithOrderID(orderID);
 		
 		String sql = "select Product, Brand, Quantity, orderID, orderTime from generalOrder." + stateCode 
-				+ " where Product Like orderID = '" + orderID + "';";
+				+ " where orderID = '" + orderID + "';";
+		System.out.println(sql);
 		Connection c = SQLOperation.getConnect("generalOrder");
 		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
 		if (rs == null) {
