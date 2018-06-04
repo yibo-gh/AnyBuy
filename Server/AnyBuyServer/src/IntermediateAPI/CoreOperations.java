@@ -1099,7 +1099,7 @@ public class CoreOperations {
 		}
 		sql = "select authTime from authLog where uid='" + veri[0] + "'";
 		Long l = Long.parseLong(SQLOperation.readDatabase(c, sql));
-		if (System.currentTimeMillis() - l > 0x927C0 || System.currentTimeMillis() < l) return "0x1D02";
+		if (System.currentTimeMillis() - l > 0x124F80 || System.currentTimeMillis() < l) return "0x1D02";
 		sql = "update authLog set authTime='" + System.currentTimeMillis() + "' where uid='" + veri[0] + "';" ;
 		SQLControl.SQLOperation.updateData(c, sql);
 		c.close();
