@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,7 +53,7 @@ public class SellActivity extends AppCompatActivity {
     public static String getGetStrID() {return getStrID;}
 
     boolean secondClick = false;
-
+    private boolean optionChanged = false;
 
     boolean bs = false;
 
@@ -108,10 +110,32 @@ public class SellActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         searchOpt.setAdapter(adapter);
 
+        TextWatcher watcher = new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                optionChanged = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
+
+        searchKeyword.addTextChangedListener(watcher);
+
+
         searchOpt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println(position);
+                optionChanged = true;
                 switch (position){
                     case 0:
                         userOrderSearchOption = "lop";
@@ -188,7 +212,6 @@ public class SellActivity extends AppCompatActivity {
 
         });
 
-
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,7 +220,11 @@ public class SellActivity extends AppCompatActivity {
                 sessionID = MainActivity.getID();
 
                 System.out.println("User's option is " + userOrderSearchOption);
-
+                if (optionChanged) {
+                    linearLayout.removeAllViews();
+                    optionChanged = false;
+                    secondClick = false;
+                }
                 if (userOrderSearchOption.equals("spn")) {
                     String Keyword = searchKeyword.getText().toString();
                     LinkedList l = new LinkedList();

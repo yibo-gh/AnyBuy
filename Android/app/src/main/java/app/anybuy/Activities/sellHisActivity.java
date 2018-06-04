@@ -42,35 +42,6 @@ public class sellHisActivity extends AppCompatActivity {
 
         TableLayout tableLayout = (TableLayout)findViewById(R.id.TableLayout03);
         tableLayout.setStretchAllColumns(true);
-        searchOpt = (Spinner) findViewById(R.id.sellhisopt);
-        searchKeyword = (EditText) findViewById(R.id.sellhiskeyword);
-        String[] options = new String[]{"Load All","Search Product Name", "Search Product Brand", "Search Order ID"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, options);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        searchOpt.setAdapter(adapter);
-
-        searchOpt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                switch (arg2){
-                    case 0: userOrderSearchOption = "lda";
-                    case 1: userOrderSearchOption = "spn";
-                    case 2: userOrderSearchOption = "spb";
-                    case 3: userOrderSearchOption = "soi";
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-
-
-
-
-
-
 
         LinkedList l = new LinkedList();
         l.insert("lds");
