@@ -72,11 +72,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
                             int ordStatus = uoh.getOrderStatus();
                             if (i == 0) {
                                 tv.setText(orderID + " " + orderStatus(ordStatus));
-                                tableRow.addView(tv);
-                                ImageView img = new ImageView(this);
-                                Drawable draw = MainActivity.loadImageFromOrderID(orderID);
-                                img.setImageDrawable(draw);
-                                tableRow.addView(img);
+                                tableRow.addView(tv); 
                             } else if (i == 2){
                                 tv.setText("Made by: " + uoh.getOrder().getBrand());
                                 tableRow.addView(tv);
