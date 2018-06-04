@@ -9,12 +9,14 @@ import Object.Order;
 
 public class functionTester {
 
-	public static void main(String[] args) throws SQLException {
+	public static void run(String sessionID) throws SQLException {
 		
 		LinkedList l = new LinkedList();
+		l.insert("lop");
+		l.insert(sessionID);
 		l.insert("US");
 		l.insert("10");
-		Object o = CoreOperations.loadPartialCountryOrder(l);
+		Object o = IntermediateAPI.API.getCommand(l);
 		
 		if (o.getClass().equals("".getClass())) System.out.println((String)o);
 		
@@ -40,6 +42,8 @@ public class functionTester {
 		String maxLine = (String)l.end.getPrev().getObject();
 		
 		l = new LinkedList();
+		l.insert("lop");
+		l.insert(sessionID);
 		l.insert(maxLine);
 		l.insert(minLine);
 		l.insert(maxOrder);
@@ -47,7 +51,7 @@ public class functionTester {
 		l.insert("0");
 		l.insert("15");
 		
-		o = CoreOperations.loadPartialCountryOrder(l);
+		o = IntermediateAPI.API.getCommand(l);
 		System.out.println(o == null);
 		if (o.getClass().equals("".getClass())) System.out.println((String)o);
 		
@@ -68,6 +72,8 @@ public class functionTester {
 		maxLine = (String)l.end.getPrev().getObject();
 		
 		l = new LinkedList();
+		l.insert("lop");
+		l.insert(sessionID);
 		l.insert(maxLine);
 		l.insert(minLine);
 		l.insert(maxOrder);
@@ -75,7 +81,7 @@ public class functionTester {
 		l.insert("0");
 		l.insert("20");
 		
-		o = CoreOperations.loadPartialCountryOrder(l);
+		o = IntermediateAPI.API.getCommand(l);
 		System.out.println(o == null);
 		if (o.getClass().equals("".getClass())) System.out.println((String)o);
 		
