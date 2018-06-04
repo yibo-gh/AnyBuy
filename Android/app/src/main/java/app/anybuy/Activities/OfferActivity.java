@@ -104,13 +104,14 @@ public class OfferActivity extends AppCompatActivity {
                 setRemarkstr(remark.getText().toString());
 
                 //make sure none of the edit texts are empty.
-                if (getOffer() == "") {
+                if (getOffer().matches("")) {
                     Toast.makeText(OfferActivity.this, "You did not enter a rate!", Toast.LENGTH_SHORT).show();
-                } else if (getExpress() == "") {
+                } else if (getExpress().matches("")) {
                     Toast.makeText(OfferActivity.this, "You did not enter a express cost!", Toast.LENGTH_SHORT).show();
-                } else if (getRemarkstr() == "") {
+                } else if (getRemarkstr().matches("")) {
                     Toast.makeText(OfferActivity.this, "You did not enter a remark!", Toast.LENGTH_SHORT).show();
                 } else {
+                    System.out.println(getOffer() + "+++++++++" + getExpress() + "++++++++++" + getRemarkstr());
                     //get the offer seller wants to make
                     int offerMadeInt = Integer.parseInt(getOffer());
 
@@ -134,11 +135,9 @@ public class OfferActivity extends AppCompatActivity {
                     Intent intent = new Intent(OfferActivity.this, SellActivity.class);
                     startActivity(intent);
 
-                }
+               }
             }
         });
-
-
 
     }
 }
