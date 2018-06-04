@@ -1,5 +1,6 @@
 package app.anybuy.Activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -127,8 +128,10 @@ public class OrderDetailActivity extends AppCompatActivity {
                 }
                 System.out.println("order ID is " + orderID);
 
-                //System.out.println("-=-=-=-=-=-=- " + acceptanceget);
+                System.out.println("-=-=-=-=-=-=- " + acceptanceget);
 
+                Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
+                startActivity(intent);
 
             }
         });
