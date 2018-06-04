@@ -582,7 +582,7 @@ public class CoreOperations {
 		
 		// Check that Offer object was given
 		Object obj = ll.head.getObject();
-		if (!obj.getClass().equals(new Offer().getClass())) return "NOT AN OFFER";
+		if (!obj.getClass().equals(new Offer().getClass())) return "0x1002";
 		Offer offer = (Offer)obj;
 		
 		// Connect to generalOffer
@@ -1099,7 +1099,7 @@ public class CoreOperations {
 		}
 		sql = "select authTime from authLog where uid='" + veri[0] + "'";
 		Long l = Long.parseLong(SQLOperation.readDatabase(c, sql));
-		if (System.currentTimeMillis() - l > 0x927C0 || System.currentTimeMillis() < l) return "0x1D02";
+		if (System.currentTimeMillis() - l > 0x124F80 || System.currentTimeMillis() < l) return "0x1D02";
 		sql = "update authLog set authTime='" + System.currentTimeMillis() + "' where uid='" + veri[0] + "';" ;
 		SQLControl.SQLOperation.updateData(c, sql);
 		c.close();
