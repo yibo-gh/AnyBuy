@@ -1,36 +1,44 @@
 package Debugger;
 
+/**
+ * Author: Yibo Guo (yguo25@ucsc.edu)
+ * Date: Jun 5, 2018
+ * 
+ * What I did: I did all following functions for testing purpose except placeOrder() and cancelOrder().
+ * Although Ho did giveRate() and acceptRate(), but I rewrite them due to server performance improvement.
+ */
+
 import java.sql.SQLException;
 import java.sql.Timestamp;
-
 import Object.*;
+
 public class Tester {
 
 	static String sessionID = "";
 	
 	public static void main (String args[]) throws SQLException {
-		register("yguo25", "ucsc.edu", "loveYOONA!");
-		login("yguo25", "ucsc.edu", "loveYOONA!");
-//		placeOrder();
-//		addAddress();
-//		loadAddress(getSessionID());
-//		deleteAddress();
-//		loadPersonOrder(getSessionID());
-//		loadPersonSold(getSessionID());
-//		loadOrder();
-//		addCard();
-//		loadCard();
-//		deleteCard();
-//		giveRate();
-//		acceptRate();
-//		cancelOrder();
-//		searchOrderByName();
-//		searchOrderByID();
-//		changePC();
-//		checkExt();
-//		changePC();
-//		loadOrderDetail();
-//		loadPartialOrder();
+		register("yoona", "snsd.or.kr", "loveYOONA!");
+		login("yoona", "snsd.or.kr", "loveYOONA!");
+		placeOrder();
+		addAddress();
+		loadAddress(getSessionID());
+		deleteAddress();
+		loadPersonOrder(getSessionID());
+		loadPersonSold(getSessionID());
+		loadOrder();
+		addCard();
+		loadCard();
+		deleteCard();
+		giveRate();
+		acceptRate();
+		cancelOrder();
+		searchOrderByName();
+		searchOrderByID();
+		changePC();
+		checkExt();
+		changePC();
+		loadOrderDetail();
+		loadPartialOrder();
 		loadOffer("KR10000000");
 	}
 	
