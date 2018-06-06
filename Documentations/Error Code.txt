@@ -38,6 +38,7 @@
 0x1FA2: Order Error: Order not found.
 0x1FA3: Order Error: No newer order found.
 0x1FA4: Order Error: No older order found.
+0x1FA5: Order Error: No qualified offer found.
 
 0x1FB1: Offer Error: Offer given.
 0x1FB2: Offer Error: No qualified order found.

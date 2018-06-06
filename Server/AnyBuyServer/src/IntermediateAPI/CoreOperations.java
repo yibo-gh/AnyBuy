@@ -280,7 +280,7 @@ public class CoreOperations {
 			c2.close();
 		}
 		c.close();
-		if (realLinkedList.getLength() > 1) realLinkedList = ServerManagement.sort.sortOrdersWithUOH(realLinkedList);
+		if (realLinkedList.getLength() > 1) realLinkedList = ServerManagement.Sort.sortOrdersWithUOH(realLinkedList);
 		return realLinkedList;
 	}
 	
@@ -1012,7 +1012,7 @@ public class CoreOperations {
 			c.close();
 		}
 		if (resLl.head.getObject() == null) return resLl;
-		else return ServerManagement.sort.sortOrders(resLl);
+		else return ServerManagement.Sort.sortOrders(resLl);
 		
 	}
 	
@@ -1084,6 +1084,7 @@ public class CoreOperations {
 		if (o.getClass().equals(new Address().getClass())) return addressList(rs);
 		if (o.getClass().equals(new Card().getClass())) return cardList(rs);
 		if (o.getClass().equals(new Order().getClass())) return orderList(rs);
+		if (o.getClass().equals(new Offer().getClass())) return offerList(rs);
 		return null;
 	}
 	
@@ -1114,6 +1115,26 @@ public class CoreOperations {
 			if (!Character.isDigit(rs.getString(4).charAt(2))) country += rs.getString(4).charAt(2);
 			Order o = new Order(rs.getString(1), rs.getString(2), rs.getInt(3), country,
 					rs.getString(4), new Timestamp(rs.getLong(5)));
+			ll.insert(o);
+		}
+		return ll;
+	}
+	
+	private static LinkedList offerList (ResultSet rs) throws SQLException {
+		LinkedList ll = new LinkedList();
+		while (rs != null && rs.next()) {
+			String OID = "";
+			//sellerID, rate, expressCost, shippingMethod, acceptance, remark
+			String SID = rs.getString(1);
+			double RA = rs.getDouble(2);
+			double EC = rs.getDouble(3);
+			int SM = rs.getInt(4);
+			boolean A;
+			int tempA = rs.getInt(5);
+			if (tempA == 1) A = true; else A = false;
+			String RM = rs.getString(6);
+			
+			Offer o = new Offer(OID, SID, RA, EC, SM, A, RM);
 			ll.insert(o);
 		}
 		return ll;
@@ -1188,6 +1209,24 @@ public class CoreOperations {
 				+ " where orderID = '" + orderID + "';";
 		Connection c = SQLOperation.getConnect("generalOrder");
 		return SQLOperation.readDatabase(c, sql);
+	}
+	
+	static Object loadOrderRate(LinkedList ll) throws SQLException {
+		
+		writeLog("Load order rates");
+		String uid = checkSession(ll);
+		if (!verifySessionRes(uid, ll)) return uid;
+		
+		Node temp = ll.head;
+		if (!temp.getObject().getClass().equals("".getClass())) return "0x1002";
+		String orderID = (String) temp.getObject();
+		
+		String sql = "SELECT * FROM generalOffer." + orderID + ";";
+		Connection c = SQLOperation.getConnect("generalOffer");
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		LinkedList res = generateResWithRS(rs, new Offer());
+		if (res.head.getObject() == null) return "0x1FA5";
+		return res;
 	}
 	
 	private static String getEamilCodeFromUid(String str) {

@@ -5,7 +5,7 @@ import Object.Node;
 import Object.UserOrderHis;
 import Object.Order;
 
-public class sort {
+public class Sort {
 	
 	public static LinkedList sortOrders (LinkedList l) {
 		Order[] uohArray = new Order[l.getLength()];

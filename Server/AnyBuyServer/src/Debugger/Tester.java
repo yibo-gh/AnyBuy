@@ -9,8 +9,8 @@ public class Tester {
 	static String sessionID = "";
 	
 	public static void main (String args[]) throws SQLException {
-		register("yoona", "snsd.or.kr", "loveYOONA!");
-		login("yoona", "snsd.or.kr", "loveYOONA!");
+		register("yguo25", "ucsc.edu", "loveYOONA!");
+		login("yguo25", "ucsc.edu", "loveYOONA!");
 //		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
@@ -21,7 +21,7 @@ public class Tester {
 //		addCard();
 //		loadCard();
 //		deleteCard();
-		giveRate();
+//		giveRate();
 //		acceptRate();
 //		cancelOrder();
 //		searchOrderByName();
@@ -31,6 +31,7 @@ public class Tester {
 //		changePC();
 //		loadOrderDetail();
 //		loadPartialOrder();
+		loadOffer("KR10000000");
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -293,8 +294,8 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "KR10000002";
-		SID = "ucex10000";
+		OID = "US10000001";
+		SID = "snok10000";
 		RA = 100.00;
 		EC = 10.00;
 		SM = 1;
@@ -362,7 +363,7 @@ public class Tester {
 		LinkedList ll = new LinkedList();
 		ll.insert("spi");
 		ll.insert(getSessionID());
-		ll.insert("KR10000004");
+		ll.insert("KR10000000");
 		Object obj = IntermediateAPI.API.getCommand(ll);
 		if (obj.getClass().equals("".getClass())) System.out.println(obj.toString());
 		else {
@@ -399,6 +400,24 @@ public class Tester {
 	
 	private static void loadPartialOrder() throws SQLException{
 		functionTester.run(getSessionID());
+	}
+	
+	private static void loadOffer(String str) throws SQLException{
+		LinkedList ll = new LinkedList();
+		ll.insert("lor");
+		ll.insert(getSessionID());
+		ll.insert(str);
+		Object o = IntermediateAPI.API.getCommand(ll);
+		if (o.getClass().equals("".getClass())) System.out.println((String) o);
+		ll = (LinkedList) o;
+		Node temp = ll.head;
+		while (temp != null) {
+			Offer of = (Offer) temp.getObject();
+			System.out.println(str + " "+ of.getSellerID() + " " + of.getShippingMethod()
+					  + " " + of.getRate() + " " + of.getExpressCost() + " "
+					  + of.getRemark());
+			temp = temp.getNext();
+		}
 	}
 	
 	private static String getSessionID() {

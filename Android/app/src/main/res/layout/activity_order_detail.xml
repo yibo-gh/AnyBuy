@@ -9,18 +9,14 @@
 
     <ScrollView
         android:id="@+id/OrderDetailScroll"
-        android:layout_width="0dp"
-        android:layout_height="247dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        android:layout_width="363dp"
+        android:layout_height="90dp"
+        app:layout_constraintBottom_toTopOf="@+id/rateDetailScroll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,31 +34,44 @@
         </LinearLayout>
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/detailImage"
-        android:layout_width="0dp"
-        android:layout_height="251dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ScrollView
+        android:id="@+id/rateDetailScroll"
+        android:layout_width="363dp"
+        android:layout_height="296dp"
+        app:layout_constraintBottom_toTopOf="@+id/detailImage"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/OrderDetailScroll"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:id="@+id/offerTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="135dp"
+                tools:layout_editor_absoluteY="265dp">
+
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/detailImage"
+        android:layout_width="363dp"
+        android:layout_height="192dp"
+        android:contentDescription="TODO"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rateDetailScroll"
         app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
-    <Button
-        android:id="@+id/accpetOfferButtonID"
-        android:textAllCaps="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/button_background"
-        android:layout_marginRight="8dp"
-        android:text="Accept "
-        app:layout_constraintBottom_toBottomOf="@+id/OrderDetailScroll"
-        app:layout_constraintEnd_toEndOf="@+id/OrderDetailScroll" />
 
 </android.support.constraint.ConstraintLayout>

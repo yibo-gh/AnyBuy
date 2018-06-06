@@ -48,6 +48,7 @@ public class API {
 			case "cgp": return CoreOperations.changePasscode(voidHead(ll));
 			case "cke": return CoreOperations.checkImageExtension(voidHead(ll));
 			case "lod": return CoreOperations.loadOrderDetail(voidHead(ll));
+			case "lor": return CoreOperations.loadOrderRate(voidHead(ll));
 			default: return CoreOperations.illegalInput();
 		}
 	}

@@ -21,6 +21,8 @@ import java.net.URL;
 import Object.LinkedList;
 import Object.Order;
 import Object.UserOrderHis;
+import Object.Node;
+import Object.Offer;
 import app.anybuy.Clients.SocketClient;
 import app.anybuy.R;
 
@@ -28,14 +30,12 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     private static String orderID = "";
     private static String acceptanceget;
-    Button acceptButton;
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
 
-    private static String[] sID;
     private static String imgURL = "";
+    private static int orderStatus;
 
-    private Bitmap bmImg;
     private ImageView imView;
 
     public static void setOrderID (String str){
@@ -48,12 +48,16 @@ public class OrderDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
 
-        TableLayout tableLayout = (TableLayout)findViewById(R.id.OrderDetailTable);
-        tableLayout.setStretchAllColumns(true);
+        TableLayout orderTable = (TableLayout)findViewById(R.id.OrderDetailTable);
+        orderTable.setStretchAllColumns(true);
+        TableRow tableRow = new TableRow(this);
+
+
+        TableLayout rateTable = (TableLayout)findViewById(R.id.offerTable);
+        rateTable.setStretchAllColumns(true);
+        TableRow rateTableRow = new TableRow(this);
 
         imView = (ImageView) findViewById(R.id.detailImage);
-
-        acceptButton = (Button) findViewById(R.id.accpetOfferButtonID);
 
         LinkedList ll = new LinkedList();
         ll.insert("lod");
@@ -63,28 +67,28 @@ public class OrderDetailActivity extends AppCompatActivity {
             return;
         }
         ll.insert(orderID);
+        TextView tv = new TextView(this);
 
         try {
             Object obj = SocketClient.Run(ll);
             if (obj.getClass().equals("".getClass())) {
-                TableRow tableRow = new TableRow(this);
-                TextView tv = new TextView(this);
+                tv = new TextView(this);
                 tv.setText((String) obj);
                 tableRow.addView(tv);
-                tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
+                orderTable.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
             } else {
                 UserOrderHis uoh = (UserOrderHis) obj;
                 Order o = uoh.getOrder();
 
-                TableRow tableRow = new TableRow(this);
-                TextView tv = new TextView(this);
-                String text = orderID + " " + orderStatus(uoh.getOrderStatus()) + "\n" + "Made by: " + uoh.getOrder().getBrand() +
+                orderStatus = uoh.getOrderStatus();
+                String text = orderID + " " + orderStatus(orderStatus) + "\n" + "Made by: " + uoh.getOrder().getBrand() +
                        "\n" + uoh.getOrder().getQuantity() + " item(s) requested from " + uoh.getOrder().getCountry()
                         + "\n"  + "Ordered at " + uoh.getOrder().getTimestamp() + "\n";
+                tv = new TextView(this);
                 tv.setText(text);
                 tableRow.addView(tv);
 
-                tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
+                orderTable.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
                 System.out.println("Line added.");
 
             }
@@ -107,34 +111,84 @@ public class OrderDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        sID = MainActivity.getID().split("\\?");
-
-        acceptButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                LinkedList linkedList = new LinkedList();
-                linkedList.insert("art");
-                linkedList.insert(MainActivity.getID());
-                linkedList.insert(orderID);
-                linkedList.insert("snok10000");
-
-                try{
-                //    acceptanceget = (String) SocketClient.Run(linkedList);
-                    Object o = SocketClient.Run(linkedList);
-                    if (o != null) acceptanceget = (String) o;
-                }catch (Exception e){
-                    System.out.println("the accept button didn't give data to backend");
+        if (orderStatus == 1) {
+            System.out.println("Requesting rate details");
+            ll = new LinkedList();
+            ll.insert("lor");
+            ll.insert(MainActivity.getID());
+            ll.insert(orderID);
+            System.out.println(ll.getLength());
+            try {
+                Object o = SocketClient.Run(ll);
+                System.out.println("Is null returned? " + (o == null));
+                if (o.getClass().equals("".getClass())) {
+                    Toast.makeText(OrderDetailActivity.this, "Internal Error!" + o.toString(), Toast.LENGTH_LONG).show();
                 }
-                System.out.println("order ID is " + orderID);
+                else {
+                    String text = "Offers:\n";
+                    tv = new TextView(this);
+                    tv.setText(text);
+                    rateTableRow.addView(tv);
+                    rateTable.addView(rateTableRow, new TableLayout.LayoutParams(FP, WC));
+                    ll = (LinkedList)o;
+                    System.out.println("res length " + ll.getLength());
+                    Node temp = ll.head;
+                    while (temp != null){
+                        rateTableRow = new TableRow(this);
+                        Offer of = (Offer) temp.getObject();
+                        final String sellerID = of.getSellerID();
+                        text = "\n\nRate: " + of.getRate() + "\nShipping Cost: " + of.getExpressCost() +
+                                "\nShipping Method: " + getShippingMethod(of.getShippingMethod()) + "\n";
+                        tv = new TextView(this);
+                        tv.setText(text);
+                        rateTableRow.addView(tv);
+                        rateTable.addView(rateTableRow, new TableLayout.LayoutParams(FP, WC));
+                        rateTableRow = new TableRow(this);
 
-                System.out.println("-=-=-=-=-=-=- " + acceptanceget);
+                        System.out.println("ready to load buttons");
 
-                Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
-                startActivity(intent);
+                        Button b = new Button(this);
+                        b.setText("Accept this rate");
+                        b.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View view) {
 
+                                LinkedList linkedList = new LinkedList();
+                                linkedList.insert("art");
+                                linkedList.insert(MainActivity.getID());
+                                linkedList.insert(orderID);
+                                linkedList.insert(sellerID);
+                                if (sellerID == "") {
+                                    Toast.makeText(OrderDetailActivity.this, "Internal Error SID Not Found.", Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+
+                                try{
+                                    //    acceptanceget = (String) SocketClient.Run(linkedList);
+                                    Object o = SocketClient.Run(linkedList);
+                                    if (o != null) acceptanceget = (String) o;
+                                }catch (Exception e){
+                                    System.out.println("the accept button didn't give data to backend");
+                                }
+                                System.out.println("order ID is " + orderID);
+
+                                System.out.println("-=-=-=-=-=-=- " + acceptanceget);
+
+                                Intent intent = new Intent(OrderDetailActivity.this, OrderDetailActivity.class);
+                                startActivity(intent);
+
+                            }
+                        });
+                        rateTableRow.addView(b);
+                        rateTable.addView(rateTableRow, new TableLayout.LayoutParams(FP, WC));
+                        System.out.println("Everything loaded.");
+                        temp = temp.getNext();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        });
+        }
     }
 
     public Bitmap returnBitMap(String url) {
@@ -166,5 +220,15 @@ public class OrderDetailActivity extends AppCompatActivity {
             case 5: return "Cancelled";
         }
         return "";
+    }
+
+    private static String getShippingMethod (int i) {
+        switch (i){
+            case 1: return "Express";
+            case 2: return "First Class Mail";
+            case 3: return "Priority First Class Mail";
+            case 4: return "Other";
+            default: return "";
+        }
     }
 }
