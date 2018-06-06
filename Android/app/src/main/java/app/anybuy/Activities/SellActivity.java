@@ -498,12 +498,6 @@ public class SellActivity extends AppCompatActivity {
                     firstClickLinkedList.insert("10");
 
                     Node temp2 = firstClickLinkedList.head;
-                    while(temp2 != null){
-                        System.out.println(temp2.getObject());
-                        System.out.println(temp2.getObject().getClass());
-                        temp2 = temp2.getNext();
-                    }
-                    //the first time you click the orders button
 
                     System.out.println(getUserCountryCode() + " heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 

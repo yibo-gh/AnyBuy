@@ -63,7 +63,7 @@ public class PaymentAddActivity extends AppCompatActivity {
                 else if(l.matches(""))  Toast.makeText(PaymentAddActivity.this, "You did not enter a last name!", Toast.LENGTH_SHORT).show();
                 else if(c.matches(""))  Toast.makeText(PaymentAddActivity.this, "You did not enter a card number!", Toast.LENGTH_SHORT).show();
                 else if(z.matches(""))  Toast.makeText(PaymentAddActivity.this, "You did not enter a zip code!", Toast.LENGTH_SHORT).show();
-                else if(e.matches(""))  Toast.makeText(PaymentAddActivity.this, "You did not enter a expiration date!", Toast.LENGTH_SHORT).show();
+                else if(e.matches("") || e.length() != 4)  Toast.makeText(PaymentAddActivity.this, "You did not enter a expiration date!", Toast.LENGTH_SHORT).show();
                 else {
                     if (c.charAt(0) == '4' && c.length() == 16) i = "visa";
                     else if (c.charAt(0) == '5' && c.length() == 16) i = "mstc";

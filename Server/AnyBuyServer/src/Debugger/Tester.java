@@ -19,27 +19,27 @@ public class Tester {
 	public static void main (String args[]) throws SQLException {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
 		login("yoona", "snsd.or.kr", "loveYOONA!");
-		placeOrder();
-		addAddress();
-		loadAddress(getSessionID());
-		deleteAddress();
-		loadPersonOrder(getSessionID());
-		loadPersonSold(getSessionID());
-		loadOrder();
-		addCard();
-		loadCard();
-		deleteCard();
-		giveRate();
+//		placeOrder();
+//		addAddress();
+//		loadAddress(getSessionID());
+//		deleteAddress();
+//		loadPersonOrder(getSessionID());
+//		loadPersonSold(getSessionID());
+//		loadOrder();
+//		addCard();
+//		loadCard();
+//		deleteCard();
+//		giveRate();
 		acceptRate();
-		cancelOrder();
-		searchOrderByName();
-		searchOrderByID();
-		changePC();
-		checkExt();
-		changePC();
-		loadOrderDetail();
-		loadPartialOrder();
-		loadOffer("KR10000000");
+//		cancelOrder();
+//		searchOrderByName();
+//		searchOrderByID();
+//		changePC();
+//		checkExt();
+//		changePC();
+//		loadOrderDetail();
+//		loadPartialOrder();
+//		loadOffer("KR10000000");
 	}
 	
 	private static void register(String user, String domain, String password) throws SQLException {
@@ -302,7 +302,7 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "US10000001";
+		OID = "CA10000001";
 		SID = "snok10000";
 		RA = 100.00;
 		EC = 10.00;
@@ -323,8 +323,8 @@ public class Tester {
 		ll.insert(getSessionID());
 		
 		String OID, SID;
-		OID = "US10000206";
-		SID = "snok10000";
+		OID = "US10000002";
+		SID = "12cx10000";
 		ll.insert(OID);
 		ll.insert(SID);
 		
@@ -346,11 +346,11 @@ public class Tester {
 	
 	private static void searchOrderByName() throws SQLException{
 		LinkedList ll = new LinkedList();
-		ll.insert("spn");
+		ll.insert("spm");
 		ll.insert(getSessionID());
 		ll.insert("US");
 		ll.insert(null);
-		ll.insert("%ona\\'s Ch%");
+		ll.insert("%123%");
 		Object obj = IntermediateAPI.API.getCommand(ll);
 		if (obj.getClass().equals("".getClass())) {
 			System.out.println((String)obj);

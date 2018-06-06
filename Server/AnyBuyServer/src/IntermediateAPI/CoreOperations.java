@@ -1011,7 +1011,7 @@ public class CoreOperations {
 			temp = temp.getNext();
 			c.close();
 		}
-		if (resLl.head.getObject() == null) return resLl;
+		if (resLl.head == null) return "0x1FB4";
 		else return ServerManagement.Sort.sortOrders(resLl);
 		
 	}

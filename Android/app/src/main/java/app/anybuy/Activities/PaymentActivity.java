@@ -52,7 +52,8 @@ public class PaymentActivity extends AppCompatActivity {
             if (o.getClass().equals("".getClass())) {
                 TableRow tableRow = new TableRow(this);
                 TextView tv = new TextView(this);
-                tv.setText((String) o);
+                if (((String)o).equals("0x1E04")) tv.setText("No card exist.");
+                else tv.setText("Please contact tech support with error code:\n" + (String) o);
                 tableRow.addView(tv);
                 tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
                 deletePayment.setEnabled(false);

@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import Object.Address;
 import Object.LinkedList;
@@ -86,27 +87,39 @@ public class AddressAddActivity extends AppCompatActivity {
                 s = state.getText().toString();
                 z = zip.getText().toString();
 
-                LinkedList ll = new LinkedList();
-                ll.insert("ada");
-                ll.insert(MainActivity.getID());
-                System.out.println("Address inputted: " + f + " " + l + " " + co + " " + l1 + " " + l2 + " " + c + " " + s + " " + z);
-                Address a = new Address(f, l, co, l1, l2, c, s, z);
-                ll.insert(a);
-                try {
-                    String str = (String) SocketClient.Run(ll);
-                    System.out.println(str);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (f.equals("") || l.equals(""))
+                    Toast.makeText(AddressAddActivity.this, "Invalid name!", Toast.LENGTH_SHORT).show();
+                else if (l1.equals(""))
+                    Toast.makeText(AddressAddActivity.this, "Invalid address line 1!", Toast.LENGTH_SHORT).show();
+                else if (c.equals(""))
+                    Toast.makeText(AddressAddActivity.this, "Invalid city info.", Toast.LENGTH_SHORT).show();
+                else if (s.equals("") || s.length() > 2)
+                    Toast.makeText(AddressAddActivity.this, "Invalid state info!", Toast.LENGTH_SHORT).show();
+                else if (z.equals(""))
+                    Toast.makeText(AddressAddActivity.this, "Invalid zip info.", Toast.LENGTH_SHORT).show();
+                else if (z.length() > 6)
+                    Toast.makeText(AddressAddActivity.this, "Zip should at most 6 digits.", Toast.LENGTH_SHORT).show();
+                else {
+                    LinkedList ll = new LinkedList();
+                    ll.insert("ada");
+                    ll.insert(MainActivity.getID());
+                    System.out.println("Address inputted: " + f + " " + l + " " + co + " " + l1 + " " + l2 + " " + c + " " + s + " " + z);
+                    Address a = new Address(f, l, co, l1, l2, c, s, z);
+                    ll.insert(a);
+                    try {
+                        String str = (String) SocketClient.Run(ll);
+                        System.out.println(str);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Intent intent = new Intent(AddressAddActivity.this, AddressActivity.class);
+                    startActivity(intent);
                 }
-
-
-                Intent intent = new Intent(AddressAddActivity.this, AddressActivity.class);
-                startActivity(intent);
 
             }
         });
-
-
 
     }
 }
