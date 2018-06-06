@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,8 @@ public class OfferActivity extends AppCompatActivity {
     EditText expressCost;
     EditText makeOffer;
     EditText remark;
+    Spinner shippingOption;
+    private int sOp;
 
     boolean offerBool;
     String []sID;
@@ -55,7 +60,7 @@ public class OfferActivity extends AppCompatActivity {
 
          offerBool = false;
          makeOffer = (EditText) findViewById(R.id.makeOfferEditTextID);
-
+         shippingOption = (Spinner) findViewById(R.id.shipSpinner);
 
         TextView display =  (TextView) findViewById(R.id.offerPageTextView);
          expressCost = (EditText) findViewById(R.id.expressCostEditViewID);
@@ -66,6 +71,10 @@ public class OfferActivity extends AppCompatActivity {
 
         //split the string to get the different info
         String[] splitByNextLine = dataOrders.split("\n");
+
+        final String[] shippingOpt = new String[] {"Express", "First Class",
+            "Priority First Class", "Other"};
+        final int[] sOpInt = new int[] {1, 2, 3, 4};
 
         final String getRemark = remark.getText().toString();
         for(int i = 0 ; i < splitByNextLine.length; i++)
@@ -81,6 +90,23 @@ public class OfferActivity extends AppCompatActivity {
                                 4.order number
 
          */
+
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, shippingOpt);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        shippingOption.setAdapter(adapter);
+
+        shippingOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                sOp = sOpInt[arg2];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                sOp = 1;
+
+            }
+        });
 
         //split by space
         String[] splitter = splitByNextLine[4].split(" ");
@@ -108,8 +134,8 @@ public class OfferActivity extends AppCompatActivity {
                     Toast.makeText(OfferActivity.this, "You did not enter a rate!", Toast.LENGTH_SHORT).show();
                 } else if (getExpress().matches("")) {
                     Toast.makeText(OfferActivity.this, "You did not enter a express cost!", Toast.LENGTH_SHORT).show();
-                } else if (getRemarkstr().matches("")) {
-                    Toast.makeText(OfferActivity.this, "You did not enter a remark!", Toast.LENGTH_SHORT).show();
+                } else if (sOp == 4 && getRemarkstr().matches("")) {
+                    Toast.makeText(OfferActivity.this, "Please tell buyer how you want to send it!", Toast.LENGTH_SHORT).show();
                 } else {
                     System.out.println(getOffer() + "+++++++++" + getExpress() + "++++++++++" + getRemarkstr());
                     //get the offer seller wants to make
@@ -118,7 +144,7 @@ public class OfferActivity extends AppCompatActivity {
                     int expressC = Integer.parseInt(getExpress());
 
                     System.out.println(imageID + "\n id: " + MainActivity.getID() + "\n rate: " + offerMadeInt + "\n express cost: " + expressC + "\nremark: " + getRemarkstr());
-                    Offer makeOffer = new Offer(imageID, sID[0], offerMadeInt, expressC, 1, offerBool, getRemarkstr());
+                    Offer makeOffer = new Offer(imageID, sID[0], offerMadeInt, expressC, sOp, offerBool, getRemarkstr());
 
                     LinkedList linkedList = new LinkedList();
                     linkedList.insert("gvr");
