@@ -2,21 +2,19 @@ package app.anybuy.Activities;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import app.anybuy.R;
+import android.widget.Toast;
 
-import app.anybuy.Clients.SocketClient;
-
-import app.anybuy.R;
-
-import Object.LinkedList;
 import Object.Card;
+import Object.LinkedList;
+import app.anybuy.Clients.SocketClient;
+import app.anybuy.R;
 
 public class PaymentAddActivity extends AppCompatActivity {
 
@@ -61,32 +59,40 @@ public class PaymentAddActivity extends AppCompatActivity {
                 z = ZP.getText().toString();
                 e = EXP.getText().toString();
 
-                if (c.charAt(0) == '4' && c.length() == 16) i = "visa";
-                else if (c.charAt(0) == '5' && c.length() == 16) i = "mstc";
-                else if (c.charAt(0) == '3' && c.length() == 15) i = "amex";
-                else if (c.charAt(0) == '3' && c.length() == 16) i = "jcbx";
-                else if (c.charAt(0) == '6' && c.charAt(1) == '0' && c.charAt(2) == '1' && c.charAt(3) == '1'
-                        && c.length() == 16) i = "dscv";
-                else if (c.charAt(0) == '6' && c.charAt(1) == '2' && (c.length() == 16 || c.length() == 19)) i = "unpy";
-                else i = "unkn";
+                if(f.matches(""))  Toast.makeText(PaymentAddActivity.this, "You did not enter a first name!", Toast.LENGTH_SHORT).show();
+                else if(l.matches(""))  Toast.makeText(PaymentAddActivity.this, "You did not enter a last name!", Toast.LENGTH_SHORT).show();
+                else if(c.matches(""))  Toast.makeText(PaymentAddActivity.this, "You did not enter a card number!", Toast.LENGTH_SHORT).show();
+                else if(z.matches(""))  Toast.makeText(PaymentAddActivity.this, "You did not enter a zip code!", Toast.LENGTH_SHORT).show();
+                else if(e.matches(""))  Toast.makeText(PaymentAddActivity.this, "You did not enter a expiration date!", Toast.LENGTH_SHORT).show();
+                else {
+                    if (c.charAt(0) == '4' && c.length() == 16) i = "visa";
+                    else if (c.charAt(0) == '5' && c.length() == 16) i = "mstc";
+                    else if (c.charAt(0) == '3' && c.length() == 15) i = "amex";
+                    else if (c.charAt(0) == '3' && c.length() == 16) i = "jcbx";
+                    else if (c.charAt(0) == '6' && c.charAt(1) == '0' && c.charAt(2) == '1' && c.charAt(3) == '1'
+                            && c.length() == 16) i = "dscv";
+                    else if (c.charAt(0) == '6' && c.charAt(1) == '2' && (c.length() == 16 || c.length() == 19))
+                        i = "unpy";
+                    else i = "unkn";
 
 
-                LinkedList ll = new LinkedList();
-                ll.insert("adc");
-                ll.insert(MainActivity.getID());
-                Card cd = new Card(f, l, i, c, e, z);
-                System.out.println("FN = " + cd.getFN());
-                ll.insert(cd);
-                try {
-                    String str = (String) SocketClient.Run(ll);
-                    System.out.println(str);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    LinkedList ll = new LinkedList();
+                    ll.insert("adc");
+                    ll.insert(MainActivity.getID());
+                    Card cd = new Card(f, l, i, c, e, z);
+                    System.out.println("FN = " + cd.getFN());
+                    ll.insert(cd);
+                    try {
+                        String str = (String) SocketClient.Run(ll);
+                        System.out.println(str);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Intent intent = new Intent(PaymentAddActivity.this, PaymentActivity.class);
+                    startActivity(intent);
                 }
-
-
-                Intent intent = new Intent(PaymentAddActivity.this, PaymentActivity.class);
-                startActivity(intent);
             }
         });
 

@@ -582,36 +582,33 @@ public class CoreOperations {
 		
 		// Check that Offer object was given
 		Object obj = ll.head.getObject();
-		if (!obj.getClass().equals(new Offer().getClass())) return "NOT AN OFFER";
+		if (!obj.getClass().equals(new Offer().getClass())) return "0x1002";
 		Offer offer = (Offer)obj;
 		
-		// Connect to generalOffer
-		Connection c = SQLControl.SQLOperation.getConnect("generalOffer");
+		Connection c = SQLOperation.getConnect(uid);
+		String sql = "SELECT orderStatus FROM generalOrder." + getCountryCodeWithOrderID(offer.getOrderID()) + " where orderID = '" + offer.getOrderID() + "';";
+		String orderStatus = SQLControl.SQLOperation.readDatabase(c, sql);
+		if (orderStatus == null) return "0x1FB4";
+		else if ( !orderStatus.equals("0") && !orderStatus.equals("1") ) return "0x1FB3";
+		c.close();
 		
-		// Make new table for order's offers if needed
-		String orderStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT * FROM " + offer.getOrderID());
-		if (orderStatus == null) {
-			SQLControl.SQLOperation.createOfferTable(c, offer.getOrderID());
-		}
+		c = SQLControl.SQLOperation.getConnect("generalOffer");
+		sql = "SELECT * FROM generalOffer." + offer.getOrderID();
+		ResultSet rs = SQLControl.SQLOperation.readDatabaseRS(c, sql);
+		System.out.println(rs == null);
+		if (rs == null) SQLControl.SQLOperation.createOfferTable(c, offer.getOrderID());
+		
 		
 		// Insert data into table, turn boolean acceptance to bit accept
 		String accept;
 		if (offer.getAcceptance()) {accept = "1";}
 		else {accept = "0";}
 		String value = "'" + offer.getSellerID() + "','" + offer.getRate() + "','" + offer.getExpressCost() + "','" + offer.getShippingMethod() + "','" + accept + "','" + offer.getRemark() + "'";
-		String sql = "INSERT INTO " + offer.getOrderID() +" (sellerID, rate, expressCost, shippingMethod, acceptance, remark) VALUES (" + value + ");"; 
+		sql = "INSERT INTO " + offer.getOrderID() +" (sellerID, rate, expressCost, shippingMethod, acceptance, remark) VALUES (" + value + ");"; 
+		System.out.println(sql);
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
-		c = SQLOperation.getConnect(uid);
-		orderStatus = SQLControl.SQLOperation.readDatabase(c, "SELECT offerStatus FROM offer where orderID = '" + offer.getOrderID() + "';");
-		System.out.println(orderStatus == null);
-		if (orderStatus == null) {
-			// offer status is 1 when a offer was initialed.
-			sql = "INSERT INTO `offer` (`orderID`, `offerStatus`) VALUES ('" + offer.getOrderID() + "', '1');";
-			System.out.println(SQLOperation.updateData(c, sql));
-		} else return "0x1FB1";
-		c.close();
 		String country = getCountryCodeWithOrderID(offer.getOrderID());
 		
 		sql = "UPDATE `generalOrder`.`" + country + "` SET `orderStatus`='1' WHERE `orderID`='" + offer.getOrderID() + "';";
@@ -619,12 +616,21 @@ public class CoreOperations {
 		SQLOperation.updateData(c, sql);
 		
 		sql = "SELECT uid FROM " + country + " where orderID = '" + offer.getOrderID() + "';";
+		System.out.println(sql);
 		String uid2 = SQLControl.SQLOperation.readDatabase(c, sql);
 		c.close();
 		
+		c = SQLOperation.getConnect(uid);
+		value = "'" + offer.getOrderID() + "','1'";
+		sql = "INSERT INTO " + uid +".offer (orderID, offerStatus) VALUES (" + value + ");"; 
+		System.out.println(sql);
+		System.out.println(SQLOperation.updateData(c, sql));
+		c.close();
+		
 		sql = "UPDATE `" + uid2 + "`.`order` SET `orderStatus` = '1' WHERE `orderID` = '" + offer.getOrderID() + "';";
+		System.out.println(sql);
 		c = SQLOperation.getConnect(uid2);
-		SQLOperation.updateData(c, sql);
+		System.out.println(SQLOperation.updateData(c, sql));
 		
 		return "0x01";
 	}
@@ -659,6 +665,36 @@ public class CoreOperations {
 		obj = temp.getObject();
 		if (!obj.getClass().equals(("".getClass()))) {return "0x1002";}
 		sellerID = obj.toString();
+
+		c = SQLControl.SQLOperation.getConnect("generalOffer");
+		sql = "SELECT acceptance from generalOffer." + orderID + ";";
+		System.out.println(sql);
+		ResultSet rs = SQLOperation.readDatabaseRS(c, sql);
+		while (rs != null && rs.next()) {
+			if (rs.getString(1).equals("1")) return "0x1FC1-1";
+		}
+		c.close();
+
+		c = SQLControl.SQLOperation.getConnect("generalOrder");
+		sql = "SELECT orderStatus from generalOrder." + getCountryCodeWithOrderID(orderID) + " WHERE orderID = '" + orderID + "';";
+		System.out.println(sql);
+		String res = SQLOperation.readDatabase(c, sql);
+		if ( !res.equals("1") ) return "0x1FC1-2";
+		c.close();
+		
+		c = SQLControl.SQLOperation.getConnect(sellerID);
+		sql = "SELECT offerStatus from " + sellerID + ".offer where orderID = '" + orderID + "';";
+		System.out.println(sql);
+		res = SQLOperation.readDatabase(c, sql);
+		if ( res == null || !res.equals("1") ) return "0x1FC1-3";
+		c.close();
+		
+		c = SQLControl.SQLOperation.getConnect(uid);
+		sql = "SELECT orderStatus from " + uid + ".order WHERE orderID = '" + orderID + "';";
+		System.out.println(sql);
+		res = SQLControl.SQLOperation.readDatabase(c, sql);
+		if (res == null) return "0x1FC2";
+		
 		
 		// Change acceptance of offer to 1
 		c = SQLControl.SQLOperation.getConnect("generalOffer");
@@ -696,7 +732,7 @@ public class CoreOperations {
 		System.out.println(SQLOperation.updateData(c, sql));
 		c.close();
 		
-		return null;
+		return "0x01";
 	}
 	
 	static String addCard (LinkedList ll) throws SQLException {
@@ -1099,7 +1135,7 @@ public class CoreOperations {
 		}
 		sql = "select authTime from authLog where uid='" + veri[0] + "'";
 		Long l = Long.parseLong(SQLOperation.readDatabase(c, sql));
-		if (System.currentTimeMillis() - l > 0x927C0 || System.currentTimeMillis() < l) return "0x1D02";
+		if (System.currentTimeMillis() - l > 0x124F80 || System.currentTimeMillis() < l) return "0x1D02";
 		sql = "update authLog set authTime='" + System.currentTimeMillis() + "' where uid='" + veri[0] + "';" ;
 		SQLControl.SQLOperation.updateData(c, sql);
 		c.close();

@@ -1,35 +1,38 @@
 package app.anybuy.Activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import app.anybuy.Clients.SocketClient;
-import app.anybuy.R;
 import Object.LinkedList;
 import Object.Order;
 import Object.UserOrderHis;
+import app.anybuy.Clients.SocketClient;
+import app.anybuy.R;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
     private static String orderID = "";
-
+    private static String acceptanceget;
+    Button acceptButton;
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
 
+    private static String[] sID;
     private static String imgURL = "";
 
     private Bitmap bmImg;
@@ -49,6 +52,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         tableLayout.setStretchAllColumns(true);
 
         imView = (ImageView) findViewById(R.id.detailImage);
+
+        acceptButton = (Button) findViewById(R.id.accpetOfferButtonID);
 
         LinkedList ll = new LinkedList();
         ll.insert("lod");
@@ -101,6 +106,35 @@ public class OrderDetailActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        sID = MainActivity.getID().split("\\?");
+
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                LinkedList linkedList = new LinkedList();
+                linkedList.insert("art");
+                linkedList.insert(MainActivity.getID());
+                linkedList.insert(orderID);
+                linkedList.insert("snok10000");
+
+                try{
+                //    acceptanceget = (String) SocketClient.Run(linkedList);
+                    Object o = SocketClient.Run(linkedList);
+                    if (o != null) acceptanceget = (String) o;
+                }catch (Exception e){
+                    System.out.println("the accept button didn't give data to backend");
+                }
+                System.out.println("order ID is " + orderID);
+
+                System.out.println("-=-=-=-=-=-=- " + acceptanceget);
+
+                Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     public Bitmap returnBitMap(String url) {

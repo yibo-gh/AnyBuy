@@ -5,7 +5,8 @@
     android:id="@+id/newCardButtonID"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.PaymentAddActivity">
+    tools:context=".Activities.PaymentAddActivity"
+    android:background="@drawable/background">
 
     <Button
         android:id="@+id/AddCardButtonID"

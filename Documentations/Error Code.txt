@@ -41,3 +41,8 @@
 
 0x1FB1: Offer Error: Offer given.
 0x1FB2: Offer Error: No qualified order found.
+0x1FB3: Offer Error: Order closed for new offers.
+0x1FB4: Offer Error: No order found.
+
+0x1FC1: Acceptance Error: Order not eligible for acceptance.
+0x1FC2: Acceptance Error: Order operation not authorized.

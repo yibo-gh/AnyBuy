@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.LegalActivity">
+    tools:context=".Activities.LegalActivity"
+    android:background="@drawable/background">
 
     <ScrollView
         android:id="@+id/scrollView3"

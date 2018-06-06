@@ -10,7 +10,7 @@ public class Tester {
 	
 	public static void main (String args[]) throws SQLException {
 		register("yoona", "snsd.or.kr", "loveYOONA!");
-		login("ychen165", "ucsc.edu", "chenyang");
+		login("yoona", "snsd.or.kr", "loveYOONA!");
 //		placeOrder();
 //		addAddress();
 //		loadAddress(getSessionID());
@@ -293,7 +293,7 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "US10000010";
+		OID = "KR10000002";
 		SID = "ucex10000";
 		RA = 100.00;
 		EC = 10.00;
@@ -314,7 +314,7 @@ public class Tester {
 		ll.insert(getSessionID());
 		
 		String OID, SID;
-		OID = "US10000003";
+		OID = "US10000206";
 		SID = "snok10000";
 		ll.insert(OID);
 		ll.insert(SID);

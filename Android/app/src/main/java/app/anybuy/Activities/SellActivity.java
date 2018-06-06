@@ -514,6 +514,7 @@ public class SellActivity extends AppCompatActivity {
                     try {
 
                         if (secondClick == false) {
+
                             Object o = SocketClient.Run(firstClickLinkedList);
                             System.out.println(o.getClass());
                             if (o.getClass().equals("".getClass())) System.out.println((String) o);
