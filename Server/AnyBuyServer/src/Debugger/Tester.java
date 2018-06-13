@@ -29,8 +29,8 @@ public class Tester {
 //		addCard();
 //		loadCard();
 //		deleteCard();
-//		giveRate();
-		acceptRate();
+		giveRate();
+//		acceptRate();
 //		cancelOrder();
 //		searchOrderByName();
 //		searchOrderByID();
@@ -302,13 +302,13 @@ public class Tester {
 		int SM;
 		boolean A;
 		
-		OID = "CA10000001";
+		OID = "KR10000001";
 		SID = "snok10000";
-		RA = 100.00;
-		EC = 10.00;
+		RA = 9.49;
+		EC = 110.00;
 		SM = 1;
 		A = false;
-		RM = "Rate Example";
+		RM = "FedEx Globle Express, Charged in USD";
 		
 		Offer offer = new Offer(OID, SID, RA, EC, SM, A, RM);
 		ll.insert(offer);

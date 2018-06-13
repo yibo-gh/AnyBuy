@@ -139,8 +139,9 @@ public class OrderDetailActivity extends AppCompatActivity {
                         rateTableRow = new TableRow(this);
                         Offer of = (Offer) temp.getObject();
                         final String sellerID = of.getSellerID();
-                        text = "\n\nRate: " + of.getRate() + "\nShipping Cost: " + of.getExpressCost() +
-                                "\nShipping Method: " + getShippingMethod(of.getShippingMethod()) + "\n";
+                        text = "Rate: " + of.getRate() + "\nShipping Cost: " + of.getExpressCost() +
+                                "\nShipping Method: " + getShippingMethod(of.getShippingMethod()) +
+                                "\nmsg from seller: " + of.getRemark();
                         tv = new TextView(this);
                         tv.setText(text);
                         rateTableRow.addView(tv);
@@ -166,7 +167,6 @@ public class OrderDetailActivity extends AppCompatActivity {
                                 }
 
                                 try{
-                                    //    acceptanceget = (String) SocketClient.Run(linkedList);
                                     Object o = SocketClient.Run(linkedList);
                                     if (o != null) acceptanceget = (String) o;
                                 }catch (Exception e){
