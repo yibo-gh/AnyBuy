@@ -15,7 +15,7 @@ public class SocketClient {
 
     public static Object Run(LinkedList ll) throws Exception {
 
-       Socket socket = new Socket("anybuy.app", 18416);
+       Socket socket = new Socket("10.0.3.1", 18416);
 
         ObjectOutputStream os = null;
         ObjectInputStream is = null;

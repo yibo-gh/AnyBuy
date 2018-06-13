@@ -62,7 +62,7 @@ public class OfferActivity extends AppCompatActivity {
          makeOffer = (EditText) findViewById(R.id.makeOfferEditTextID);
          shippingOption = (Spinner) findViewById(R.id.shipSpinner);
 
-        TextView display =  (TextView) findViewById(R.id.offerPageTextView);
+         TextView display =  (TextView) findViewById(R.id.offerPageTextView);
          expressCost = (EditText) findViewById(R.id.expressCostEditViewID);
          remark = (EditText)findViewById(R.id.remarkEditTextID);
 
@@ -82,15 +82,6 @@ public class OfferActivity extends AppCompatActivity {
             System.out.println(splitByNextLine[i] + " ................. ");
 
         }
-
-        /*
-            splitByNextLine:    1: product Name
-                                2: brand name
-                                3.quantity
-                                4.order number
-
-         */
-
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, shippingOpt);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

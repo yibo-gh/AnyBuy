@@ -81,8 +81,10 @@ public class OrderDetailActivity extends AppCompatActivity {
                 Order o = uoh.getOrder();
 
                 orderStatus = uoh.getOrderStatus();
-                String text = orderID + " " + orderStatus(orderStatus) + "\n" + "Made by: " + uoh.getOrder().getBrand() +
-                       "\n" + uoh.getOrder().getQuantity() + " item(s) requested from " + uoh.getOrder().getCountry()
+                String text = orderID + " " + orderStatus(orderStatus) + "\n"
+                        + uoh.getOrder().getProduct() + "\n"
+                        + "Made by: " + uoh.getOrder().getBrand()
+                        + "\n" + uoh.getOrder().getQuantity() + " item(s) requested from " + uoh.getOrder().getCountry()
                         + "\n"  + "Ordered at " + uoh.getOrder().getTimestamp() + "\n";
                 tv = new TextView(this);
                 tv.setText(text);
@@ -206,7 +208,9 @@ public class OrderDetailActivity extends AppCompatActivity {
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("set image error.");
         }
+        System.out.println("image set success. " + url);
         return bmp;
     }
 

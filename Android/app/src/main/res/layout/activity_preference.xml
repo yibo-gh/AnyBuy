@@ -5,95 +5,69 @@
     android:id="@+id/profileLayoutID"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     tools:context=".Activities.ProfileActivity">
 
 
     <ImageView
         android:id="@+id/productImageViewID"
-        android:layout_width="0dp"
+        android:layout_width="62dp"
         android:layout_height="66dp"
-        android:layout_marginEnd="174dp"
-        android:layout_marginLeft="175dp"
-        android:layout_marginRight="174dp"
-        android:layout_marginStart="175dp"
-        android:layout_marginTop="63dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        app:layout_constraintEnd_toEndOf="@+id/receiveEmailButtonID"
+        app:layout_constraintStart_toStartOf="@+id/receiveEmailButtonID"
+        app:srcCompat="@android:drawable/sym_def_app_icon"
+        tools:layout_editor_absoluteY="63dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/receiveEmailButtonID"
-        android:layout_width="0dp"
+        android:layout_width="192dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="110dp"
-        android:layout_marginLeft="109dp"
-        android:layout_marginRight="110dp"
-        android:layout_marginStart="109dp"
-        android:layout_marginTop="36dp"
         android:background="@drawable/button_background"
         android:text="Receive Emails"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productImageViewID" />
+        app:layout_constraintEnd_toEndOf="@+id/changeEmailButtonID"
+        app:layout_constraintStart_toStartOf="@+id/changeEmailButtonID"
+        tools:layout_editor_absoluteY="165dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/changeEmailButtonID"
-        android:layout_width="0dp"
+        android:layout_width="192dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="109dp"
-        android:layout_marginLeft="110dp"
-        android:layout_marginRight="109dp"
 
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/button_background"
         android:text="Change Email"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receiveEmailButtonID" />
+        app:layout_constraintEnd_toEndOf="@+id/changePasswordButtonID"
+        app:layout_constraintStart_toStartOf="@+id/changePasswordButtonID"
+        tools:layout_editor_absoluteY="223dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/changePasswordButtonID"
 
-        android:layout_width="0dp"
+        android:layout_width="192dp"
         android:layout_height="48dp"
 
 
-        android:layout_marginEnd="110dp"
-
-        android:layout_marginLeft="109dp"
-
-        android:layout_marginRight="110dp"
-        android:layout_marginStart="109dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/button_background"
         android:text="Change Password"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changeEmailButtonID" />
+        app:layout_constraintEnd_toEndOf="@+id/numberOfOrdersButtonID"
+        app:layout_constraintStart_toStartOf="@+id/numberOfOrdersButtonID"
+        tools:layout_editor_absoluteY="281dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/numberOfOrdersButtonID"
-        android:layout_width="0dp"
+        android:layout_width="192dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="110dp"
-        android:layout_marginLeft="109dp"
-        android:layout_marginRight="110dp"
-        android:layout_marginStart="109dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/button_background"
         android:text="Number Of Orders"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changePasswordButtonID" />
-
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="339dp"
+        tools:ignore="MissingConstraints" />
 
 
     <android.support.constraint.Guideline

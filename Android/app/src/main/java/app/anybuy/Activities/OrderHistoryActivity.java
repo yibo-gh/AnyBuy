@@ -71,10 +71,10 @@ public class OrderHistoryActivity extends AppCompatActivity {
                             final String orderID = uoh.getOrder().getImage();
                             int ordStatus = uoh.getOrderStatus();
                             if (i == 0) {
-                                tv.setText(orderID + " " + orderStatus(ordStatus));
+                                tv.setText(orderID + " " + uoh.getOrder().getProduct() + " " + orderStatus(ordStatus));
                                 tableRow.addView(tv); 
                             } else if (i == 2){
-                                tv.setText("Made by: " + uoh.getOrder().getBrand());
+                                tv.setText("Made by " + uoh.getOrder().getBrand());
                                 tableRow.addView(tv);
                                 // Cancel button
                             } else if (i == 3){
@@ -83,10 +83,10 @@ public class OrderHistoryActivity extends AppCompatActivity {
                             } else if (i == 4){
                                 tv.setText("Ordered at " + uoh.getOrder().getTimestamp());
                                 tableRow.addView(tv);
-                            } else if (i == 5){
+                            } else if (i == 6){
                                 tv.setText("\n");
                                 tableRow.addView(tv);
-                            } else if (i == 6){
+                            } else if (i == 5){
                                 Button bt = new Button(this);
                                 if (ordStatus == 0 | ordStatus == 1) {
                                     bt.setText("Cancel");
